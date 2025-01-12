@@ -5,7 +5,6 @@ import createColor from "./createColor"
 import { breakpoints } from "../css"
 
 export const createTheme = (name: string, options: ThemeOptionInput, darkMode?: boolean): ThemeOptions => {
-   // const cssopt = css_options()
    if (!ThemeFactory.has(name)) {
       let theme: any = mergeObject(defaultThemeOption, {
          ...(darkMode ? darkColorPallete : {}),

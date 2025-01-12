@@ -1,6 +1,7 @@
 import * as React from "react"
 import { ThemeOptions } from "./types"
-import Tag, { TagComponentType, TagProps } from "../Tag"
+import Tag from "../Tag"
+import { TagComponentType, TagProps } from "../Tag/types"
 import { BreakpointProvider } from "../breakpoint"
 import { ThemeContex, ThemeFactory } from "./core"
 import ThemeCssVars from "./ThemeCssVars"

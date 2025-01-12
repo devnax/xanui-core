@@ -17,7 +17,7 @@ export * from './theme/types'
 export * from './useColorTemplate'
 export * from './useAnimation'
 export type * from './Transition'
-export type { TagProps, TagComponentType } from './Tag'
+export type * from './Tag/types'
 export type { useBreakpointPropsType } from './breakpoint/useBreakpointProps'
 
 export {

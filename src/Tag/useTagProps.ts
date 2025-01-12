@@ -1,4 +1,4 @@
-import { TagComponentType, TagProps, TagPropsRoot } from '.';
+import { TagComponentType, TagProps, TagPropsRoot } from './types';
 import cssPropList from './cssPropList';
 import { css } from '../css';
 import { classNames } from 'pretty-class';

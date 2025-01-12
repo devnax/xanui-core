@@ -3,6 +3,18 @@ import { Aliases, BreakpointKeys, CSSProps, CSSValueType } from "../css/types"
 import { ColorsRefTypes, TypographyRefTypes } from '../theme/types';
 import { classNamesTypes } from 'pretty-class'
 
+export type TagComponentType = keyof React.JSX.IntrinsicElements | React.ComponentType<any>
+export type TagProps<T extends TagComponentType = 'div'> = Omit<React.HTMLProps<T>, 'width' | 'height'> & {
+    component?: T;
+    children?: React.ReactNode;
+    ref?: any;
+} & CSSPropAsAttr
+
+export type TagPropsRoot<T extends TagComponentType = 'div'> = TagProps<T> & {
+    sxr?: CSSProps
+}
+
+
 interface TagCSSProperties {
     alignContent: CSSValueType<"alignContent">;
     alignItems: CSSValueType<"alignItems">;
