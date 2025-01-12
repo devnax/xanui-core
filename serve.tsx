@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { createThemeSwitcher, ThemeProvider, useTheme } from './src/theme'
-import { Tag, useTransition } from './src';
+import { Tag, Transition } from './src';
 
 const useThemeSwitcher = createThemeSwitcher("light")
 
@@ -18,21 +18,22 @@ const ThemeBox = () => {
   )
 }
 
-
 const Trans = () => {
   const theme = useTheme()
-  const t = useTransition(true, {
-    variant: "zoom"
-  })
+  const [open, setOpen] = React.useState(true)
   return (
-    <Tag
-      className={t.classname}
-      height={100}
-      width={100}
-      bgcolor="red"
-      radius={2}
-    >
-      {theme.name}
+    <Tag>
+      <button onClick={() => setOpen(!open)}>Click</button>
+      <Transition open={open} variant="collapsVerticle" disableInitialTransition>
+        <Tag
+          width={100}
+          bgcolor="red"
+          radius={2}
+          px={2}
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </Tag>
+      </Transition>
     </Tag>
   )
 }
