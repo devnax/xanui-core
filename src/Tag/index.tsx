@@ -6,6 +6,6 @@ const Tag = React.forwardRef(<T extends TagComponentType = 'div'>({ component, c
     const props: any = useTagProps(rest)
     props.ref = ref
     return React.createElement(component || "div", props, children)
-}) as <T extends TagComponentType = 'div'>(props: TagPropsRoot<T> & { ref?: React.Ref<any> }) => React.ReactElement;
+})
 
 export default Tag

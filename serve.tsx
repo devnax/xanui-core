@@ -26,6 +26,7 @@ const Trans = () => {
       <button onClick={() => setOpen(!open)}>Click</button>
       <Transition open={open} variant="collapsVerticle" disableInitialTransition>
         <Tag
+          component="div"
           width={100}
           bgcolor="red"
           radius={2}

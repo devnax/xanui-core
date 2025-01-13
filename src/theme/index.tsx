@@ -3,6 +3,7 @@ import { createTheme } from "./createTheme"
 import ThemeProvider from './ThemeProvider'
 import createThemeSwitcher from './createThemeSwitcher'
 import { getTheme, useTheme } from './core'
+export type { ThemeProviderProps } from './ThemeProvider'
 
 export {
     ThemeProvider,
