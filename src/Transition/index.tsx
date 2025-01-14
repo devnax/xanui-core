@@ -44,6 +44,7 @@ const Transition = ({ children, open, ...props }: TransitionProps) => {
 
     const id = useId().replaceAll(":", "")
     const [rendered, setRendered] = useState(false)
+    const [initial, setInitial] = useState(false)
     const [transitionState, setTransitionState] = useState<TransitionState>(open ? (disableInitialTransition ? "opened" : "open") : "closed")
     const [element, setElement] = useState<TransitionElementProps>({
         height: 0,
@@ -104,7 +105,14 @@ const Transition = ({ children, open, ...props }: TransitionProps) => {
 
     useEffect(() => {
         if (rendered) {
-            setCss(open ? to : from)
+            if (!initial) {
+                setInitial(true)
+                setTimeout(() => {
+                    setCss(open ? to : from)
+                }, 50);
+            } else {
+                setCss(open ? to : from)
+            }
         }
     }, [rendered, open])
 
@@ -112,8 +120,8 @@ const Transition = ({ children, open, ...props }: TransitionProps) => {
     if (rendered) {
         let trans = ` ${duration}ms ${_ease} ${delay || 0}ms`
         _ = {
+            ..._css,
             transition: Object.keys(_css || {}).map(k => formatCSSProp(k)).join(trans + ", ") + trans,
-            ..._css
         }
     }
 
@@ -121,7 +129,7 @@ const Transition = ({ children, open, ...props }: TransitionProps) => {
     if (!children || Array.isArray(children)) throw new Error("Invalid children in Transition")
     const first: any = Children.toArray(children).shift();
     let classname = `${cls.classname} trans-${id} trans-${(open ? "open" : "close")} trans-state-${transitionState}`
-    const child = cloneElement(first, { className: classname })
+    const child = cloneElement(first, { classNames: [classname] })
     if (rendered) return child
     if (!rendered && disableInitialTransition && open) return child
 

@@ -24,15 +24,25 @@ const Trans = () => {
   return (
     <Tag>
       <button onClick={() => setOpen(!open)}>Click</button>
-      <Transition open={open} variant="collapsVerticle" disableInitialTransition>
+      <Transition open={open} variant="fade" >
         <Tag
           component="div"
-          width={100}
-          bgcolor="red"
+          width={300}
+          bgcolor="green"
           radius={2}
-          px={2}
+          p={2}
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          <Transition open={open} variant="zoom"  >
+            <Tag
+              component="div"
+              width={100}
+              bgcolor="red"
+              radius={2}
+              px={2}
+            >
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </Tag>
+          </Transition>
         </Tag>
       </Transition>
     </Tag>
