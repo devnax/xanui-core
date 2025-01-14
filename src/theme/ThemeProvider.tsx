@@ -32,7 +32,7 @@ const ThemeProvider = ({ children, theme, resetCss, scrollbarCss, renderIsRoot, 
 
       css({
          "@global": {
-            [`.nui-${theme}-theme-root`]: ThemeCssVars(THEME)
+            [`.xui-${theme}-theme-root`]: ThemeCssVars(THEME)
          }
       })
 

@@ -16,7 +16,7 @@ const useTagProps = <T extends TagComponentType = "div">({ sxr, sx, baseClass, c
       _props[prop] = (props as any)[prop]
    }
    _props.className = classNames([
-      baseClass ? "nui-" + baseClass : "",
+      baseClass ? "xui-" + baseClass : "",
       style.classname,
       props.className,
       ...(clses as any || []),

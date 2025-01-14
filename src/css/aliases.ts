@@ -5,9 +5,9 @@ const isStr = (v: any, or: any) => typeof v === 'string' ? v : or
 
 const aliases: OptionAliases<Aliases> = {
    bgcolor: (v) => ({ backgroundColor: v }),
-   bgimage: (v) => ({ backgroundImage: `url(${v})`, "background-size": "cover", "background-repeat": "no-repeat" }),
-   bg: (v) => ({ 'background': v }),
-   p: (v) => ({ "padding": isStr(v, 8 * v) }),
+   bgimage: (v) => ({ backgroundImage: `url(${v})`, backgroundSize: "cover", backgroundRepeat: "no-repeat" }),
+   bg: (v) => ({ background: v }),
+   p: (v) => ({ padding: isStr(v, 8 * v) }),
    pt: (v) => ({ paddingTop: isStr(v, 8 * v) }),
    pr: (v) => ({ paddingRight: isStr(v, 8 * v) }),
    pb: (v) => ({ paddingBottom: isStr(v, 8 * v) }),
@@ -28,8 +28,8 @@ const aliases: OptionAliases<Aliases> = {
    flexRow: (v) => (v ? { flexDirection: "row" } : {}),
    flexColumn: (v) => (v ? { flexDirection: "column" } : {}),
    flexWraped: (v) => (v ? { flexWrap: "wrap" } : {}),
-   direction: (v) => (v === 'row' || v === 'column' ? { "flex-direction": v } : { direction: v }),
-   gap: (v) => ({ "gap": isStr(v, 8 * v) }),
+   direction: (v) => (v === 'row' || v === 'column' ? { flexDirection: v } : { direction: v }),
+   gap: (v) => ({ gap: isStr(v, 8 * v) }),
 };
 
 export default aliases
