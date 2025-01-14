@@ -123,6 +123,7 @@ const Transition = ({ children, open, ...props }: TransitionProps) => {
     let classname = `${cls.classname} trans-${id} trans-${(open ? "open" : "close")} trans-state-${transitionState}`
     const child = cloneElement(first, { className: classname })
     if (rendered) return child
+    if (!rendered && disableInitialTransition && open) return child
 
     return (
         <Tag
