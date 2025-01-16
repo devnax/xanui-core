@@ -58,6 +58,7 @@ const Transition = ({ children, open, ...props }: TransitionProps) => {
 
     let from = (variant as any).from
     let to = (variant as any).to
+
     const [_css, setCss] = useState(open ? to : from)
 
     useEffect(() => {
@@ -114,7 +115,7 @@ const Transition = ({ children, open, ...props }: TransitionProps) => {
                 setCss(open ? to : from)
             }
         }
-    }, [rendered, open])
+    }, [rendered, open, JSON.stringify(from), JSON.stringify(to)])
 
     let _: any = {}
     if (rendered) {

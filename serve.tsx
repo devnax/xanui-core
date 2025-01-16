@@ -20,10 +20,12 @@ const ThemeBox = () => {
 
 const Trans = () => {
   const theme = useTheme()
+  const [v, setV] = React.useState<any>('zoom')
   const [open, setOpen] = React.useState(true)
   return (
     <Tag>
       <button onClick={() => setOpen(!open)}>Click</button>
+      <button onClick={() => setV(v === 'zoom' ? { from: {}, to: { transform: "scale(.5)" } } : "zoom")}>change</button>
       <Transition open={open} variant="fade" >
         <Tag
           component="div"
@@ -32,7 +34,7 @@ const Trans = () => {
           radius={2}
           p={2}
         >
-          <Transition open={open} variant="zoom"  >
+          <Transition open={open} variant={v}  >
             <Tag
               component="div"
               width={100}
@@ -53,44 +55,6 @@ const Trans = () => {
 const App = () => {
   return (
     <ThemeProvider theme="light">
-
-      <Tag
-        id="asd"
-        sxr={{
-          width: 100,
-          height: 100,
-          bgcolor: "red",
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-          "& svg[class='circle-progress-svg']": {
-            zIndex: 1,
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            [`@keyframes $asde`]: {
-              "100%": {
-                transform: "rotate(360deg)"
-              }
-            },
-            "& .circle-progress-thumb": {
-              fill: "none",
-              strokeLinecap: "round",
-              [`@keyframes asdasd`]: {
-                "0%": { strokeDasharray: "1, 150", strokeDashoffset: 0 },
-                "50%": { strokeDasharray: "90, 150", strokeDashoffset: -35 },
-                "100%": { strokeDasharray: "90, 150", strokeDashoffset: -124 }
-              }
-            },
-            "& .circle-progress-track": {
-              fill: "none",
-            }
-          },
-          position: "relative"
-        }}
-      />
       <Tag
         flexBox
         flexRow
