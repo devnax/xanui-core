@@ -4,7 +4,7 @@ import { css } from '../css';
 import { classNames } from 'pretty-class';
 
 const useTagProps = <T extends TagComponentType = "div">({ sxr, sx, baseClass, classNames: clses, hover, ...props }: TagPropsRoot<T>): TagProps<T> => {
-   let _css: any = { ...props, ...sxr, ...sx }
+   let _css: any = { ...sxr, ...sx, ...props }
    if (hover) _css['&:hover'] = hover
    const style = css(_css, {
       skipProps: (prop, _val, dept): any => dept === 1 && !cssPropList[prop]
