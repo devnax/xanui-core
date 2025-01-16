@@ -52,7 +52,45 @@ const Trans = () => {
 
 const App = () => {
   return (
-    <ThemeProvider theme="light" >
+    <ThemeProvider theme="light">
+
+      <Tag
+        id="asd"
+        sxr={{
+          width: 100,
+          height: 100,
+          bgcolor: "red",
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          "& svg[class='circle-progress-svg']": {
+            zIndex: 1,
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            [`@keyframes $asde`]: {
+              "100%": {
+                transform: "rotate(360deg)"
+              }
+            },
+            "& .circle-progress-thumb": {
+              fill: "none",
+              strokeLinecap: "round",
+              [`@keyframes asdasd`]: {
+                "0%": { strokeDasharray: "1, 150", strokeDashoffset: 0 },
+                "50%": { strokeDasharray: "90, 150", strokeDashoffset: -35 },
+                "100%": { strokeDasharray: "90, 150", strokeDashoffset: -124 }
+              }
+            },
+            "& .circle-progress-track": {
+              fill: "none",
+            }
+          },
+          position: "relative"
+        }}
+      />
       <Tag
         flexBox
         flexRow
