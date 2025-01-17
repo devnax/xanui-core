@@ -131,7 +131,6 @@ const ThemeProvider = ({ children, theme, resetCss, scrollbarCss, isRootProvider
                direction={THEME.rtl ? "rtl" : "ltr"}
             >
                {children}
-               {renderIsRoot}
             </Tag>
          }
       </ThemeContex.Provider>
