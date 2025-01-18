@@ -162,6 +162,7 @@ const CSS_PROP_LIST: any = {
     perspectiveOrigin: 1,
     pointerEvents: 1,
     position: 1,
+    resize: 1,
     right: 1,
     textAlign: 1,
     textDecoration: 1,

@@ -22,16 +22,16 @@ export const css = (props: CSSProps, options?: CSSOptionProps) => {
         ...options,
         breakpoints,
         aliases,
-        getValue: (p: any, v: any, _c: any,) => {
+        getValue: (p: any, v: any, _c: any, dept) => {
             if (options?.getValue) {
-                let _val = options?.getValue(p, v, _c)
+                let _val = options?.getValue(p, v, _c, dept)
                 if (_val) return _val
             }
             return getValue(p, v, _c)
         },
-        getProps: (p: any, v: any, _c: any) => {
+        getProps: (p: any, v: any, _c: any, dept) => {
             if (options?.getProps) {
-                let _p = options?.getProps(p, v, _c)
+                let _p = options?.getProps(p, v, _c, dept)
                 if (_p) return _p
             }
             return getProps(p, v, _c)

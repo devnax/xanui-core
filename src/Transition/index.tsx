@@ -42,7 +42,7 @@ const Transition = ({ children, open, ...props }: TransitionProps) => {
     duration ??= 400
     variant ??= "fade"
 
-    const id = useId().replaceAll(":", "")
+    const id = useId().replace(/:/g, "")
     const [rendered, setRendered] = useState(false)
     const [initial, setInitial] = useState(false)
     const [transitionState, setTransitionState] = useState<TransitionState>(open ? (disableInitialTransition ? "opened" : "open") : "closed")

@@ -23,7 +23,7 @@ const useAnimation = ({ from, to, delay, ease, duration }: UseAnimationProps) =>
     let _delay = delay || 0;
     let _duration = duration || 600;
     let _ease = ease || "easeBounceOut"
-    const id = "anim" + useId().replaceAll(":", "")
+    const id = "anim" + useId().replace(/:/g, "")
     const anim = css({
         animationName: id,
         animationDelay: _delay + "ms",
