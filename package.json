@@ -1,11 +1,11 @@
 {
    "name": "@xanui/core",
-   "version": "1.0.15",
+   "version": "1.0.16",
    "description": "",
    "private": false,
    "type": "module",
-   "main": "./index.js",
-   "module": "./esm/index.js",
+   "main": "./cjs/index.js",
+   "module": "./index.js",
    "types": "./types/index.d.ts",
    "exports": {
       ".": {
