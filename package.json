@@ -1,6 +1,6 @@
 {
    "name": "@xanui/core",
-   "version": "1.0.16",
+   "version": "1.0.21",
    "description": "",
    "private": false,
    "type": "module",
@@ -13,9 +13,8 @@
          "import": "./index.js",
          "require": "./cjs/index.js"
       },
-      "./types/*": "./types/*.d.ts",
-      "./cjs/*": "./cjs/*.js",
       "./*": {
+         "types": "./types/*.d.ts",
          "import": "./*.js",
          "require": "./cjs/*.js"
       }
