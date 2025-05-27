@@ -1,28 +1,29 @@
 {
    "name": "@xanui/core",
-   "version": "1.0.22",
+   "version": "1.1.0",
    "description": "",
    "private": false,
-   "type": "module",
-   "main": "./cjs/index.js",
+   "main": "./index.js",
    "module": "./index.js",
-   "types": "./types/index.d.ts",
+   "types": "./index.d.ts",
+   "type": "module",
+   "sideEffects": false,
    "scripts": {
       "start": "makepack start",
       "build": "makepack build",
-      "build:publish": "makepack publish"
+      "release": "makepack release"
    },
    "dependencies": {
       "oncss": "^1.1.14",
-      "pretty-class": "^1.0.2",
+      "pretty-class": "^1.0.4",
       "react": "^19.0.0",
       "react-dom": "^19.0.0",
-      "react-state-bucket": "^1.1.6"
+      "react-state-bucket": "^1.1.8"
    },
    "devDependencies": {
       "@types/react": "^19.0.2",
       "@types/react-dom": "^19.0.2",
-      "makepack": "^1.5.24",
+      "makepack": "^1.6.4",
       "typescript": "^4.9.5"
    },
    "keywords": []
