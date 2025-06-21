@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { BreakpointCtx } from "."
+import { BreakpointCtx } from "./BreakpointProvider"
 import isWindow from "../isWindow"
 import { breakpoints } from "../css"
 import { BreakpointKeys } from "../css/types"

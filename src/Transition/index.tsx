@@ -1,4 +1,3 @@
-'use client'
 import React, { ReactElement, cloneElement, Children, useState, useEffect, useId } from 'react';
 import Tag from '../Tag';
 import { animationEases } from '../useAnimation';
