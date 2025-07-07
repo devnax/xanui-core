@@ -15,7 +15,7 @@ export type TagPropsRoot<T extends TagComponentType = 'div'> = TagProps<T> & {
 }
 
 
-interface TagCSSProperties {
+export interface TagCSSProperties {
     alignContent: CSSValueType<"alignContent">;
     alignItems: CSSValueType<"alignItems">;
     alignSelf: CSSValueType<"alignSelf">;
