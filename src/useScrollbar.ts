@@ -1,4 +1,3 @@
-"use client"
 import { getTheme } from './theme'
 import { css } from './css'
 
