@@ -5,13 +5,14 @@ import createThemeSwitcher from './createThemeSwitcher'
 import { getTheme, useTheme } from './core'
 export type { ThemeProviderProps } from './ThemeProvider'
 
+createTheme("light", { colors: lightColorPallete })
+createTheme("dark", { colors: darkColorPallete })
+
 export {
     ThemeProvider,
     createThemeSwitcher,
+    createTheme,
     getTheme,
     useTheme
 }
-
-createTheme("light", { colors: lightColorPallete })
-createTheme("dark", { colors: darkColorPallete })
 

@@ -4,10 +4,11 @@ import useAnimation from './useAnimation'
 import useColorTemplate from './useColorTemplate'
 import useBreakpoint from './breakpoint/useBreakpoint'
 import useBreakpointProps from './breakpoint/useBreakpointProps'
-import ServerStyleTags from './ServerStyleTags'
+import RenderServerStyles from './RenderServerStyles'
 import isWindow from './isWindow'
 import useInterface from './useInterface'
 import Transition from './Transition'
+import useScrollbar from './useScrollbar'
 
 export * from './css'
 export * from "./theme"
@@ -26,9 +27,10 @@ export {
     useAnimation,
     Transition,
     useColorTemplate,
-    ServerStyleTags,
+    RenderServerStyles,
     useBreakpoint,
     useBreakpointProps,
     isWindow,
-    useInterface
+    useInterface,
+    useScrollbar
 }

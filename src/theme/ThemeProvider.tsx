@@ -6,65 +6,38 @@ import { BreakpointProvider } from "../breakpoint"
 import { ThemeContex, ThemeFactory } from "./core"
 import ThemeCssVars from "./ThemeCssVars"
 import { css } from "../css"
+import useScrollbar from "../useScrollbar"
 
 export type ThemeProviderProps<T extends TagComponentType = 'div'> = TagProps<T> & {
    theme: string;
-   resetCss?: boolean;
-   scrollbarCss?: boolean;
+   applyScrollbarCss?: boolean;
    isRootProvider?: boolean;
    renderIsRoot?: React.ReactElement;
 }
 
-const ThemeProvider = ({ children, theme, resetCss, scrollbarCss, isRootProvider, renderIsRoot, ...props }: ThemeProviderProps) => {
+const ThemeProvider = ({ children, theme, applyScrollbarCss, isRootProvider, renderIsRoot, ...props }: ThemeProviderProps) => {
    const THEME = ThemeFactory.get(theme) as ThemeOptions
    if (!THEME) throw new Error(`Invalid theme name provided: ${theme}`)
-   resetCss ??= true
-   scrollbarCss ??= true
+   applyScrollbarCss ??= true
 
    React.useMemo(() => {
-      if (!!Object.keys(THEME.globalStyle).length) {
-         css({
-            "@global": THEME.globalStyle
-         })
-      }
+      const root_cls = `.xui-${theme}-theme-root`
+      let gkeys = Object.keys(THEME.globalStyle || {})
+      let gstyles: any = {}
+      gkeys.forEach((key) => {
+         gstyles[`${root_cls} ${key}`] = THEME.globalStyle[key as any]
+      })
 
       css({
          "@global": {
-            [`.xui-${theme}-theme-root`]: ThemeCssVars(THEME)
+            ...gstyles,
+            [root_cls]: ThemeCssVars(THEME)
          }
       })
 
-      if (scrollbarCss && typeof document !== 'undefined') {
-         let thumbSize = 10
-         let thumbColor = THEME.colors.divider
-         let trackColor = THEME.colors.background.secondary
-         css({
-            "@global": {
-               "*": {
-                  scrollbarWidth: "thin",
-                  scrollbarColor: `${thumbColor} ${trackColor}`,
-               },
-               "::-webkit-scrollbar": {
-                  width: thumbSize,
-                  height: thumbSize,
-               },
-               "::-webkit-scrollbar-thumb": {
-                  backgroundColor: thumbColor,
-                  borderRadius: "5px",
-                  border: "2px solid #f4f4f4",
-               },
-               "::-webkit-scrollbar-thumb:hover": {
-                  backgroundColor: thumbColor,
-               },
-               "::-webkit-scrollbar-track": {
-                  backgroundColor: trackColor,
-                  borderRadius: "5px",
-               },
-            }
-         })
-      }
+      applyScrollbarCss && useScrollbar(theme, root_cls)
 
-      resetCss && css({
+      css({
          "@global": {
             "*": {
                m: 0,

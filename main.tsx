@@ -53,8 +53,10 @@ const Trans = () => {
 
 
 const App = () => {
+  const themeSwitcher = useThemeSwitcher()
   return (
-    <ThemeProvider theme="light">
+    <ThemeProvider theme={themeSwitcher.name}>
+      <ThemeBox />
       <Tag
         flexBox
         flexRow
