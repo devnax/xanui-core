@@ -2,8 +2,8 @@ import { createBucket } from "react-state-bucket"
 import { getTheme } from "./core"
 
 export type ThemeSwitcherOption = {
-   store: "memory" | "session" | "local",
-   onChange: (theme: string) => void
+   store?: "memory" | "session" | "local",
+   onChange?: (theme: string) => void
 }
 
 const createThemeSwitcher = (defaultTheme: string, option?: ThemeSwitcherOption) => {
