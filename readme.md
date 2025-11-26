@@ -28,7 +28,7 @@ createTheme('brand', {
 	},
 })
 
-const useThemeSwitcher = createThemeSwitcher('brand')
+const useThemeSwitcher = createThemeSwitcher('brand', ThemeSwitcherOption)
 
 export const App = () => {
 	const { name, change } = useThemeSwitcher()

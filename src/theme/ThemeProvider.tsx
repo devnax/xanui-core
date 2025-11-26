@@ -7,6 +7,8 @@ import { ThemeContex, ThemeFactory } from "./core"
 import ThemeCssVars from "./ThemeCssVars"
 import { css } from "../css"
 import useScrollbar from "../useScrollbar"
+import { createTheme } from "./createTheme"
+import { darkColorPallete, lightColorPallete } from "./ThemeDefaultOptions"
 
 export type ThemeProviderProps<T extends TagComponentType = 'div'> = TagProps<T> & {
    theme: string;
@@ -15,7 +17,11 @@ export type ThemeProviderProps<T extends TagComponentType = 'div'> = TagProps<T>
    renderIsRoot?: React.ReactElement;
 }
 
+createTheme("light", { colors: lightColorPallete })
+createTheme("dark", { colors: darkColorPallete })
+
 const ThemeProvider = ({ children, theme, applyScrollbarCss, isRootProvider, renderIsRoot, ...props }: ThemeProviderProps) => {
+
    const THEME = ThemeFactory.get(theme) as ThemeOptions
    if (!THEME) throw new Error(`Invalid theme name provided: ${theme}`)
    applyScrollbarCss ??= true
