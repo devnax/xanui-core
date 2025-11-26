@@ -11,7 +11,7 @@ const createThemeSwitcher = (defaultTheme: string, option?: ThemeSwitcherOption)
    const useThemeState = createBucket({ name: defaultTheme }, {
       store: option?.store || "memory",
       onChange: (key, value) => {
-         option?.onChange(value)
+         option?.onChange && option?.onChange(value)
       }
    })
 
