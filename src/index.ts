@@ -10,7 +10,7 @@ import useInterface from './hooks/useInterface'
 import Transition from './Transition'
 import useScrollbar from './hooks/useScrollbar'
 import AppRoot from './AppRoot'
-import usePortal from './usePortal'
+import usePortal from './hooks/usePortal'
 import type { AppRootProps } from './AppRoot'
 export * from "./AppRoot"
 export * from './css'

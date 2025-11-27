@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import { createRoot } from "react-dom/client";
-import { ThemeProvider, useTheme } from "./theme";
+import { ThemeProvider, useTheme } from "../theme";
 
 export function usePortal(children: React.ReactNode) {
    const [initialized, setInitialized] = React.useState(false);
