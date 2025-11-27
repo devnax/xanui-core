@@ -1,52 +1,48 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useState, useCallback } from "react";
 import isWindow from "../isWindow";
 import { breakpoints } from "../css";
 import { BreakpointKeys } from "../css/types";
 
-export const BreakpointCtx = React.createContext<BreakpointKeys>("xl")
+export const BreakpointCtx = React.createContext<BreakpointKeys>("xs");
 
+/**
+ * SSR-safe breakpoint detection
+ */
 const getKey = (): BreakpointKeys => {
-    const isWin = isWindow()
-    if (isWin) {
-        const width = window.innerWidth
-        if (width < breakpoints.sm) {
-            return 'xs'
-        } else if (width > breakpoints.xs && width < breakpoints.md) {
-            return 'sm'
-        } else if (width > breakpoints.sm && width < breakpoints.lg) {
-            return 'md'
-        } else if (width > breakpoints.md && width < breakpoints.xl) {
-            return 'lg'
-        } else {
-            return 'xl'
-        }
-    } else {
-        return 'xl'
+    if (!isWindow()) {
+        // Server fallback (mobile-first)
+        return "xs";
     }
-}
+
+    const width = window.innerWidth;
+
+    if (width < breakpoints.sm) return "xs";
+    if (width < breakpoints.md) return "sm";
+    if (width < breakpoints.lg) return "md";
+    if (width < breakpoints.xl) return "lg";
+    return "xl";
+};
 
 export const BreakpointProvider = ({ children }: { children?: ReactNode }) => {
-    const [current, setCurrent] = useState<BreakpointKeys>(getKey)
+    const [current, setCurrent] = useState<BreakpointKeys>(getKey);
 
-    const handler = () => {
-        let c = getKey()
-        if (current !== c) {
-            setCurrent(c)
-        }
-    }
+    const handler = useCallback(() => {
+        const newKey = getKey();
+        setCurrent(prev => (prev === newKey ? prev : newKey));
+    }, []);
 
     React.useEffect(() => {
-        window.removeEventListener("resize", handler)
-        window.addEventListener("resize", handler)
-        handler()
-        return () => {
-            window.removeEventListener("resize", handler)
-        }
-    }, [current])
+        if (!isWindow()) return;
+
+        window.addEventListener("resize", handler);
+        handler(); // detect on mount
+
+        return () => window.removeEventListener("resize", handler);
+    }, [handler]);
 
     return (
         <BreakpointCtx.Provider value={current}>
             {children}
         </BreakpointCtx.Provider>
-    )
-}
+    );
+};

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { use } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createThemeSwitcher, ThemeProvider, useTheme } from './src/theme'
 import { Tag, Transition, useBreakpoint } from './src';
@@ -7,6 +7,8 @@ const useThemeSwitcher = createThemeSwitcher("light")
 
 const ThemeBox = () => {
   const themeSwitcher = useThemeSwitcher()
+  const bp = useBreakpoint()
+  console.log(bp.isDown("md"));
 
   return (
     <button

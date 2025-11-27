@@ -5,17 +5,20 @@ import { breakpoints } from "../css"
 import { BreakpointKeys } from "../css/types"
 
 const useBreakpoint = () => {
-   const val = useContext(BreakpointCtx)
-   const isWin = isWindow()
-   const bp = {
-      value: val,
-      is: (key: BreakpointKeys) => val === key,
-      isDown: (key: BreakpointKeys) => isWin ? window.innerWidth < breakpoints[key] : false,
-      isUp: (key: BreakpointKeys) => isWin ? window.innerWidth > breakpoints[key] : false,
-      isOrDown: (key: BreakpointKeys) => bp.is(key) || bp.isDown(key),
-      isOrUp: (key: BreakpointKeys) => bp.is(key) || bp.isUp(key)
+   const value = useContext(BreakpointCtx)
+   const getWidth = () => isWindow() ? window.innerWidth : 99999
+   const is = (key: BreakpointKeys) => value === key
+   const isUp = (key: BreakpointKeys) => getWidth() >= breakpoints[key]
+   const isDown = (key: BreakpointKeys) => getWidth() < breakpoints[key]
+
+   return {
+      value,
+      is,
+      isUp,
+      isDown,
+      isOrUp: (key: BreakpointKeys) => is(key) || isUp(key),
+      isOrDown: (key: BreakpointKeys) => is(key) || isDown(key)
    }
-   return bp
 }
 
 export default useBreakpoint
