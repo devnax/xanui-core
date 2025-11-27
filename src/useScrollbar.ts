@@ -1,14 +1,25 @@
 import { getTheme } from './theme'
 import { css } from './css'
 
-const useScrollbar = (themeName: string, root_cls?: string): string => {
+export type UseScrollbarOption = {
+   themeName: string
+   root_cls?: string;
+   thumbSize?: number
+   thumbColor?: string
+   trackColor?: string
+}
+
+type ClassName = string
+
+const useScrollbar = ({ themeName, root_cls, thumbSize, thumbColor, trackColor }: UseScrollbarOption): ClassName => {
    const theme = getTheme(themeName)
    if (!theme) throw new Error(`theme "${themeName}" not found for ScrollbarCss`);
 
-   let thumbSize = 10
-   let thumbColor = theme.colors.text.secondary
-   let trackColor = theme.colors.divider
+   thumbSize = thumbSize || 10
+   thumbColor = thumbColor || theme.colors.text.secondary
+   trackColor = trackColor || theme.colors.divider
    root_cls = root_cls || ""
+
    let clss = {
       "*": root_cls ? `${root_cls} *` : `*`,
       "scrollbar": root_cls ? `${root_cls}::-webkit-scrollbar, ${root_cls} ::-webkit-scrollbar` : `::-webkit-scrollbar`,

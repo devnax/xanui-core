@@ -19,7 +19,7 @@
 
 ### Automatic (inside ThemeProvider)
 
-`ThemeProvider` calls `useScrollbar(theme, rootCls)` for you when `applyScrollbarCss` is `true`, so most apps already get the styling.
+`ThemeProvider` calls `useScrollbar(UseScrollbarOption)` for you when `applyScrollbarCss` is `true`, so most apps already get the styling.
 
 ### Manual Invocation
 
@@ -27,12 +27,13 @@
 import { useScrollbar } from 'xanui-core'
 
 export const ScrollArea = ({ children }) => {
-  React.useEffect(() => {
-    useScrollbar('light', '.scroll-area')
-  }, [])
+    const classname = useScrollbar({
+      theme: "light"
+    })
+  
 
   return (
-    <div className="scroll-area" style={{ maxHeight: 320, overflowY: 'auto' }}>
+    <div className={classname} style={{ maxHeight: 320, overflowY: 'auto' }}>
       {children}
     </div>
   )

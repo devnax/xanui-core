@@ -41,7 +41,10 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ap
          }
       })
 
-      applyScrollbarCss && useScrollbar(theme, root_cls)
+      applyScrollbarCss && useScrollbar({
+         themeName: theme,
+         root_cls: root_cls
+      })
 
       css({
          "@global": {
