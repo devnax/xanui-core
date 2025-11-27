@@ -20,7 +20,7 @@ export type ThemeProviderProps<T extends TagComponentType = 'div'> = TagProps<T>
 createTheme("light", { colors: lightColorPallete })
 createTheme("dark", { colors: darkColorPallete })
 
-const ThemeProvider = ({ children, theme, applyScrollbarCss, isRootProvider, renderIsRoot, ...props }: ThemeProviderProps) => {
+const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, applyScrollbarCss, isRootProvider, renderIsRoot, ...props }: ThemeProviderProps<T>) => {
 
    const THEME = ThemeFactory.get(theme) as ThemeOptions
    if (!THEME) throw new Error(`Invalid theme name provided: ${theme}`)

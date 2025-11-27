@@ -1,12 +1,13 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { createThemeSwitcher, ThemeProvider, useTheme } from './src/theme'
-import { Tag, Transition } from './src';
+import { Tag, Transition, useBreakpoint } from './src';
 
 const useThemeSwitcher = createThemeSwitcher("light")
 
 const ThemeBox = () => {
   const themeSwitcher = useThemeSwitcher()
+
   return (
     <button
       onClick={() => {
@@ -55,7 +56,7 @@ const Trans = () => {
 const App = () => {
   const themeSwitcher = useThemeSwitcher()
   return (
-    <ThemeProvider theme={themeSwitcher.name}>
+    <ThemeProvider component='body' isRootProvider theme={themeSwitcher.name}>
       <ThemeBox />
       <Tag
         flexBox

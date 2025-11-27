@@ -18,8 +18,8 @@ export const darkColorPallete = {
         secondary: "#C4CDD5",
     },
     background: {
-        primary: "#272727",
-        secondary: "#1E1E1E",
+        primary: "#141A21",
+        secondary: "#1C252E",
     },
     divider: "#3D3D3D"
 }
