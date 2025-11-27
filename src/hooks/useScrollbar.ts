@@ -1,5 +1,6 @@
 import { getTheme } from '../theme'
 import { css } from '../css'
+import { ThemeOptions } from '../theme/types';
 
 export type UseScrollbarOption = {
    themeName: string
@@ -12,8 +13,11 @@ export type UseScrollbarOption = {
 type ClassName = string
 
 const useScrollbar = ({ themeName, root_cls, thumbSize, thumbColor, trackColor }: UseScrollbarOption): ClassName => {
-   const theme = getTheme(themeName)
-   if (!theme) throw new Error(`theme "${themeName}" not found for ScrollbarCss`);
+   let theme = getTheme(themeName)
+   if (!theme) {
+      console.error(`useScrollbar: The theme '${themeName}' is not defined. Please make sure to use a valid theme name.`)
+      theme = getTheme("light") as ThemeOptions
+   }
 
    thumbSize = thumbSize || 10
    thumbColor = thumbColor || theme.colors.text.secondary

@@ -6,7 +6,8 @@ import { breakpoints } from "../css"
 
 export const createTheme = (name: string, options: ThemeOptionInput, darkMode?: boolean): ThemeOptions => {
    if (ThemeFactory.has(name)) {
-      throw new Error(`theme "${name}" already exists!`);
+      console.error(`createTheme: The theme '${name}' is already defined. Please choose a different name for the theme.`)
+      return ThemeFactory.get(name) as ThemeOptions
    }
 
    let theme: any = mergeObject(defaultThemeOption, {

@@ -12,9 +12,11 @@ export type ThemeProviderProps<T extends TagComponentType = 'div'> = TagProps<T>
 
 
 const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ...props }: ThemeProviderProps<T>) => {
-
-   const THEME = ThemeFactory.get(theme) as ThemeOptions
-   if (!THEME) throw new Error(`Invalid theme name provided: ${theme}`)
+   let THEME = ThemeFactory.get(theme) as ThemeOptions
+   if (!THEME) {
+      console.error(`ThemeProvider: The theme '${theme}' is not defined. Please make sure to use a valid theme name.`)
+      THEME = ThemeFactory.get("default") as ThemeOptions
+   }
 
    React.useMemo(() => {
       const root_cls = `.xui-${theme}-theme-root`
