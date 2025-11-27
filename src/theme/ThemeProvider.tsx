@@ -15,7 +15,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ..
    let THEME = ThemeFactory.get(theme) as ThemeOptions
    if (!THEME) {
       console.error(`ThemeProvider: The theme '${theme}' is not defined. Please make sure to use a valid theme name.`)
-      THEME = ThemeFactory.get("default") as ThemeOptions
+      THEME = ThemeFactory.get("light") as ThemeOptions
    }
 
    React.useMemo(() => {
