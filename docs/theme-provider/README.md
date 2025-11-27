@@ -1,45 +1,46 @@
 # ThemeProvider
 
-`ThemeProvider` attaches a named theme created via `createTheme` to the React tree, pushes CSS variables and global resets, and (optionally) wraps children with `BreakpointProvider` so responsive hooks can function without extra boilerplate.
+`ThemeProvider` binds a named theme (registered via `createTheme`) to a subtree. It exposes the active theme through context, injects theme CSS variables, and applies baseline typography/background styles so descendants automatically render with the correct look-and-feel.
 
 ## Props
 
-| Prop                | Type                 | Default     | Description                                                                                                                       |
-| ------------------- | -------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `theme`             | `string`             | —           | Registered theme name. Throws if the theme was not created with `createTheme`.                                                    |
-| `applyScrollbarCss` | `boolean`            | `true`      | When `true`, injects themed scrollbar styles via `useScrollbar`. Set to `false` if the host app manages scrollbars independently. |
-| `isRootProvider`    | `boolean`            | `false`     | Wraps children with `BreakpointProvider` and enforces global typography, background, and layout defaults. Useful at the app root. |
-| `renderIsRoot`      | `React.ReactElement` | `undefined` | Rendered next to children when `isRootProvider` is `true` (e.g., for portals such as modals).                                     |
-| `...tagProps`       | `TagProps`           | —           | Any prop accepted by `Tag` (including `sx`, `px`, `direction`, native DOM attributes).                                            |
+| Prop          | Type       | Default | Description                                                                                            |
+| ------------- | ---------- | ------- | ------------------------------------------------------------------------------------------------------ |
+| `theme`       | `string`   | —       | Theme name that must exist in `ThemeFactory`. Throws if the theme is missing.                          |
+| `...tagProps` | `TagProps` | `—`     | Any prop accepted by `Tag` (e.g., `component`, `px`, `gap`, DOM attributes). They augment the wrapper. |
+
+### Automatic styling
+
+- Enforces `minHeight="100%"`, and pulls body typography defaults (`fontFamily`, `fontSize`, `fontWeight`, `lineHeight`) from the selected theme.
+- Sets `bgcolor` to `theme.colors.background.primary` and `direction` to `rtl` when the theme is flagged RTL.
+- Generates a deterministic class name (`xui-${theme}-theme-root`) used by CSS variables and helpers like `themeRootClass`.
+- Pushes each selector from `theme.globalStyle` into the global stylesheet under that class and injects the computed CSS variables via `ThemeCssVars`.
 
 ## Usage Examples
 
-### Root-Level Provider with Scrollbar Styling
+### Minimal App Shell
 
 ```tsx
 import { ThemeProvider } from 'xanui-core'
 
 export const AppShell = ({ children }) => (
-  <ThemeProvider
-    theme="light"
-    isRootProvider
-    renderIsRoot={<div id="modal-root" />}
-  >
+  <ThemeProvider theme="light" component="main">
     {children}
   </ThemeProvider>
 )
 ```
 
-### Nested Provider Without Breakpoint Context
+### Nesting for Overlays
 
 ```tsx
-<ThemeProvider
-  theme="brand-dark"
-  applyScrollbarCss={false}
-  px={20}
-  py={16}
-  radius={12}
->
-  <SidebarContent />
+<ThemeProvider theme="light">
+  <AppContent />
+  <ThemeProvider theme="brand" component="aside" px={24} py={16} radius={12} shadow={3}>
+    <ControlPanel />
+  </ThemeProvider>
 </ThemeProvider>
 ```
+
+### Pair with `AppRoot`
+
+`AppRoot` wraps `ThemeProvider` with global resets and the `BreakpointProvider`. Prefer it at the document root, then rely on `ThemeProvider` for nested theme islands.

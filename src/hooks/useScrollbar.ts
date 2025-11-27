@@ -1,5 +1,5 @@
-import { getTheme } from './theme'
-import { css } from './css'
+import { getTheme } from '../theme'
+import { css } from '../css'
 
 export type UseScrollbarOption = {
    themeName: string

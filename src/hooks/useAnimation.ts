@@ -1,6 +1,6 @@
-import { css } from './css'
+import { css } from '../css'
 import { useId } from 'react'
-import { CSSProps } from './css/types'
+import { CSSProps } from '../css/types'
 
 export const animationEases = {
     easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",

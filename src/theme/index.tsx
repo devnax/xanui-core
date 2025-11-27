@@ -5,6 +5,8 @@ import { getTheme, useTheme } from './core'
 export type { ThemeProviderProps } from './ThemeProvider'
 export type { ThemeSwitcherOption } from './createThemeSwitcher'
 
+export const themeRootClass = (theme: string) => `.xui-${theme}-theme-root`
+
 export {
     ThemeProvider,
     createThemeSwitcher,

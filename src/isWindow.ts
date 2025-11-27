@@ -1,3 +1,3 @@
 
-const isWindow = (): Window | void => typeof window !== 'undefined' ? window : undefined
+const isWindow = () => typeof window !== 'undefined'
 export default isWindow

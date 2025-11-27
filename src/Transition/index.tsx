@@ -1,6 +1,6 @@
 import React, { ReactElement, cloneElement, Children, useState, useEffect, useId } from 'react';
 import Tag from '../Tag';
-import { animationEases } from '../useAnimation';
+import { animationEases } from '../hooks/useAnimation';
 import { css } from '../css';
 import { formatCSSProp } from 'oncss';
 import { CSSProps } from '../css/types';

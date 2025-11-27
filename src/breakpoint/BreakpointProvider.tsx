@@ -24,7 +24,7 @@ const getKey = (): BreakpointKeys => {
 };
 
 export const BreakpointProvider = ({ children }: { children?: ReactNode }) => {
-    const [current, setCurrent] = useState<BreakpointKeys>(getKey);
+    const [current, setCurrent] = useState<BreakpointKeys>("xs");
 
     const handler = useCallback(() => {
         const newKey = getKey();
@@ -32,11 +32,8 @@ export const BreakpointProvider = ({ children }: { children?: ReactNode }) => {
     }, []);
 
     React.useEffect(() => {
-        if (!isWindow()) return;
-
         window.addEventListener("resize", handler);
         handler(); // detect on mount
-
         return () => window.removeEventListener("resize", handler);
     }, [handler]);
 

@@ -2,22 +2,42 @@ import React, { use } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createThemeSwitcher, ThemeProvider, useTheme } from './src/theme'
 import { Tag, Transition, useBreakpoint } from './src';
+import AppRoot from './src/AppRoot';
+import usePortal from './src/usePortal';
 
 const useThemeSwitcher = createThemeSwitcher("light")
 
 const ThemeBox = () => {
   const themeSwitcher = useThemeSwitcher()
   const bp = useBreakpoint()
-  console.log(bp.isDown("md"));
+  const [count, setCount] = React.useState(0);
+
+  const portal = usePortal(
+    <Tag
+      position="fixed"
+      bottom={10}
+      right={10}
+      p={2}
+      bgcolor="rgba(0,0,0,.5)"
+      color="#fff"
+      radius={2}
+    >
+      This is portal content {count}
+    </Tag>
+  )
 
   return (
-    <button
-      onClick={() => {
-        themeSwitcher.change(themeSwitcher.name === 'light' ? "dark" : "light")
-      }}
-    >
-      change
-    </button>
+    <div>
+      <button onClick={() => setCount(count + 1)}>Increase Count {count}</button>
+      <button onClick={() => portal.isMount() ? portal.unmount() : portal.mount()}>Mount Portal</button>
+      <button
+        onClick={() => {
+          themeSwitcher.change(themeSwitcher.name === 'light' ? "dark" : "light")
+        }}
+      >
+        change
+      </button>
+    </div>
   )
 }
 
@@ -57,8 +77,9 @@ const Trans = () => {
 
 const App = () => {
   const themeSwitcher = useThemeSwitcher()
+
   return (
-    <ThemeProvider component='body' isRootProvider theme={themeSwitcher.name}>
+    <AppRoot component='body' theme={themeSwitcher.name}>
       <ThemeBox />
       <Tag
         flexBox
@@ -90,7 +111,7 @@ const App = () => {
           ))
         }
       </Tag>
-    </ThemeProvider>
+    </AppRoot>
   );
 }
 const rootEle = document.getElementById('root')

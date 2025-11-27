@@ -1,28 +1,36 @@
 import Tag from './Tag'
 import useTagProps from './Tag/useTagProps'
-import useAnimation from './useAnimation'
-import useColorTemplate from './useColorTemplate'
+import useAnimation from './hooks/useAnimation'
+import useColorTemplate from './hooks/useColorTemplate'
 import useBreakpoint from './breakpoint/useBreakpoint'
 import useBreakpointProps from './breakpoint/useBreakpointProps'
 import RenderServerStyles from './RenderServerStyles'
 import isWindow from './isWindow'
-import useInterface from './useInterface'
+import useInterface from './hooks/useInterface'
 import Transition from './Transition'
-import useScrollbar from './useScrollbar'
-
+import useScrollbar from './hooks/useScrollbar'
+import AppRoot from './AppRoot'
+import usePortal from './usePortal'
+import type { AppRootProps } from './AppRoot'
+export * from "./AppRoot"
 export * from './css'
 export * from "./theme"
 export * from './css/types'
 export * from './Tag/types'
 export * from './theme/types'
-export * from './useColorTemplate'
-export * from './useAnimation'
+export * from './hooks/useColorTemplate'
+export * from './hooks/useAnimation'
 export * from './Transition'
 export * from './Tag/types'
 export * from './breakpoint/useBreakpointProps'
 
+export type {
+    AppRootProps
+}
 export {
+    AppRoot,
     Tag,
+    usePortal,
     useTagProps,
     useAnimation,
     Transition,
