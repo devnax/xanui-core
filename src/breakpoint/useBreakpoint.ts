@@ -10,8 +10,8 @@ const useBreakpoint = () => {
    const bp = {
       value: val,
       is: (key: BreakpointKeys) => val === key,
-      isDown: (key: BreakpointKeys) => isWin && window.innerWidth < breakpoints[key],
-      isUp: (key: BreakpointKeys) => isWin && window.innerWidth > breakpoints[key],
+      isDown: (key: BreakpointKeys) => isWin ? window.innerWidth < breakpoints[key] : false,
+      isUp: (key: BreakpointKeys) => isWin ? window.innerWidth > breakpoints[key] : false,
       isOrDown: (key: BreakpointKeys) => bp.is(key) || bp.isDown(key),
       isOrUp: (key: BreakpointKeys) => bp.is(key) || bp.isUp(key)
    }
