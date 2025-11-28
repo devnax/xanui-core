@@ -23,9 +23,6 @@ export function usePortal(children: React.ReactNode, options?: UsePortalOptions)
 
    const container = () => {
       const rootEle = appRootElement();
-      if (options?.container && !rootEle.contains(options.container)) {
-         throw new Error(`Provided container is not a child of AppRoot. Please ensure that the container is within the AppRoot component.`);
-      }
       const container = options?.container || rootEle
       if (!container) throw new Error(`Container not found for portal. Please ensure that AppRoot is present in the application tree.`);
       return container;
