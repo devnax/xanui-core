@@ -9,7 +9,7 @@ import isWindow from './isWindow'
 import useInterface from './hooks/useInterface'
 import Transition from './Transition'
 import useScrollbar from './hooks/useScrollbar'
-import AppRoot from './AppRoot'
+import AppRoot, { appRootElement } from './AppRoot'
 import usePortal from './hooks/usePortal'
 import type { AppRootProps } from './AppRoot'
 export * from "./AppRoot"
@@ -29,6 +29,7 @@ export type {
 }
 export {
     AppRoot,
+    appRootElement,
     Tag,
     usePortal,
     useTagProps,

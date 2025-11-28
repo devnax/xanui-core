@@ -14,6 +14,9 @@ export type AppRootProps<T extends TagComponentType = "div"> = ThemeProviderProp
    noScrollbarCss?: boolean;
 }
 
+const appRootClassName = "xui-app-root"
+export const appRootElement = () => document.querySelector(`.${appRootClassName}`) as HTMLDivElement;
+
 const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children, noScrollbarCss, theme, ...props }: AppRootProps<T>, ref: React.Ref<any>) => {
    noScrollbarCss ??= false
 
@@ -65,7 +68,7 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
 
    useEffect(() => {
 
-      const root = document.querySelectorAll(`.xui-app-root`)
+      const root = document.querySelectorAll(`.${appRootClassName}`)
       if (!root || root.length > 1) {
          throw new Error("Multiple AppRoot detected in the application tree. Please ensure that there is only one AppRoot component wrapping your application.");
       }
@@ -85,7 +88,7 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
          ref={ref}
          theme={theme}
          {...props}
-         classNames={[`xui-app-root`]}
+         classNames={[appRootClassName]}
       >
          <BreakpointProvider>
             {children}

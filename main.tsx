@@ -24,7 +24,7 @@ const ThemeBox = () => {
     >
       This is portal content {count}
     </Tag>
-  )
+    , { autoMount: false })
 
   return (
     <div>

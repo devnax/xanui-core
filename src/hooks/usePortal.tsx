@@ -1,61 +1,74 @@
 import React, { useEffect, useMemo } from "react";
 import { createRoot } from "react-dom/client";
 import { ThemeProvider, useTheme } from "../theme";
+import { appRootElement } from "../AppRoot";
 
-export function usePortal(children: React.ReactNode) {
-   const [initialized, setInitialized] = React.useState(false);
+export type UsePortalOptions = {
+   container?: HTMLElement;
+   autoMount?: boolean;
+}
+
+export function usePortal(children: React.ReactNode, options?: UsePortalOptions) {
+   options = options || {};
+   if (options.autoMount === undefined) {
+      options.autoMount = true;
+   }
+   const [mounted, setMounted] = React.useState(options.autoMount);
    const theme = useTheme();
    const { el, root } = useMemo(() => {
       const el = document.createElement("div");
       const root = createRoot(el);
       return { el, root };
-   }, []);
+   }, [options.autoMount]);
 
-   const render = () => root.render(<ThemeProvider theme={theme.name}>{children}</ThemeProvider>)
    const container = () => {
-      const container = document.querySelector(`.xui-app-root`) as HTMLDivElement;
-      if (!container) {
-         throw new Error("No ThemeProvider found in the application tree. Please wrap your application with ThemeProvider to use usePortal hook.");
+      const rootEle = appRootElement();
+      if (options?.container && !rootEle.contains(options.container)) {
+         throw new Error(`Provided container is not a child of AppRoot. Please ensure that the container is within the AppRoot component.`);
       }
+      const container = options?.container || rootEle
+      if (!container) throw new Error(`Container not found for portal. Please ensure that AppRoot is present in the application tree.`);
       return container;
    }
-   const isContained = () => container().contains(el);
-   const append = () => {
-      if (!isContained()) {
-         container().appendChild(el);
+
+   const mount = () => {
+      const cont = container();
+      if (!cont.contains(el)) {
+         cont.appendChild(el);
       }
+      root.render(<ThemeProvider theme={theme.name}>{children}</ThemeProvider>)
    }
 
-   useEffect(() => {
-      if (initialized) {
-         if (isContained()) {
-            render()
-         }
-      } else {
-         append()
-         render()
-         setInitialized(true);
-      }
+   const unmount = () => {
+      root.render(null)
+      el.remove();
+   }
 
+
+   useEffect(() => {
+      if (mounted) {
+         mount()
+      } else {
+         unmount()
+      }
+   }, [mounted]);
+
+   useEffect(() => {
+      if (mounted) {
+         mount()
+      }
    }, [children]);
 
    useEffect(() => {
       return () => {
-         root.render(null)
-         el.remove();
+         unmount()
       };
    }, []);
 
    return {
-      isMount: () => document.body.contains(el),
-      mount: () => {
-         append()
-         render()
-      },
-      unmount: () => {
-         root.render(null);
-         el.remove();
-      }
+      isMount: () => mounted,
+      mount: () => setMounted(true),
+      unmount: () => setMounted(false)
    }
 }
 
