@@ -41,7 +41,7 @@ export function usePortal(children: React.ReactNode) {
          const isContained = document.body.contains(el);
          if (isContained) {
             root.unmount();
-            document.body.removeChild(el);
+            el?.remove();
          }
       };
    }, []);
@@ -57,7 +57,7 @@ export function usePortal(children: React.ReactNode) {
       },
       unmount: () => {
          if (document.body.contains(el)) {
-            document.body.removeChild(el);
+            el?.remove();
          }
          root.render(<></>);
       }

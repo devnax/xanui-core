@@ -4,7 +4,14 @@ import { ObjectType, ThemeOptions } from "./types"
 export const ThemeFactory = new Map<string, ThemeOptions>()
 export const ThemeContex = React.createContext("light")
 export const getTheme = (theme: string) => ThemeFactory.get(theme)
-export const useTheme = (): ThemeOptions => ThemeFactory.get(React.useContext(ThemeContex)) as any
+export const useTheme = (): ThemeOptions => {
+   const theme = ThemeFactory.get(React.useContext(ThemeContex)) as any
+   if (!theme) {
+      console.error("Theme not found, returning light theme as fallback")
+      return ThemeFactory.get("light") as any
+   }
+   return theme
+}
 
 export const mergeObject = (a: ObjectType, b: ObjectType) => {
    a = { ...a }
