@@ -64,6 +64,13 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
    }, [])
 
    useEffect(() => {
+
+      const root = document.querySelectorAll(`.xui-app-root`)
+      if (!root || root.length > 1) {
+         throw new Error("Multiple AppRoot detected in the application tree. Please ensure that there is only one AppRoot component wrapping your application.");
+      }
+
+
       // move oncss style tags to head
       if (typeof window === 'undefined') return;
       const head = document.getElementsByTagName('head')[0];

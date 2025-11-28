@@ -7,29 +7,32 @@ export function usePortal(children: React.ReactNode) {
    const theme = useTheme();
    const { el, root } = useMemo(() => {
       const el = document.createElement("div");
-      const root = createRoot(el); // React 18 root
+      const root = createRoot(el);
       return { el, root };
    }, []);
 
-   const render = () => {
-      root.render(<ThemeProvider theme={theme.name}>{children}</ThemeProvider>);
-   }
-
-   useEffect(() => {
+   const render = () => root.render(<ThemeProvider theme={theme.name}>{children}</ThemeProvider>)
+   const container = () => {
       const container = document.querySelector(`.xui-app-root`) as HTMLDivElement;
       if (!container) {
          throw new Error("No ThemeProvider found in the application tree. Please wrap your application with ThemeProvider to use usePortal hook.");
       }
-      const isContained = document.body.contains(el);
+      return container;
+   }
+   const isContained = () => container().contains(el);
+   const append = () => {
+      if (!isContained()) {
+         container().appendChild(el);
+      }
+   }
 
+   useEffect(() => {
       if (initialized) {
-         if (isContained) {
+         if (isContained()) {
             render()
          }
       } else {
-         if (!isContained) {
-            container.appendChild(el);
-         }
+         append()
          render()
          setInitialized(true);
       }
@@ -38,28 +41,20 @@ export function usePortal(children: React.ReactNode) {
 
    useEffect(() => {
       return () => {
-         const isContained = document.body.contains(el);
-         if (isContained) {
-            root.unmount();
-            el?.remove();
-         }
+         root.render(null)
+         el.remove();
       };
    }, []);
 
    return {
       isMount: () => document.body.contains(el),
       mount: () => {
-         const isContained = document.body.contains(el);
-         if (!isContained) {
-            document.body.appendChild(el);
-         }
+         append()
          render()
       },
       unmount: () => {
-         if (document.body.contains(el)) {
-            el?.remove();
-         }
-         root.render(<></>);
+         root.render(null);
+         el.remove();
       }
    }
 }

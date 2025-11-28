@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { createThemeSwitcher, ThemeProvider, useTheme } from './src/theme'
 import { Tag, Transition, useBreakpoint } from './src';
 import AppRoot from './src/AppRoot';
-import usePortal from './src/usePortal';
+import usePortal from './src/hooks/usePortal';
 
 const useThemeSwitcher = createThemeSwitcher("light")
 
@@ -77,10 +77,12 @@ const Trans = () => {
 
 const App = () => {
   const themeSwitcher = useThemeSwitcher()
+  const [toggled, setToggled] = React.useState(true)
 
   return (
-    <AppRoot component='body' theme={themeSwitcher.name}>
-      <ThemeBox />
+    <AppRoot theme={themeSwitcher.name}>
+      <button onClick={() => setToggled(!toggled)}>Toggle ThemeBox</button>
+      {toggled && <ThemeBox />}
       <Tag
         flexBox
         flexRow
