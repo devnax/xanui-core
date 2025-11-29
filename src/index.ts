@@ -11,7 +11,10 @@ import Transition from './Transition'
 import useScrollbar from './hooks/useScrollbar'
 import AppRoot, { appRootElement } from './AppRoot'
 import usePortal from './hooks/usePortal'
+import { Renderar } from './AppRoot/Renderar'
 import type { AppRootProps } from './AppRoot'
+
+
 export * from "./AppRoot"
 export * from './css'
 export * from "./theme"
@@ -28,6 +31,7 @@ export type {
     AppRootProps
 }
 export {
+    Renderar,
     AppRoot,
     appRootElement,
     Tag,

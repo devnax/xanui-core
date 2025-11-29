@@ -6,6 +6,7 @@ import { BreakpointProvider } from '../breakpoint';
 import useScrollbar from '../hooks/useScrollbar';
 import { css } from '../css';
 import { darkColorPallete, lightColorPallete } from '../theme/ThemeDefaultOptions';
+import { RenderRenderar } from './Renderar';
 
 createTheme("light", { colors: lightColorPallete })
 createTheme("dark", { colors: darkColorPallete })
@@ -92,6 +93,7 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
       >
          <BreakpointProvider>
             {children}
+            <RenderRenderar />
          </BreakpointProvider>
       </ThemeProvider>
    )

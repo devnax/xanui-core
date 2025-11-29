@@ -4,6 +4,7 @@ import { createThemeSwitcher, ThemeProvider, useTheme } from './src/theme'
 import { Tag, Transition, useBreakpoint } from './src';
 import AppRoot from './src/AppRoot';
 import usePortal from './src/hooks/usePortal';
+import { Renderar } from './src/AppRoot/Renderar';
 
 const useThemeSwitcher = createThemeSwitcher("light")
 
@@ -25,9 +26,28 @@ const ThemeBox = () => {
       This is portal content {count}
     </Tag>
     , { autoMount: false })
+  const C = () => (
+    <Tag
+      p={2}
+      bgcolor="blue"
+      color="#fff"
+      radius={2}
+    >
+      Rendered Component
+    </Tag>
+  )
 
   return (
     <div>
+      <button
+        onClick={() => {
+          const r = Renderar.render(C)
+
+          setTimeout(() => {
+            r.unrender();
+          }, 1000);
+        }}
+      >Render</button>
       <button onClick={() => setCount(count + 1)}>Increase Count {count}</button>
       <button onClick={() => portal.isMount() ? portal.unmount() : portal.mount()}>Mount Portal</button>
       <button
