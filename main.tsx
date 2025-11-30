@@ -26,12 +26,15 @@ const ThemeBox = () => {
       This is portal content {count}
     </Tag>
     , { autoMount: false })
-  const C = () => (
+
+
+  const C = (props: any) => (
     <Tag
       p={2}
       bgcolor="blue"
       color="#fff"
       radius={2}
+      {...props}
     >
       Rendered Component
     </Tag>
@@ -41,7 +44,9 @@ const ThemeBox = () => {
     <div>
       <button
         onClick={() => {
-          const r = Renderar.render(C)
+          const r = Renderar.render(C, {
+            bgcolor: 'red',
+          })
 
           setTimeout(() => {
             r.unrender();

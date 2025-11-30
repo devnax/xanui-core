@@ -1,11 +1,17 @@
 import React, { ReactElement } from "react";
 
-const Components: React.FunctionComponent[] = []
-let dispatch: Function
+type StoredComponent = {
+   component: React.FunctionComponent<any>;
+   props: any;
+};
+
+const Components: StoredComponent[] = [];
+let dispatch: (() => void) | null = null;
 
 export class Renderar {
-   static render(component: React.FunctionComponent) {
-      Components.push(component);
+   static render(component: React.FunctionComponent, props?: any) {
+      Components.push({ component, props });
+
       if (dispatch) {
          dispatch();
       }
@@ -14,30 +20,28 @@ export class Renderar {
          unrender: () => {
             this.unrender(component);
          }
-      }
+      };
    }
 
    static unrender(component: React.FunctionComponent) {
-      const index = Components.indexOf(component);
+      const index = Components.findIndex((c) => c.component === component);
       if (index > -1) {
          Components.splice(index, 1);
-         if (dispatch) {
-            dispatch();
-         }
+         if (dispatch) dispatch();
       }
    }
 }
 
 export const RenderRenderar = () => {
-   const [_, setState] = React.useState<number>(0);
+   const [, setState] = React.useState(0);
 
    if (!dispatch) {
       dispatch = () => {
-         setState(prev => prev + 1);
-      }
+         setState((prev) => prev + 1);
+      };
    }
 
-   return Components.map((Component, index): ReactElement => {
-      return <Component key={index} />
+   return Components.map(({ component: Component, props }, index): ReactElement => {
+      return <Component key={index} {...props} />;
    });
-}
+};
