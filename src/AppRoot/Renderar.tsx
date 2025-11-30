@@ -19,6 +19,9 @@ export class Renderar {
       return {
          unrender: () => {
             this.unrender(component);
+         },
+         updateProps: (newProps: any) => {
+            this.updateProps(component, newProps);
          }
       };
    }
@@ -29,6 +32,14 @@ export class Renderar {
          Components.splice(index, 1);
          if (dispatch) dispatch();
       }
+   }
+
+   static updateProps(component: React.FunctionComponent, props: any) {
+      const storedComponent = Components.find((c) => c.component === component);
+      if (storedComponent) {
+         storedComponent.props = { ...storedComponent.props, ...props };
+      }
+      if (dispatch) dispatch();
    }
 }
 

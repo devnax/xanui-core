@@ -49,7 +49,7 @@ const ThemeBox = () => {
           })
 
           setTimeout(() => {
-            r.unrender();
+            r.updateProps({ bgcolor: 'green' })
           }, 1000);
         }}
       >Render</button>
