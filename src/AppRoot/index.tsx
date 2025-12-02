@@ -20,17 +20,21 @@ export const appRootElement = () => document.querySelector(`.${appRootClassName}
 
 const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children, noScrollbarCss, theme, ...props }: AppRootProps<T>, ref: React.Ref<any>) => {
    noScrollbarCss ??= false
+   const [sx, setSx] = React.useState({
+      ...props.sx,
+      visibility: typeof window === "undefined" ? "hidden" : 'hidden',
+   });
 
-   useMemo(() => {
+   const scrollbarCss: any = useMemo(() => {
       if (noScrollbarCss) return;
-      useScrollbar({
+      return useScrollbar({
          themeName: theme,
          root_cls: themeRootClass(theme)
       })
    }, [noScrollbarCss, theme])
 
-   useMemo(() => {
-      css({
+   const globalStyle = useMemo(() => {
+      return css({
          "@global": {
             "*": {
                m: 0,
@@ -64,6 +68,8 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
                overflowWrap: "break-word",
             }
          }
+      }, {
+         injectStyle: typeof window !== 'undefined'
       })
    }, [])
 
@@ -74,6 +80,9 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
          throw new Error("Multiple AppRoot detected in the application tree. Please ensure that there is only one AppRoot component wrapping your application.");
       }
 
+      setSx({
+         visibility: "visible"
+      });
 
       // move oncss style tags to head
       if (typeof window === 'undefined') return;
@@ -89,8 +98,25 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
          ref={ref}
          theme={theme}
          {...props}
+         sx={sx}
          classNames={[appRootClassName]}
       >
+         {
+            typeof window === 'undefined' && <>
+               <style
+                  precedence={globalStyle.classname}
+                  href={globalStyle.classname}
+                  dangerouslySetInnerHTML={{ __html: globalStyle.css }}
+               />
+               {
+                  scrollbarCss && <style
+                     precedence={scrollbarCss.classname}
+                     href={scrollbarCss.classname}
+                     dangerouslySetInnerHTML={{ __html: scrollbarCss.css }}
+                  />
+               }
+            </>
+         }
          <BreakpointProvider>
             {children}
             <RenderRenderar />

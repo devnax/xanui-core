@@ -3,7 +3,6 @@ import cssPropList from './cssPropList';
 import { css } from '../css';
 import { classNames } from 'pretty-class';
 import { CSSFactoryType } from 'oncss';
-import isWindow from '../isWindow';
 
 export type useTagPropsReturn<T extends TagComponentType = "div"> = {
    props: TagProps<T>,
@@ -15,7 +14,7 @@ const useTagProps = <T extends TagComponentType = "div">({ sxr, sx, baseClass, c
    if (hover) _css['&:hover'] = hover
    const style = css(_css, {
       skipProps: (prop, _val, dept): any => dept === 1 && !cssPropList[prop],
-      injectStyle: isWindow(),
+      injectStyle: typeof window !== 'undefined',
    })
 
    let skipProps = style.skiped[style.classname as any] || []

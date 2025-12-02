@@ -18,7 +18,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ..
       THEME = ThemeFactory.get("light") as ThemeOptions
    }
 
-   React.useMemo(() => {
+   const globalStyle: any = React.useMemo(() => {
       const root_cls = `.xui-${theme}-theme-root`
       let gkeys = Object.keys(THEME.globalStyle || {})
       let gstyles: any = {}
@@ -26,16 +26,25 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ..
          gstyles[`${root_cls} ${key}`] = THEME.globalStyle[key as any]
       })
 
-      css({
+      return css({
          "@global": {
             ...gstyles,
             [root_cls]: ThemeCssVars(THEME)
          }
+      }, {
+         injectStyle: typeof window !== 'undefined'
       })
    }, [theme])
 
    return (
       <ThemeContex.Provider value={theme}>
+         {
+            typeof window === 'undefined' && <style
+               precedence={globalStyle.classname}
+               href={globalStyle.classname}
+               dangerouslySetInnerHTML={{ __html: globalStyle.css }}
+            />
+         }
          <Tag
             minHeight="100%"
             bgcolor={THEME.colors.background.primary}

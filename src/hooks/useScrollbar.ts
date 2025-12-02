@@ -55,6 +55,8 @@ const useScrollbar = ({ themeName, root_cls, thumbSize, thumbColor, trackColor }
             borderRadius: "5px",
          },
       }
+   }, {
+      injectStyle: typeof window !== 'undefined'
    }) as any
 }
 

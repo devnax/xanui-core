@@ -24,7 +24,7 @@ const getKey = (): BreakpointKeys => {
 };
 
 export const BreakpointProvider = ({ children }: { children?: ReactNode }) => {
-    const [current, setCurrent] = useState<BreakpointKeys>("xs");
+    const [current, setCurrent] = useState<BreakpointKeys>("xl");
 
     const handler = useCallback(() => {
         const newKey = getKey();
