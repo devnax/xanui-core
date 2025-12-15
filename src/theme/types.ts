@@ -52,9 +52,10 @@ export type ThemeTypographyItem = {
 }
 
 export type ThemeColor = {
-    background: Omit<ThemeColorItem, "text">;
     text: Omit<ThemeColorItem, "text" | "alpha" | "template">;
     divider: string;
+    background: Omit<ThemeColorItem, "text">;
+    surface: Omit<ThemeColorItem, "text">;
     brand: ThemeColorItem;
     accent: ThemeColorItem;
     success: ThemeColorItem
@@ -64,13 +65,13 @@ export type ThemeColor = {
 };
 
 export type ThemeTypographyType = {
-    fontFamily: string,
     h1: ThemeTypographyItem;
     h2: ThemeTypographyItem;
     h3: ThemeTypographyItem;
     h4: ThemeTypographyItem;
     h5: ThemeTypographyItem;
     h6: ThemeTypographyItem;
+    big: ThemeTypographyItem;
     text: ThemeTypographyItem;
     button: ThemeTypographyItem;
     small: ThemeTypographyItem;
@@ -91,9 +92,10 @@ export interface ThemeOptions {
 export type ThemeColorItemInput = Partial<Omit<ThemeColorItem, "alpha">>
 export type ThemeTypographyItemInput = Partial<ThemeTypographyItem>
 export type ThemeColorInput = {
-    background?: Omit<ThemeColorItemInput, "text">
     text?: Omit<ThemeColorItemInput, "text">
     divider?: string;
+    background?: Omit<ThemeColorItemInput, "text">
+    surface?: Omit<ThemeColorItemInput, "text">
     brand?: ThemeColorItemInput;
     accent?: ThemeColorItemInput;
     success?: ThemeColorItemInput
@@ -142,7 +144,10 @@ export type ColorsRefTypes =
     | "background"
     | "background.primary"
     | "background.secondary"
-    | "background.alpha"
+
+    | "surface"
+    | "surface.primary"
+    | "surface.secondary"
 
     | "brand"
     | "brand.primary"

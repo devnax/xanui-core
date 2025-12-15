@@ -85,8 +85,7 @@ const Trans = () => {
           <Transition open={open} variant={v}  >
             <Tag
               component="div"
-              width={100}
-              bgcolor="red"
+              bgcolor="background.primary"
               radius={2}
               px={2}
             >
@@ -106,6 +105,18 @@ const App = () => {
 
   return (
     <AppRoot theme={themeSwitcher.name}>
+
+      <Tag
+        width={200}
+        height={200}
+        bgcolor="surface.secondary"
+        radius={2}
+        shadow={2}
+        spacing={1}
+      >
+        <a href="#">asd</a>
+        <a href="#">asd</a>
+      </Tag>
       <button onClick={() => setToggled(!toggled)}>Toggle ThemeBox</button>
       {toggled && <ThemeBox />}
       <Tag

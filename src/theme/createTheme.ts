@@ -1,5 +1,5 @@
 import { ThemeOptions, ThemeOptionInput } from "./types"
-import defaultThemeOption, { darkColorPallete } from './ThemeDefaultOptions'
+import { darkColorPallete, lightThemeOptions } from './ThemeDefaultOptions'
 import { mergeObject, ThemeFactory } from "./core"
 import createColor from "./createColor"
 import { breakpoints } from "../css"
@@ -10,7 +10,7 @@ export const createTheme = (name: string, options: ThemeOptionInput, darkMode?: 
       return ThemeFactory.get(name) as ThemeOptions
    }
 
-   let theme: any = mergeObject(defaultThemeOption, {
+   let theme: any = mergeObject(lightThemeOptions, {
       ...(darkMode ? darkColorPallete : {}),
       ...options,
       name,

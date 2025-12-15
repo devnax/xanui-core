@@ -1,15 +1,13 @@
 
 import React, { useEffect, useMemo } from 'react';
 import { TagComponentType } from '../Tag/types';
-import { createTheme, ThemeProvider, ThemeProviderProps, themeRootClass } from '../theme';
+import { ThemeProvider, ThemeProviderProps, themeRootClass } from '../theme';
 import { BreakpointProvider } from '../breakpoint';
 import useScrollbar from '../hooks/useScrollbar';
 import { css } from '../css';
-import { darkColorPallete, lightColorPallete } from '../theme/ThemeDefaultOptions';
 import { RenderRenderar } from './Renderar';
 
-createTheme("light", { colors: lightColorPallete })
-createTheme("dark", { colors: darkColorPallete })
+
 
 export type AppRootProps<T extends TagComponentType = "div"> = ThemeProviderProps<T> & {
    noScrollbarCss?: boolean;
@@ -20,10 +18,7 @@ export const appRootElement = () => document.querySelector(`.${appRootClassName}
 
 const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children, noScrollbarCss, theme, ...props }: AppRootProps<T>, ref: React.Ref<any>) => {
    noScrollbarCss ??= false
-   const [sx, setSx] = React.useState({
-      ...props.sx,
-      visibility: typeof window === "undefined" ? "hidden" : 'hidden',
-   });
+   const [visibility, setVisibility] = React.useState<string>("hidden");
 
    const scrollbarCss: any = useMemo(() => {
       if (noScrollbarCss) return;
@@ -45,7 +40,8 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
             },
             "html, body": {
                minHeight: "100%",
-               "-webkit-font-smoothing": "antialiased"
+               "-webkit-font-smoothing": "antialiased",
+               "-moz-osx-font-smoothing": "grayscale",
             } as any,
             "img, picture, video, canvas, svg": {
                maxWidth: "100%",
@@ -56,13 +52,21 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
             },
             "table": {
                borderCollapse: "collapse",
-               borderSpacing: 0
+               borderSpacing: 0,
             },
             "ol, ul": {
-               listStyle: "none"
+               listStyle: "none",
+               padding: 0,
+               margin: 0,
             },
             "a": {
-               display: "inline-block"
+               display: "inline-block",
+               color: "inherit",
+               textDecoration: "none",
+               cursor: "pointer",
+               "&:hover": {
+                  textDecoration: "underline"
+               }
             },
             "p, h1, h2, h3, h4, h5, h6": {
                overflowWrap: "break-word",
@@ -80,9 +84,7 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
          throw new Error("Multiple AppRoot detected in the application tree. Please ensure that there is only one AppRoot component wrapping your application.");
       }
 
-      setSx({
-         visibility: "visible"
-      });
+      setVisibility("visible");
 
       // move oncss style tags to head
       if (typeof window === 'undefined') return;
@@ -91,6 +93,7 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
       styles.forEach((style) => {
          head.appendChild(style);
       });
+
    }, [])
 
    return (
@@ -98,7 +101,10 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
          ref={ref}
          theme={theme}
          {...props}
-         sx={sx}
+         sx={{
+            ...props.sx,
+            ...(visibility === "hidden" ? { visibility: "hidden" } : {})
+         }}
          classNames={[appRootClassName]}
       >
          {

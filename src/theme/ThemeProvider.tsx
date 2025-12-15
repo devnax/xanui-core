@@ -5,11 +5,15 @@ import { TagComponentType, TagProps } from "../Tag/types"
 import { ThemeContex, ThemeFactory } from "./core"
 import ThemeCssVars from "./ThemeCssVars"
 import { css } from "../css"
+import { createTheme } from "./createTheme"
+import { darkThemeOptions, lightThemeOptions } from "./ThemeDefaultOptions"
 
 export type ThemeProviderProps<T extends TagComponentType = 'div'> = TagProps<T> & {
    theme: string;
 }
 
+createTheme("light", lightThemeOptions)
+createTheme("dark", darkThemeOptions)
 
 const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ...props }: ThemeProviderProps<T>) => {
    let THEME = ThemeFactory.get(theme) as ThemeOptions
@@ -49,11 +53,15 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ..
             minHeight="100%"
             bgcolor={THEME.colors.background.primary}
             color={THEME.colors.text.primary}
-            fontFamily={THEME.typography.fontFamily}
             fontSize={THEME.typography.text.fontSize}
             fontWeight={THEME.typography.text.fontWeight}
             lineHeight={THEME.typography.text.lineHeight}
             {...props}
+            sxr={{
+               "& a": {
+                  color: THEME?.colors?.brand.primary || 'inherit',
+               },
+            }}
             baseClass={`${theme}-theme-root`}
             direction={THEME.rtl ? "rtl" : "ltr"}
          >
