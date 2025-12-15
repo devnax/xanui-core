@@ -5,44 +5,12 @@ export type ObjectType = { [key: string]: any }
 export type ThemeColorItem = {
     primary: string;
     secondary: string;
-    text: string;
     alpha: string;
-    template: {
-        outline: {
-            bgcolor: string;
-            color: string;
-            border: number;
-            borderColor: string;
-            hover: {
-                bgcolor: string,
-                color: string,
-            }
-        },
-        fill: {
-            bgcolor: string;
-            color: string,
-            hover: {
-                bgcolor: string;
-                color: string;
-            }
-        },
-        text: {
-            bgcolor: string;
-            color: string;
-            hover: {
-                bgcolor: string;
-                color: string;
-            }
-        },
-        alpha: {
-            bgcolor: string
-            color: string;
-            hover: {
-                bgcolor: string;
-                color: string;
-            }
-        }
-    }
+    divider: string;
+    text: {
+        primary: string;
+        secondary: string;
+    };
 }
 
 export type ThemeTypographyItem = {
@@ -52,10 +20,8 @@ export type ThemeTypographyItem = {
 }
 
 export type ThemeColor = {
-    text: Omit<ThemeColorItem, "text" | "alpha" | "template">;
-    divider: string;
-    background: Omit<ThemeColorItem, "text">;
-    surface: Omit<ThemeColorItem, "text">;
+    common: ThemeColorItem;
+    surface: ThemeColorItem;
     brand: ThemeColorItem;
     accent: ThemeColorItem;
     success: ThemeColorItem
@@ -92,10 +58,8 @@ export interface ThemeOptions {
 export type ThemeColorItemInput = Partial<Omit<ThemeColorItem, "alpha">>
 export type ThemeTypographyItemInput = Partial<ThemeTypographyItem>
 export type ThemeColorInput = {
-    text?: Omit<ThemeColorItemInput, "text">
-    divider?: string;
-    background?: Omit<ThemeColorItemInput, "text">
-    surface?: Omit<ThemeColorItemInput, "text">
+    common?: ThemeColorItemInput;
+    surface?: ThemeColorItemInput;
     brand?: ThemeColorItemInput;
     accent?: ThemeColorItemInput;
     success?: ThemeColorItemInput
@@ -104,7 +68,6 @@ export type ThemeColorInput = {
     danger?: ThemeColorItemInput
 };
 export type ThemeTypographyInputType = {
-    fontFamily?: string,
     h1?: ThemeTypographyItemInput;
     h2?: ThemeTypographyItemInput;
     h3?: ThemeTypographyItemInput;
@@ -137,50 +100,67 @@ export type TypographyRefTypes =
     | "small"
 
 export type ColorsRefTypes =
-    | "text"
-    | "text.primary"
-    | "text.secondary"
 
-    | "background"
-    | "background.primary"
-    | "background.secondary"
+    | "common"
+    | "common.primary"
+    | "common.secondary"
+    | "common.alpha"
+    | "common.divider"
+    | "common.text.primary"
+    | "common.text.secondary"
 
     | "surface"
     | "surface.primary"
     | "surface.secondary"
+    | "surface.divider"
+    | "surface.alpha"
+    | "surface.text.primary"
+    | "surface.text.secondary"
 
     | "brand"
     | "brand.primary"
     | "brand.secondary"
     | "brand.alpha"
-    | "brand.text"
+    | "brand.divider"
+    | "brand.text.primary"
+    | "brand.text.secondary"
 
     | "accent"
     | "accent.primary"
     | "accent.secondary"
     | "accent.alpha"
-    | "accent.text"
+    | "accent.divider"
+    | "accent.text.primary"
+    | "accent.text.secondary"
 
     | "info"
     | "info.primary"
     | "info.secondary"
     | "info.alpha"
-    | "info.text"
+    | "info.divider"
+    | "info.text.primary"
+    | "info.text.secondary"
 
     | "success"
     | "success.primary"
     | "success.secondary"
     | "success.alpha"
-    | "success.text"
+    | "success.divider"
+    | "success.text.primary"
+    | "success.text.secondary"
 
     | "warning"
     | "warning.primary"
     | "warning.secondary"
     | "warning.alpha"
-    | "warning.text"
+    | "warning.divider"
+    | "warning.text.primary"
+    | "warning.text.secondary"
 
     | "danger"
     | "danger.primary"
     | "danger.secondary"
     | "danger.alpha"
-    | "danger.text"
+    | "danger.divider"
+    | "danger.text.primary"
+    | "danger.text.secondary"

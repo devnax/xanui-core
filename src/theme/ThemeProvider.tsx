@@ -51,15 +51,15 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ..
          }
          <Tag
             minHeight="100%"
-            bgcolor={THEME.colors.background.primary}
-            color={THEME.colors.text.primary}
+            bgcolor={THEME.colors.common.primary}
+            color={THEME.colors.common.text.primary}
             fontSize={THEME.typography.text.fontSize}
             fontWeight={THEME.typography.text.fontWeight}
             lineHeight={THEME.typography.text.lineHeight}
             {...props}
             sxr={{
                "& a": {
-                  color: THEME?.colors?.brand.primary || 'inherit',
+                  color: THEME.colors.brand.primary || 'inherit',
                },
             }}
             baseClass={`${theme}-theme-root`}

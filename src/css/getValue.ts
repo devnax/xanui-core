@@ -5,23 +5,16 @@ const getColor = (color: string) => {
         [`${color}`]: `var(--color-${color}-primary)`,
         [`${color}.primary`]: `var(--color-${color}-primary)`,
         [`${color}.secondary`]: `var(--color-${color}-secondary)`,
-        [`${color}.text`]: `var(--color-${color}-text)`,
-        [`${color}.alpha`]: `var(--color-${color}-alpha)`
+        [`${color}.alpha`]: `var(--color-${color}-alpha)`,
+        [`${color}.divider`]: `var(--color-${color}-divider)`,
+        [`${color}.text.primary`]: `var(--color-${color}-text-primary)`,
+        [`${color}.text.secondary`]: `var(--color-${color}-text-secondary)`,
     }
 }
 
 const withImportant = (important: any, value: any) => important ? value + important : value
 const colors: any = {
-    "text": `var(--color-text-primary)`,
-    "text.primary": `var(--color-text-primary)`,
-    "text.secondary": `var(--color-text-secondary)`,
-
-    "background": `var(--color-background-primary)`,
-    "background.primary": `var(--color-background-primary)`,
-    "background.secondary": `var(--color-background-secondary)`,
-    "background.alpha": `var(--color-background-alpha)`,
-    "divider": `var(--color-divider)`,
-
+    ...getColor("common"),
     ...getColor("surface"),
     ...getColor("brand"),
     ...getColor("accent"),

@@ -20,8 +20,8 @@ const useScrollbar = ({ themeName, root_cls, thumbSize, thumbColor, trackColor }
    }
 
    thumbSize = thumbSize || 10
-   thumbColor = thumbColor || theme.colors.text.secondary
-   trackColor = trackColor || theme.colors.divider
+   thumbColor = thumbColor || theme.colors.surface.primary
+   trackColor = trackColor || theme.colors.surface.primary
    root_cls = root_cls || ""
 
    let clss = {

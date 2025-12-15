@@ -58,37 +58,50 @@ export const darkShadows = [
 
 
 export const lightColorPallete = {
-    text: {
-        primary: "#1F2937",     // slate-800
-        secondary: "#6B7280",   // slate-500
-    },
-    background: {
+    common: {
         primary: "#FFFFFF",
-        secondary: "#F4F6FB",   // softer than #EDEFF7
+        secondary: "#F4F6FB",
+        divider: "#E5E7EB",
+        alpha: "#F9FAFB",
+        text: {
+            primary: "#1F2937",     // slate-800
+            secondary: "#6B7280",   // slate-500
+        },
     },
     surface: {
         primary: "#FFFFFF",   // cards, dialogs
-        secondary: "#F9FAFB", // subtle sections
+        secondary: "#F9FAFB", // subtle sections,
+        divider: "#E5E7EB",
+        alpha: "#F4F6FB",
+        text: {
+            primary: "#1F2937",     // slate-800
+            secondary: "#6B7280",   // slate-500
+        },
     },
-
-    divider: "#E5E7EB"        // neutral-200
 }
 
 
 export const darkColorPallete = {
-    text: {
-        primary: "#F9FAFB",     // near-white
-        secondary: "#9CA3AF",   // slate-400
-    },
-    background: {
-        primary: "#0F172A",     // slate-900
-        secondary: "#111827",   // slate-800
+    common: {
+        primary: "#0F172A",
+        secondary: "#111827",
+        divider: "#374151",
+        alpha: "#1F2937",
+        text: {
+            primary: "#F9FAFB",
+            secondary: "#9CA3AF",
+        },
     },
     surface: {
         primary: "#1F2937",   // cards & modals
         secondary: "#273449", // nested surfaces
+        divider: "#4B5563",
+        alpha: "#111827",
+        text: {
+            primary: "#F9FAFB",     // near-white
+            secondary: "#9CA3AF",   // slate-400
+        },
     },
-    divider: "#1F2937"        // slate-700
 }
 
 export const ThemeColors = {
@@ -97,37 +110,67 @@ export const ThemeColors = {
     brand: {
         primary: "#2563EB",   // blue-600
         secondary: "#3B82F6", // blue-500
-        text: "#FFFFFF",
+        divider: "#E5E7EB",        // neutral-200
+        alpha: "#EFF6FF",          // blue-50
+        text: {
+            primary: "#FFFFFF",
+            secondary: "#DBEAFE",
+        }
     },
 
     accent: {
         primary: "#0D9488",   // teal-600
         secondary: "#14B8A6", // teal-500
-        text: "#FFFFFF",
+        divider: "#E5E7EB",        // neutral-200
+        alpha: "#F0FDFA",          // teal-50
+        text: {
+            primary: "#FFFFFF",
+            secondary: "#E0F2F1",
+        }
     },
 
     info: {
         primary: "#0284C7",   // sky-600
         secondary: "#38BDF8", // sky-400
-        text: "#FFFFFF",
+        divider: "#E5E7EB",        // neutral-200
+        alpha: "#EFF6FF",          // sky-50
+        text: {
+            primary: "#FFFFFF",
+            secondary: "#E0F2FE",
+        }
     },
 
     success: {
         primary: "#16A34A",   // green-600
         secondary: "#4ADE80", // green-400
-        text: "#FFFFFF",
+        divider: "#E5E7EB",        // neutral-200
+        alpha: "#ECFDF5",          // green-50
+        text: {
+            primary: "#FFFFFF",
+            secondary: "#D1FAE5",
+        },
     },
 
     warning: {
-        primary: "#D97706",   // amber-600
-        secondary: "#FBBF24", // amber-400
-        text: "#1F2937",      // dark text reads better on yellow
+        primary: "#D97706",
+        secondary: "#FBBF24",
+        divider: "#E5E7EB",
+        alpha: "#FFFBEB",
+        text: {
+            primary: "#000000",
+            secondary: "#78350F",
+        },
     },
 
     danger: {
-        primary: "#DC2626",   // red-600
-        secondary: "#F87171", // red-400
-        text: "#FFFFFF",
+        primary: "#DC2626",
+        secondary: "#F87171",
+        divider: "#E5E7EB",
+        alpha: "#FEF2F2",
+        text: {
+            primary: "#FFFFFF",
+            secondary: "#FECACA",
+        }
     },
 }
 
