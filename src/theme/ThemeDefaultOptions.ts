@@ -59,24 +59,19 @@ export const darkShadows = [
 
 export const lightColorPallete = {
     common: {
-        primary: "#FFFFFF",
-        secondary: "#F4F6FB",
-        divider: "#E5E7EB",
-        alpha: "#F9FAFB",
-        text: {
-            primary: "#1F2937",     // slate-800
-            secondary: "#6B7280",   // slate-500
-        },
+        primary: "#FFFFFF",     // main background
+        secondary: "#ecf0f3",   // secondary background
+        divider: "#E5E7EB",     // borders
+        alpha: "#F3F4F6",       // subtle hover / overlay
+        text: "#1F2937",        // main text
     },
+
     surface: {
-        primary: "#FFFFFF",   // cards, dialogs
-        secondary: "#F9FAFB", // subtle sections,
-        divider: "#E5E7EB",
-        alpha: "#F4F6FB",
-        text: {
-            primary: "#1F2937",     // slate-800
-            secondary: "#6B7280",   // slate-500
-        },
+        primary: "#FFFFFF",     // cards & modals
+        secondary: "#F4F6FB",   // nested surfaces
+        divider: "#D1D5DB",     // subtle divider
+        alpha: "#F9FAFB",       // hover / overlay on surface
+        text: "#6B7280",        // surface text (slightly softer)
     },
 }
 
@@ -87,20 +82,14 @@ export const darkColorPallete = {
         secondary: "#111827",
         divider: "#374151",
         alpha: "#1F2937",
-        text: {
-            primary: "#F9FAFB",
-            secondary: "#9CA3AF",
-        },
+        text: "#F9FAFB",
     },
     surface: {
         primary: "#1F2937",   // cards & modals
         secondary: "#273449", // nested surfaces
         divider: "#4B5563",
         alpha: "#111827",
-        text: {
-            primary: "#F9FAFB",     // near-white
-            secondary: "#9CA3AF",   // slate-400
-        },
+        text: "#9CA3AF",
     },
 }
 
@@ -112,10 +101,7 @@ export const ThemeColors = {
         secondary: "#3B82F6", // blue-500
         divider: "#E5E7EB",        // neutral-200
         alpha: "#EFF6FF",          // blue-50
-        text: {
-            primary: "#FFFFFF",
-            secondary: "#DBEAFE",
-        }
+        text: "#FFFFFF"
     },
 
     accent: {
@@ -123,10 +109,7 @@ export const ThemeColors = {
         secondary: "#14B8A6", // teal-500
         divider: "#E5E7EB",        // neutral-200
         alpha: "#F0FDFA",          // teal-50
-        text: {
-            primary: "#FFFFFF",
-            secondary: "#E0F2F1",
-        }
+        text: "#FFFFFF"
     },
 
     info: {
@@ -134,10 +117,7 @@ export const ThemeColors = {
         secondary: "#38BDF8", // sky-400
         divider: "#E5E7EB",        // neutral-200
         alpha: "#EFF6FF",          // sky-50
-        text: {
-            primary: "#FFFFFF",
-            secondary: "#E0F2FE",
-        }
+        text: "#FFFFFF"
     },
 
     success: {
@@ -145,10 +125,7 @@ export const ThemeColors = {
         secondary: "#4ADE80", // green-400
         divider: "#E5E7EB",        // neutral-200
         alpha: "#ECFDF5",          // green-50
-        text: {
-            primary: "#FFFFFF",
-            secondary: "#D1FAE5",
-        },
+        text: "#FFFFFF"
     },
 
     warning: {
@@ -156,10 +133,7 @@ export const ThemeColors = {
         secondary: "#FBBF24",
         divider: "#E5E7EB",
         alpha: "#FFFBEB",
-        text: {
-            primary: "#000000",
-            secondary: "#78350F",
-        },
+        text: "#000000"
     },
 
     danger: {
@@ -167,10 +141,7 @@ export const ThemeColors = {
         secondary: "#F87171",
         divider: "#E5E7EB",
         alpha: "#FEF2F2",
-        text: {
-            primary: "#FFFFFF",
-            secondary: "#FECACA",
-        }
+        text: "#FFFFFF"
     },
 }
 

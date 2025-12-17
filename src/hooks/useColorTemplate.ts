@@ -10,20 +10,20 @@ const useColorTemplate = (name: keyof ThemeColor, type: UseColorTemplateType) =>
     let template = {
         outline: {
             bgcolor: "transparent",
-            color: color.text.primary,
+            color: color.text,
             border: 1,
             borderColor: color.divider,
             hover: {
-                color: color.text.primary,
+                color: color.text,
                 borderColor: color.divider,
             }
         },
         fill: {
             bgcolor: color.primary,
-            color: color.text.primary,
+            color: color.text,
             hover: {
                 bgcolor: color.secondary,
-                color: color.text.primary,
+                color: color.text,
             }
         },
         text: {

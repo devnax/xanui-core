@@ -7,10 +7,7 @@ export type ThemeColorItem = {
     secondary: string;
     alpha: string;
     divider: string;
-    text: {
-        primary: string;
-        secondary: string;
-    };
+    text: string
 }
 
 export type ThemeTypographyItem = {
@@ -106,61 +103,53 @@ export type ColorsRefTypes =
     | "common.secondary"
     | "common.alpha"
     | "common.divider"
-    | "common.text.primary"
-    | "common.text.secondary"
+    | "common.text"
 
     | "surface"
     | "surface.primary"
     | "surface.secondary"
     | "surface.divider"
     | "surface.alpha"
-    | "surface.text.primary"
-    | "surface.text.secondary"
+    | "surface.text"
 
     | "brand"
     | "brand.primary"
     | "brand.secondary"
     | "brand.alpha"
     | "brand.divider"
-    | "brand.text.primary"
-    | "brand.text.secondary"
+    | "brand.text"
 
     | "accent"
     | "accent.primary"
     | "accent.secondary"
     | "accent.alpha"
     | "accent.divider"
-    | "accent.text.primary"
-    | "accent.text.secondary"
+    | "accent.text"
 
     | "info"
     | "info.primary"
     | "info.secondary"
     | "info.alpha"
     | "info.divider"
-    | "info.text.primary"
-    | "info.text.secondary"
+    | "info.text"
 
     | "success"
     | "success.primary"
     | "success.secondary"
     | "success.alpha"
     | "success.divider"
-    | "success.text.primary"
-    | "success.text.secondary"
+    | "success.text"
 
     | "warning"
     | "warning.primary"
     | "warning.secondary"
     | "warning.alpha"
     | "warning.divider"
-    | "warning.text.primary"
-    | "warning.text.secondary"
+    | "warning.text"
 
     | "danger"
     | "danger.primary"
     | "danger.secondary"
     | "danger.alpha"
-    | "danger.divider"
+    | "danger"
     | "danger.text.primary"
-    | "danger.text.secondary"

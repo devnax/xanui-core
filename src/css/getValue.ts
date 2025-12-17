@@ -7,8 +7,7 @@ const getColor = (color: string) => {
         [`${color}.secondary`]: `var(--color-${color}-secondary)`,
         [`${color}.alpha`]: `var(--color-${color}-alpha)`,
         [`${color}.divider`]: `var(--color-${color}-divider)`,
-        [`${color}.text.primary`]: `var(--color-${color}-text-primary)`,
-        [`${color}.text.secondary`]: `var(--color-${color}-text-secondary)`,
+        [`${color}.text`]: `var(--color-${color}-text)`,
     }
 }
 
