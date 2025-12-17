@@ -21,42 +21,36 @@ const getProps = (prop: string, value: string, _css: CSSProps) => {
     }
 
 
-    if (prop === 'spacing') {
-        const isFlex = (_css as any)?.flexBox || (_css as any)?.flexRow || (_css as any)?.flexColumn || (_css as any)?.display === 'flex'
-        if (isFlex && typeof value === 'number') {
-            const direction = (_css as any)?.flexColumn ? 'column' : 'row'
-            let val: any = value * 8
-            if (direction === 'row') {
-                return {
-                    marginLeft: `calc(-1 * ${val}px)${important || ""}`,
-                    marginTop: `calc(-1 * ${val}px)${important || ""}`,
-                    '& > *': {
-                        paddingLeft: `${val}px${important || ""}`,
-                        marginTop: `${val}px${important || ""}`,
-                    }
-                } as any
-            } else {
-                return {
-                    marginTop: `calc(-1 * ${val}px)${important || ""}`,
-                    marginLeft: `calc(-1 * ${val}px)${important || ""}`,
-                    '& > *': {
-                        paddingTop: `${val}px${important || ""}`,
-                        marginLeft: `${val}px${important || ""}`,
-                    }
-                } as any
-            }
+    if (prop === "spacing" && typeof value === "number") {
+        const val = value * 8;
+        const isFlex =
+            (_css as any)?.flexBox ||
+            (_css as any)?.flexRow ||
+            (_css as any)?.flexColumn ||
+            (_css as any)?.display === "flex";
+
+        if (isFlex) {
+            const isColumn = (_css as any)?.flexColumn === true;
+
+            return {
+                ...(isColumn
+                    ? { marginTop: `-${val}px${important || ""}` }
+                    : { marginLeft: `-${val}px${important || ""}` }),
+
+                "& > *": isColumn
+                    ? { marginTop: `${val}px${important || ""}` }
+                    : { marginLeft: `${val}px${important || ""}` },
+            } as any;
         }
 
-        if (typeof value === 'number') {
-            let val: any = value * 8
-            return {
-                margin: `-${val}px${important || ""}`,
-                '& > *': {
-                    padding: `${val}px${important || ""}`,
-                }
-            } as any
-        }
+        // non-flex fallback (safe & predictable)
+        return {
+            "& > * + *": {
+                marginTop: `${val}px${important || ""}`,
+            },
+        } as any;
     }
+
 
     if (value && typeof value === "number" && ["border", "borderRight", "borderLeft", "borderTop", "borderBottom"].includes(prop as any)) {
         const keys: any = Object.keys(_css)

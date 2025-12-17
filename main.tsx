@@ -1,7 +1,7 @@
 import React, { use } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createThemeSwitcher, ThemeProvider, useTheme } from './src/theme'
-import { Tag, Transition, useBreakpoint } from './src';
+import { Tag, Transition, useBreakpoint, useColorTemplate } from './src';
 import AppRoot from './src/AppRoot';
 import usePortal from './src/hooks/usePortal';
 import { Renderar } from './src/AppRoot/Renderar';
@@ -102,23 +102,39 @@ const Trans = () => {
 const App = () => {
   const themeSwitcher = useThemeSwitcher()
   const [toggled, setToggled] = React.useState(true)
-
+  const template = useColorTemplate('success', 'alpha')
   return (
-    <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif">
+    <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" p={2}>
+      <Tag
+        flexBox
+        spacing={2}
+        p={1}
+      >
+        <Tag
+          component={"button"}
+          cursor={"pointer"}
+          p={.5}
+          radius={1}
+          width={100}
+          {...template}
+        >
+          hello
+        </Tag>
 
+      </Tag>
       <Tag
         width={200}
         height={200}
-        bgcolor="surface.secondary"
+        bgcolor="common.secondary"
         radius={2}
-        shadow={2}
-        spacing={1}
-        hover={{
-          shadow: 4,
-        }}
       >
-        <a href="#">asd</a>
-        <a href="#">asd</a>
+        <Tag
+          color="text.primary"
+          overflow="auto"
+          height={200}
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos sequi numquam illo expedita accusamus dolores. Recusandae ab dignissimos quod. Minus suscipit quis natus neque voluptate assumenda provident dicta officiis animi!
+        </Tag>
       </Tag>
       <button onClick={() => setToggled(!toggled)}>Toggle ThemeBox</button>
       {toggled && <ThemeBox />}

@@ -57,90 +57,73 @@ export const darkShadows = [
 ]
 
 
-export const lightColorPallete = {
+export const lightColorPalette = {
     common: {
-        primary: "#FFFFFF",     // main background
-        secondary: "#ecf0f3",   // secondary background
-        divider: "#E5E7EB",     // borders
-        alpha: "#F3F4F6",       // subtle hover / overlay
-        text: "#1F2937",        // main text
+        primary: "#FFFFFF",
+        secondary: "#F3F4F6", // darker than before (was #F9FAFB)
     },
-
-    surface: {
-        primary: "#FFFFFF",     // cards & modals
-        secondary: "#F4F6FB",   // nested surfaces
-        divider: "#D1D5DB",     // subtle divider
-        alpha: "#F9FAFB",       // hover / overlay on surface
-        text: "#6B7280",        // surface text (slightly softer)
+    text: {
+        primary: "#111827",
+        secondary: "#6B7280",
     },
-}
+    divider: {
+        primary: "#E5E7EB",
+        secondary: "#D1D5DB",
+    },
+};
 
-
-export const darkColorPallete = {
+export const darkColorPalette = {
     common: {
         primary: "#0F172A",
-        secondary: "#111827",
-        divider: "#374151",
-        alpha: "#1F2937",
-        text: "#F9FAFB",
+        secondary: "#1E293B", // darker separation (was #111827)
     },
-    surface: {
-        primary: "#1F2937",   // cards & modals
-        secondary: "#273449", // nested surfaces
-        divider: "#4B5563",
-        alpha: "#111827",
-        text: "#9CA3AF",
+    text: {
+        primary: "#F9FAFB",
+        secondary: "#9CA3AF",
     },
-}
+    divider: {
+        primary: "#374151",
+        secondary: "#4B5563",
+    },
+};
+
 
 export const ThemeColors = {
-    ...lightColorPallete,
+    ...lightColorPalette,
 
     brand: {
         primary: "#2563EB",   // blue-600
         secondary: "#3B82F6", // blue-500
-        divider: "#E5E7EB",        // neutral-200
-        alpha: "#EFF6FF",          // blue-50
         text: "#FFFFFF"
     },
 
     accent: {
         primary: "#0D9488",   // teal-600
         secondary: "#14B8A6", // teal-500
-        divider: "#E5E7EB",        // neutral-200
-        alpha: "#F0FDFA",          // teal-50
         text: "#FFFFFF"
     },
 
     info: {
         primary: "#0284C7",   // sky-600
         secondary: "#38BDF8", // sky-400
-        divider: "#E5E7EB",        // neutral-200
-        alpha: "#EFF6FF",          // sky-50
         text: "#FFFFFF"
     },
 
     success: {
         primary: "#16A34A",   // green-600
         secondary: "#4ADE80", // green-400
-        divider: "#E5E7EB",        // neutral-200
-        alpha: "#ECFDF5",          // green-50
         text: "#FFFFFF"
     },
 
     warning: {
         primary: "#D97706",
         secondary: "#FBBF24",
-        divider: "#E5E7EB",
-        alpha: "#FFFBEB",
         text: "#000000"
     },
 
     danger: {
         primary: "#DC2626",
         secondary: "#F87171",
-        divider: "#E5E7EB",
-        alpha: "#FEF2F2",
         text: "#FFFFFF"
     },
 }
@@ -164,7 +147,7 @@ export const darkThemeOptions: ThemeOptionInput = {
     rtl: false,
     shadow: darkShadows,
     globalStyle: {},
-    colors: darkColorPallete,
+    colors: darkColorPalette,
     typography: ThemeTypography,
     interfaces: {}
 } as ThemeOptionInput

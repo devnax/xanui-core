@@ -19,9 +19,9 @@ const useScrollbar = ({ themeName, root_cls, thumbSize, thumbColor, trackColor }
       theme = getTheme("light") as ThemeOptions
    }
 
-   thumbSize = thumbSize || 10
-   thumbColor = thumbColor || theme.colors.surface.primary
-   trackColor = trackColor || theme.colors.surface.primary
+   thumbSize = thumbSize || 12
+   thumbColor = thumbColor || theme.colors.divider.secondary
+   trackColor = trackColor || theme.colors.divider.primary
    root_cls = root_cls || ""
 
    let clss = {
@@ -44,15 +44,15 @@ const useScrollbar = ({ themeName, root_cls, thumbSize, thumbColor, trackColor }
          },
          [clss["scrollbarThumb"]]: {
             backgroundColor: thumbColor,
-            borderRadius: "5px",
-            border: "2px solid #f4f4f4",
+            borderRadius: "6px",
+            border: `2px solid ${theme.colors.common.primary}`,
          },
          [clss["scrollbarThumbHover"]]: {
             backgroundColor: thumbColor,
          },
          [clss['scrollbarTrack']]: {
             backgroundColor: trackColor,
-            borderRadius: "5px",
+            borderRadius: "6px",
          },
       }
    }, {

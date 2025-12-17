@@ -5,8 +5,6 @@ export type ObjectType = { [key: string]: any }
 export type ThemeColorItem = {
     primary: string;
     secondary: string;
-    alpha: string;
-    divider: string;
     text: string
 }
 
@@ -17,8 +15,9 @@ export type ThemeTypographyItem = {
 }
 
 export type ThemeColor = {
-    common: ThemeColorItem;
-    surface: ThemeColorItem;
+    common: Omit<ThemeColorItem, "text">;
+    text: Omit<ThemeColorItem, "text">;
+    divider: Omit<ThemeColorItem, "text">;
     brand: ThemeColorItem;
     accent: ThemeColorItem;
     success: ThemeColorItem
@@ -56,7 +55,8 @@ export type ThemeColorItemInput = Partial<Omit<ThemeColorItem, "alpha">>
 export type ThemeTypographyItemInput = Partial<ThemeTypographyItem>
 export type ThemeColorInput = {
     common?: ThemeColorItemInput;
-    surface?: ThemeColorItemInput;
+    text?: Omit<ThemeColorItem, "text">;
+    divider?: Omit<ThemeColorItem, "text">;
     brand?: ThemeColorItemInput;
     accent?: ThemeColorItemInput;
     success?: ThemeColorItemInput
@@ -98,58 +98,35 @@ export type TypographyRefTypes =
 
 export type ColorsRefTypes =
 
-    | "common"
     | "common.primary"
     | "common.secondary"
-    | "common.alpha"
-    | "common.divider"
-    | "common.text"
 
-    | "surface"
-    | "surface.primary"
-    | "surface.secondary"
-    | "surface.divider"
-    | "surface.alpha"
-    | "surface.text"
+    | "text.primary"
+    | "text.secondary"
 
-    | "brand"
+    | "divider.primary"
+    | "divider.secondary"
+
     | "brand.primary"
     | "brand.secondary"
-    | "brand.alpha"
-    | "brand.divider"
     | "brand.text"
 
-    | "accent"
     | "accent.primary"
     | "accent.secondary"
-    | "accent.alpha"
-    | "accent.divider"
     | "accent.text"
 
-    | "info"
     | "info.primary"
     | "info.secondary"
-    | "info.alpha"
-    | "info.divider"
     | "info.text"
 
-    | "success"
     | "success.primary"
     | "success.secondary"
-    | "success.alpha"
-    | "success.divider"
     | "success.text"
 
-    | "warning"
     | "warning.primary"
     | "warning.secondary"
-    | "warning.alpha"
-    | "warning.divider"
     | "warning.text"
 
-    | "danger"
     | "danger.primary"
     | "danger.secondary"
-    | "danger.alpha"
-    | "danger"
     | "danger.text.primary"

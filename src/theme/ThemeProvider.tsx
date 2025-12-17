@@ -52,7 +52,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ..
          <Tag
             minHeight="100%"
             bgcolor={THEME.colors.common.primary}
-            color={THEME.colors.common.text.primary}
+            color={THEME.colors.text.primary}
             fontSize={THEME.typography.text.fontSize}
             fontWeight={THEME.typography.text.fontWeight}
             lineHeight={THEME.typography.text.lineHeight}
