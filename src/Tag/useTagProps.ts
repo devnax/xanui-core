@@ -9,30 +9,35 @@ export type useTagPropsReturn<T extends TagComponentType = "div"> = {
    style: CSSFactoryType
 }
 
-const useTagProps = <T extends TagComponentType = "div">({ baseClass, classNames: clses, ...props }: TagPropsRoot<T>): useTagPropsReturn<T> => {
-
-   if ('hover' in props) {
-      (props as any)['&:hover'] = props['hover'];
-      delete (props as any)['hover'];
+const useTagProps = <T extends TagComponentType = "div">({ baseClass, classNames: clses, sx, sxr, style, hover, ...props }: TagPropsRoot<T>): useTagPropsReturn<T> => {
+   const _css: any = {
+      ...(sxr || {}),
+      ...(sx || {}),
+      ...(style || {}),
+      ...props
    }
 
-   const style = css(props, {
+   if (hover) {
+      _css['&:hover'] = { ...(_css['&:hover'] || {}), ...hover }
+   }
+
+   const styles = css(_css, {
       skipProps: (prop, _val, dept): any => dept === 1 && !cssPropList[prop],
       injectStyle: typeof window !== 'undefined',
    })
 
-   let skipProps = style.skiped[style.classname as any] || []
+   let skipProps = styles.skiped[styles.classname as any] || []
    const _props: any = {};
    for (let prop of skipProps) {
       _props[prop] = (props as any)[prop]
    }
    _props.className = classNames([
       baseClass ? "xui-" + baseClass : "",
-      style.classname,
+      styles.classname,
       props.className,
       ...(clses as any || []),
    ])
-   return { props: _props, style };
+   return { props: _props, style: styles };
 }
 
 

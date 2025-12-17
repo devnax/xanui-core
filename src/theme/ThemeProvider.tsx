@@ -56,6 +56,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ..
             fontSize={THEME.typography.text.fontSize}
             fontWeight={THEME.typography.text.fontWeight}
             lineHeight={THEME.typography.text.lineHeight}
+            fontFamily={`system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`}
             {...props}
             sxr={{
                "& a": {
