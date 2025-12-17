@@ -1,5 +1,4 @@
 import React, { ReactNode, useState, useCallback } from "react";
-import isWindow from "../isWindow";
 import { breakpoints } from "../css";
 import { BreakpointKeys } from "../css/types";
 
@@ -9,8 +8,7 @@ export const BreakpointCtx = React.createContext<BreakpointKeys>("xs");
  * SSR-safe breakpoint detection
  */
 const getKey = (): BreakpointKeys => {
-    if (!isWindow()) {
-        // Server fallback (mobile-first)
+    if (typeof window === 'undefined') {
         return "xs";
     }
 

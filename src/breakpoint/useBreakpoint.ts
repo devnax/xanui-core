@@ -1,12 +1,11 @@
 import { useContext } from "react"
 import { BreakpointCtx } from "./BreakpointProvider"
-import isWindow from "../isWindow"
 import { breakpoints } from "../css"
 import { BreakpointKeys } from "../css/types"
 
 const useBreakpoint = () => {
    const value = useContext(BreakpointCtx)
-   const getWidth = () => isWindow() ? window.innerWidth : 99999
+   const getWidth = () => typeof window !== 'undefined' ? window.innerWidth : 99999
    const is = (key: BreakpointKeys) => value === key
    const isUp = (key: BreakpointKeys) => getWidth() >= breakpoints[key]
    const isDown = (key: BreakpointKeys) => getWidth() < breakpoints[key]

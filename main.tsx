@@ -104,7 +104,7 @@ const App = () => {
   const [toggled, setToggled] = React.useState(true)
 
   return (
-    <AppRoot theme={themeSwitcher.name}>
+    <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif">
 
       <Tag
         width={200}
@@ -113,6 +113,9 @@ const App = () => {
         radius={2}
         shadow={2}
         spacing={1}
+        hover={{
+          shadow: 4,
+        }}
       >
         <a href="#">asd</a>
         <a href="#">asd</a>

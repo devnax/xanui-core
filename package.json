@@ -1,6 +1,6 @@
 {
    "name": "@xanui/core",
-   "version": "1.2.3",
+   "version": "1.2.4",
    "description": "",
    "private": false,
    "main": "./index.js",
@@ -16,7 +16,7 @@
    "dependencies": {
       "oncss": "^1.2.4",
       "pretty-class": "^1.0.8",
-      "react-state-bucket": "^1.2.4"
+      "react-state-bucket": "^1.2.5"
    },
    "devDependencies": {
       "@types/react": "^19.2.7",

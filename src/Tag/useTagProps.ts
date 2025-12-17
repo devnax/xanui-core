@@ -9,10 +9,14 @@ export type useTagPropsReturn<T extends TagComponentType = "div"> = {
    style: CSSFactoryType
 }
 
-const useTagProps = <T extends TagComponentType = "div">({ sxr, sx, baseClass, classNames: clses, hover, ...props }: TagPropsRoot<T>): useTagPropsReturn<T> => {
-   let _css: any = { ...sxr, ...sx, ...props }
-   if (hover) _css['&:hover'] = hover
-   const style = css(_css, {
+const useTagProps = <T extends TagComponentType = "div">({ baseClass, classNames: clses, ...props }: TagPropsRoot<T>): useTagPropsReturn<T> => {
+
+   if ('hover' in props) {
+      (props as any)['&:hover'] = props['hover'];
+      delete (props as any)['hover'];
+   }
+
+   const style = css(props, {
       skipProps: (prop, _val, dept): any => dept === 1 && !cssPropList[prop],
       injectStyle: typeof window !== 'undefined',
    })
