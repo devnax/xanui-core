@@ -39,7 +39,6 @@ export type Aliases = {
     color?: CSSValueType<'color'> | ColorsRefTypes;
     width?: CSSValueType<'width'> | BreakpointKeys;
     height?: CSSValueType<'height'>
-    borderColor?: CSSValueType<'backgroundColor'> | ColorsRefTypes;
 
     fontSize?: CSSValueType<"fontSize"> | TypographyRefTypes;
     minWidth?: CSSValueType<"minWidth"> | BreakpointKeys;
