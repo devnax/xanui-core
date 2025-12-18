@@ -23,9 +23,11 @@ const useColorTemplate = (name: keyof ThemeColor, type: UseColorTemplateType) =>
         return {
             bgcolor: "transparent",
             color: if_common(color.text, color.primary),
-            border: `1px solid ${divider}`,
+            border: 1,
+            borderColor: divider,
             hover: {
                 color: if_common(color.text, color.secondary),
+                border: 1,
                 borderColor: color.divider,
             }
         }
@@ -33,30 +35,39 @@ const useColorTemplate = (name: keyof ThemeColor, type: UseColorTemplateType) =>
         return {
             bgcolor: if_common(color.secondary, color.primary),
             color: color.text,
-            border: `1px solid transparent`,
+            border: 0,
+            borderColor: `transparent`,
             hover: {
                 bgcolor: if_common(color.secondary, color.secondary),
                 color: color.text,
+                border: 0,
+                borderColor: `transparent`,
             }
         }
     } else if (type === "text") {
         return {
             bgcolor: "transparent",
             color: if_common(color.text, color.primary),
-            border: `1px solid transparent`,
+            border: 0,
+            borderColor: `transparent`,
             hover: {
                 bgcolor: if_common(color.secondary, alpha(color.primary, 0.09)),
                 color: if_common(color.text, color.primary),
+                border: 0,
+                borderColor: `transparent`,
             }
         }
     } else if (type === "alpha") {
         return {
             bgcolor: if_common(color.secondary, alpha(color.primary, 0.09)),
             color: if_common(color.text, color.primary),
-            border: `1px solid transparent`,
+            border: 0,
+            borderColor: `transparent`,
             hover: {
                 bgcolor: if_common(color.secondary, alpha(color.primary, 0.15)),
                 color: if_common(color.text, color.primary),
+                border: 0,
+                borderColor: `transparent`,
             }
         }
     }
