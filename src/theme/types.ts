@@ -1,12 +1,9 @@
 import { BreakpointKeys, GlobalCSS } from "../css/types";
-
+import { ColorScale } from "./createColorScale";
 export type ObjectType = { [key: string]: any }
 
-export type ThemeColorItem = {
-    primary: string;
-    secondary: string;
-    text: string
-}
+
+
 
 export type ThemeTypographyItem = {
     fontSize: number;
@@ -15,15 +12,13 @@ export type ThemeTypographyItem = {
 }
 
 export type ThemeColor = {
-    common: Omit<ThemeColorItem, "text">;
-    text: Omit<ThemeColorItem, "text">;
-    divider: Omit<ThemeColorItem, "text">;
-    brand: ThemeColorItem;
-    accent: ThemeColorItem;
-    success: ThemeColorItem
-    info: ThemeColorItem
-    warning: ThemeColorItem
-    danger: ThemeColorItem
+    common: ColorScale;
+    brand: ColorScale;
+    accent: ColorScale;
+    success: ColorScale
+    info: ColorScale
+    warning: ColorScale
+    danger: ColorScale
 };
 
 export type ThemeTypographyType = {
@@ -41,6 +36,7 @@ export type ThemeTypographyType = {
 
 export interface ThemeOptions {
     name: string;
+    isDark: boolean;
     rtl: boolean;
     globalStyle: GlobalCSS,
     breakpoints: { [key in BreakpointKeys]: number };
@@ -50,13 +46,22 @@ export interface ThemeOptions {
     typography: ThemeTypographyType;
 }
 
+
 // Theme Input
-export type ThemeColorItemInput = Partial<Omit<ThemeColorItem, "alpha">>
-export type ThemeTypographyItemInput = Partial<ThemeTypographyItem>
+export type ThemeColorItemInput = string | {
+    base: string;
+    light?: string;
+    lighter?: string;
+    dark?: string;
+    darker?: string;
+    soft?: string;
+    softer?: string;
+    text?: string;
+    subtext?: string;
+};
+
 export type ThemeColorInput = {
     common?: ThemeColorItemInput;
-    text?: Omit<ThemeColorItem, "text">;
-    divider?: Omit<ThemeColorItem, "text">;
     brand?: ThemeColorItemInput;
     accent?: ThemeColorItemInput;
     success?: ThemeColorItemInput
@@ -64,6 +69,9 @@ export type ThemeColorInput = {
     warning?: ThemeColorItemInput
     danger?: ThemeColorItemInput
 };
+
+export type ThemeTypographyItemInput = Partial<ThemeTypographyItem>
+
 export type ThemeTypographyInputType = {
     h1?: ThemeTypographyItemInput;
     h2?: ThemeTypographyItemInput;
@@ -98,35 +106,72 @@ export type TypographyRefTypes =
 
 export type ColorsRefTypes =
 
-    | "common.primary"
-    | "common.secondary"
+    | "common"
+    | "common.light"
+    | "common.lighter"
+    | "common.dark"
+    | "common.darker"
+    | "common.soft"
+    | "common.softer"
+    | "common.text"
+    | "common.subtext"
 
-    | "text.primary"
-    | "text.secondary"
-
-    | "divider.primary"
-    | "divider.secondary"
-
-    | "brand.primary"
-    | "brand.secondary"
+    | "brand"
+    | "brand.light"
+    | "brand.lighter"
+    | "brand.dark"
+    | "brand.darker"
+    | "brand.soft"
+    | "brand.softer"
     | "brand.text"
+    | "brand.subtext"
 
-    | "accent.primary"
-    | "accent.secondary"
+    | "accent"
+    | "accent.light"
+    | "accent.lighter"
+    | "accent.dark"
+    | "accent.darker"
+    | "accent.soft"
+    | "accent.softer"
     | "accent.text"
+    | "accent.subtext"
 
-    | "info.primary"
-    | "info.secondary"
+    | "info"
+    | "info.light"
+    | "info.lighter"
+    | "info.dark"
+    | "info.darker"
+    | "info.soft"
+    | "info.softer"
     | "info.text"
+    | "info.subtext"
 
-    | "success.primary"
-    | "success.secondary"
+    | "success"
+    | "success.light"
+    | "success.lighter"
+    | "success.dark"
+    | "success.darker"
+    | "success.soft"
+    | "success.softer"
     | "success.text"
+    | "success.subtext"
 
-    | "warning.primary"
-    | "warning.secondary"
+    | "warning"
+    | "warning.light"
+    | "warning.lighter"
+    | "warning.dark"
+    | "warning.darker"
+    | "warning.soft"
+    | "warning.softer"
     | "warning.text"
+    | "warning.subtext"
 
-    | "danger.primary"
-    | "danger.secondary"
-    | "danger.text.primary"
+    | "danger"
+    | "danger.light"
+    | "danger.lighter"
+    | "danger.dark"
+    | "danger.darker"
+    | "danger.soft"
+    | "danger.softer"
+    | "danger.text"
+    | "danger.subtext"

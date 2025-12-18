@@ -5,15 +5,13 @@ import { TagComponentType, TagProps } from "../Tag/types"
 import { ThemeContex, ThemeFactory } from "./core"
 import ThemeCssVars from "./ThemeCssVars"
 import { css } from "../css"
-import { createTheme } from "./createTheme"
-import { darkThemeOptions, lightThemeOptions } from "./ThemeDefaultOptions"
+import { createDefaultThemes } from "./ThemeDefaultOptions"
 
 export type ThemeProviderProps<T extends TagComponentType = 'div'> = TagProps<T> & {
    theme: string;
 }
 
-createTheme("light", lightThemeOptions)
-createTheme("dark", darkThemeOptions)
+createDefaultThemes()
 
 const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ...props }: ThemeProviderProps<T>) => {
    let THEME = ThemeFactory.get(theme) as ThemeOptions
@@ -51,8 +49,8 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ..
          }
          <Tag
             minHeight="100%"
-            bgcolor={THEME.colors.common.primary}
-            color={THEME.colors.text.primary}
+            bgcolor={THEME.colors.common.base}
+            color={THEME.colors.common.text}
             fontSize={THEME.typography.text.fontSize}
             fontWeight={THEME.typography.text.fontWeight}
             lineHeight={THEME.typography.text.lineHeight}
@@ -60,7 +58,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ..
             {...props}
             sxr={{
                "& a": {
-                  color: THEME.colors.brand.primary || 'inherit',
+                  color: THEME.colors.brand.base || 'inherit',
                },
             }}
             baseClass={`${theme}-theme-root`}

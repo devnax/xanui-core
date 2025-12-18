@@ -1,45 +1,31 @@
-import { alpha } from "../css"
-import { useTheme } from "../theme"
-import { ThemeColor } from "../theme/types"
-
-export type UseColorTemplateType = "fill" | "outline" | "text" | "alpha"
+export type UseColorTemplateType = "fill" | "outline" | "text" | "soft"
 export type UseColorTemplateColor = "common" | "brand" | "accent" | "success" | "info" | "warning" | "danger"
 
-const useColorTemplate = (name: keyof ThemeColor, type: UseColorTemplateType) => {
-    const theme = useTheme()
-    let color: any = theme.colors[name]
-    let divider = theme.colors.divider.primary
-
-    if (name === "common") {
-        color = {
-            ...color,
-            text: theme.colors.text.primary,
-        }
-    }
-
-    const if_common = (a: string, b: string) => name === "common" ? a : b
+const useColorTemplate = (color: UseColorTemplateColor, type: UseColorTemplateType) => {
+    const if_common = (a: string, b: string) => color === "common" ? a : b
 
     if (type === "outline") {
         return {
             bgcolor: "transparent",
-            color: if_common(color.text, color.primary),
+            color: if_common(`${color}.text`, color),
             border: 1,
-            borderColor: divider,
+            borderColor: `${color}.dark`,
             hover: {
-                color: if_common(color.text, color.secondary),
+                bgcolor: "transparent",
+                color: if_common(`${color}.text`, color),
                 border: 1,
-                borderColor: color.divider,
+                borderColor: `${color}.darker`,
             }
         }
     } else if (type === "fill") {
         return {
-            bgcolor: if_common(color.secondary, color.primary),
-            color: color.text,
+            bgcolor: if_common(`${color}.light`, color),
+            color: `${color}.text`,
             border: 0,
             borderColor: `transparent`,
             hover: {
-                bgcolor: if_common(color.secondary, color.secondary),
-                color: color.text,
+                bgcolor: if_common(`${color}.lighter`, `${color}.dark`),
+                color: `${color}.text`,
                 border: 0,
                 borderColor: `transparent`,
             }
@@ -47,25 +33,25 @@ const useColorTemplate = (name: keyof ThemeColor, type: UseColorTemplateType) =>
     } else if (type === "text") {
         return {
             bgcolor: "transparent",
-            color: if_common(color.text, color.primary),
+            color: if_common(`${color}.text`, color),
             border: 0,
             borderColor: `transparent`,
             hover: {
-                bgcolor: if_common(color.secondary, alpha(color.primary, 0.09)),
-                color: if_common(color.text, color.primary),
+                bgcolor: "transparent",
+                color: if_common(`${color}.text`, `${color}.dark`),
                 border: 0,
                 borderColor: `transparent`,
             }
         }
-    } else if (type === "alpha") {
+    } else if (type === "soft") {
         return {
-            bgcolor: if_common(color.secondary, alpha(color.primary, 0.09)),
-            color: if_common(color.text, color.primary),
+            bgcolor: `${color}.soft`,
+            color: if_common(`${color}.text`, color),
             border: 0,
             borderColor: `transparent`,
             hover: {
-                bgcolor: if_common(color.secondary, alpha(color.primary, 0.15)),
-                color: if_common(color.text, color.primary),
+                bgcolor: `${color}.softer`,
+                color: if_common(`${color}.text`, color),
                 border: 0,
                 borderColor: `transparent`,
             }

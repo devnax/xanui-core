@@ -1,3 +1,4 @@
+import { createTheme } from './createTheme'
 import { ThemeOptionInput, ThemeTypographyType } from './types'
 
 export const lightShadows = [
@@ -56,78 +57,6 @@ export const darkShadows = [
     "0px 11px 15px -7px rgba(255,255,255,0.05),0px 24px 38px 3px rgba(255,255,255,0.04),0px 9px 46px 8px rgba(255,255,255,0.03)",
 ]
 
-
-export const lightColorPalette = {
-    common: {
-        primary: "#FFFFFF",
-        secondary: "#F3F4F6", // darker than before (was #F9FAFB)
-    },
-    text: {
-        primary: "#111827",
-        secondary: "#6B7280",
-    },
-    divider: {
-        primary: "#E5E7EB",
-        secondary: "#D1D5DB",
-    },
-};
-
-export const darkColorPalette = {
-    common: {
-        primary: "#0F172A",
-        secondary: "#1E293B", // darker separation (was #111827)
-    },
-    text: {
-        primary: "#F9FAFB",
-        secondary: "#9CA3AF",
-    },
-    divider: {
-        primary: "#374151",
-        secondary: "#4B5563",
-    },
-};
-
-
-export const ThemeColors = {
-    ...lightColorPalette,
-
-    brand: {
-        primary: "#2563EB",   // blue-600
-        secondary: "#3B82F6", // blue-500
-        text: "#FFFFFF"
-    },
-
-    accent: {
-        primary: "#0D9488",   // teal-600
-        secondary: "#14B8A6", // teal-500
-        text: "#FFFFFF"
-    },
-
-    info: {
-        primary: "#0284C7",   // sky-600
-        secondary: "#38BDF8", // sky-400
-        text: "#FFFFFF"
-    },
-
-    success: {
-        primary: "#16A34A",   // green-600
-        secondary: "#4ADE80", // green-400
-        text: "#FFFFFF"
-    },
-
-    warning: {
-        primary: "#D97706",
-        secondary: "#FBBF24",
-        text: "#000000"
-    },
-
-    danger: {
-        primary: "#DC2626",
-        secondary: "#F87171",
-        text: "#FFFFFF"
-    },
-}
-
 export const ThemeTypography: ThemeTypographyType = {
     h1: { fontSize: 48, lineHeight: 1.3, fontWeight: 600 }, // bolder for emphasis
     h2: { fontSize: 40, lineHeight: 1.35, fontWeight: 500 },
@@ -141,23 +70,30 @@ export const ThemeTypography: ThemeTypographyType = {
     small: { fontSize: 12, lineHeight: 1.6, fontWeight: 400 },
 }
 
-
-export const darkThemeOptions: ThemeOptionInput = {
-    name: "dark",
-    rtl: false,
-    shadow: darkShadows,
-    globalStyle: {},
-    colors: darkColorPalette,
-    typography: ThemeTypography,
-    interfaces: {}
-} as ThemeOptionInput
-
 export const lightThemeOptions: ThemeOptionInput = {
     name: "light",
     rtl: false,
     shadow: lightShadows,
     globalStyle: {},
-    colors: ThemeColors,
+    colors: {
+        common: "#FFFFFF",
+        brand: "#2563EB",
+        accent: "#0D9488",
+        info: "#0284C7",
+        success: "#16A34A",
+        warning: "#D97706",
+        danger: "#DC2626",
+    },
     typography: ThemeTypography,
     interfaces: {}
 } as ThemeOptionInput
+
+
+export const createDefaultThemes = () => {
+    createTheme("light", {})
+    createTheme("dark", {
+        colors: {
+            common: "#0F172A",
+        }
+    })
+}

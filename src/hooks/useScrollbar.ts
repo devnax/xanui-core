@@ -1,59 +1,45 @@
-import { getTheme } from '../theme'
 import { css } from '../css'
-import { ThemeOptions } from '../theme/types';
 
 export type UseScrollbarOption = {
-   themeName: string
    root_cls?: string;
    thumbSize?: number
    thumbColor?: string
-   trackColor?: string
+   trackColor?: string;
 }
 
 type ClassName = string
 
-const useScrollbar = ({ themeName, root_cls, thumbSize, thumbColor, trackColor }: UseScrollbarOption): ClassName => {
-   let theme = getTheme(themeName)
-   if (!theme) {
-      console.error(`useScrollbar: The theme '${themeName}' is not defined. Please make sure to use a valid theme name.`)
-      theme = getTheme("light") as ThemeOptions
-   }
+const useScrollbar = ({ root_cls, thumbSize, thumbColor, trackColor }: UseScrollbarOption): ClassName => {
 
-   thumbSize = thumbSize || 12
-   thumbColor = thumbColor || theme.colors.divider.secondary
-   trackColor = trackColor || theme.colors.divider.primary
-   root_cls = root_cls || ""
+   thumbSize = thumbSize || 8
+   thumbColor = thumbColor || "var(--color-common-subtext)"
+   trackColor = trackColor || "var(--color-common-lighter)"
 
-   let clss = {
-      "*": root_cls ? `${root_cls} *` : `*`,
-      "scrollbar": root_cls ? `${root_cls}::-webkit-scrollbar, ${root_cls} ::-webkit-scrollbar` : `::-webkit-scrollbar`,
-      "scrollbarThumb": root_cls ? `${root_cls}::-webkit-scrollbar-thumb, ${root_cls} ::-webkit-scrollbar-thumb` : `::-webkit-scrollbar-thumb`,
-      "scrollbarThumbHover": root_cls ? `${root_cls}::-webkit-scrollbar-thumb:hover, ${root_cls} ::-webkit-scrollbar-thumb:hover` : `::-webkit-scrollbar-thumb:hover`,
-      "scrollbarTrack": root_cls ? `${root_cls}::-webkit-scrollbar-track, ${root_cls} ::-webkit-scrollbar-track` : `::-webkit-scrollbar-track`,
-   }
+   const cls = (cls: string) => root_cls ? `${root_cls} ${cls}` : cls
 
    return css({
       "@global": {
-         [clss['*']]: {
-            scrollbarWidth: "thin",
-            scrollbarColor: `${thumbColor} ${trackColor}`,
-         },
-         [clss["scrollbar"]]: {
+
+         [cls('*::-webkit-scrollbar')]: {
             width: thumbSize,
             height: thumbSize,
+            cursor: "pointer",
          },
-         [clss["scrollbarThumb"]]: {
+         [cls("*::-webkit-scrollbar-thumb")]: {
             backgroundColor: thumbColor,
             borderRadius: "6px",
-            border: `2px solid ${theme.colors.common.primary}`,
          },
-         [clss["scrollbarThumbHover"]]: {
+         [cls("*::-webkit-scrollbar-thumb:hover")]: {
             backgroundColor: thumbColor,
          },
-         [clss['scrollbarTrack']]: {
+         [cls("*::-webkit-scrollbar-track")]: {
             backgroundColor: trackColor,
             borderRadius: "6px",
          },
+         // [cls('*')]: {
+         //    scrollbarWidth: "thin",
+         //    scrollbarColor: `${thumbColor} ${trackColor}`,
+         // },
       }
    }, {
       injectStyle: typeof window !== 'undefined'

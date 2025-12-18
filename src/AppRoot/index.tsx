@@ -23,7 +23,6 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
    const scrollbarCss: any = useMemo(() => {
       if (noScrollbarCss) return;
       return useScrollbar({
-         themeName: theme,
          root_cls: themeRootClass(theme)
       })
    }, [noScrollbarCss, theme])

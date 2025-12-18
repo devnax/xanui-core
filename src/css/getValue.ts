@@ -1,19 +1,23 @@
 import { CSSProps } from "./types"
 
-const getColor = (color: string, hasText = true) => {
+const getColor = (color: string) => {
     const i = {
-        [`${color}.primary`]: `var(--color-${color}-primary)`,
-        [`${color}.secondary`]: `var(--color-${color}-secondary)`,
+        [`${color}`]: `var(--color-${color})`,
+        [`${color}.light`]: `var(--color-${color}-light)`,
+        [`${color}.lighter`]: `var(--color-${color}-lighter)`,
+        [`${color}.dark`]: `var(--color-${color}-dark)`,
+        [`${color}.darker`]: `var(--color-${color}-darker)`,
+        [`${color}.soft`]: `var(--color-${color}-soft)`,
+        [`${color}.softer`]: `var(--color-${color}-softer)`,
+        [`${color}.text`]: `var(--color-${color}-text)`,
+        [`${color}.subtext`]: `var(--color-${color}-subtext)`,
     }
-    if (hasText) i[`${color}.text`] = `var(--color-${color}-text)`
 
     return i
 }
 
 const withImportant = (important: any, value: any) => important ? value + important : value
 const colors: any = {
-    ...getColor("text", false),
-    ...getColor("divider", false),
     ...getColor("common"),
     ...getColor("brand"),
     ...getColor("accent"),

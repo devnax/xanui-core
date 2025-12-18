@@ -5,8 +5,9 @@ import { Tag, Transition, useBreakpoint, useColorTemplate } from './src';
 import AppRoot from './src/AppRoot';
 import usePortal from './src/hooks/usePortal';
 import { Renderar } from './src/AppRoot/Renderar';
+import createColorScale from './src/theme/createColorScale';
 
-const useThemeSwitcher = createThemeSwitcher("light")
+const useThemeSwitcher = createThemeSwitcher("dark")
 
 const ThemeBox = () => {
   const themeSwitcher = useThemeSwitcher()
@@ -102,7 +103,10 @@ const Trans = () => {
 const App = () => {
   const themeSwitcher = useThemeSwitcher()
   const [toggled, setToggled] = React.useState(true)
-  const template = useColorTemplate('success', 'alpha')
+  const template = useColorTemplate('common', 'outline')
+  const color = createColorScale('#000000');
+  console.log(color);
+
   return (
     <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" p={2}>
       <Tag
@@ -114,23 +118,31 @@ const App = () => {
           component={"button"}
           cursor={"pointer"}
           p={.5}
+          px={2}
           radius={1}
-          width={100}
+          minWidth={100}
           {...template}
         >
-          hello
+          Lorem ipsum
         </Tag>
 
       </Tag>
       <Tag
-        width={200}
         height={200}
-        bgcolor="common.secondary"
         radius={2}
       >
         <Tag
-          color="text.primary"
           overflow="auto"
+
+          p={1}
+          fontWeight={700}
+        >
+          University of Anything
+        </Tag>
+        <Tag
+          overflow="auto"
+          p={1}
+          width={200}
           height={200}
         >
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos sequi numquam illo expedita accusamus dolores. Recusandae ab dignissimos quod. Minus suscipit quis natus neque voluptate assumenda provident dicta officiis animi!
