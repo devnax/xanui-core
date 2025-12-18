@@ -76,13 +76,69 @@ export const lightThemeOptions: ThemeOptionInput = {
     shadow: lightShadows,
     globalStyle: {},
     colors: {
-        common: "#FFFFFF",
-        brand: "#2563EB",
-        accent: "#0D9488",
-        info: "#0284C7",
-        success: "#16A34A",
-        warning: "#D97706",
-        danger: "#DC2626",
+        common: {
+            primary: "#FFFFFF",
+            secondary: "#E5E7EB",
+            divider: "#D1D5DB",
+            text: "#111827",
+            subtext: "#6B7280",
+        },
+
+        default: {
+            primary: "#6C757D",
+            secondary: "#5A6268",
+            divider: "#343A40",
+            text: "#FFFFFF",
+            subtext: "#CED4DA",
+        },
+
+        brand: {
+            primary: "#2563EB",
+            secondary: "#1D4ED8",
+            divider: "#1E40AF",
+            text: "#F9FAFB",
+            subtext: "#BFDBFE",
+        },
+
+        accent: {
+            primary: "#7C3AED",
+            secondary: "#6D28D9",
+            divider: "#5B21B6",
+            text: "#F9FAFB",
+            subtext: "#DDD6FE",
+        },
+
+        success: {
+            primary: "#16A34A",
+            secondary: "#15803D",
+            divider: "#166534",
+            text: "#F9FAFB",
+            subtext: "#BBF7D0",
+        },
+
+        info: {
+            primary: "#2563EB",
+            secondary: "#1D4ED8",
+            divider: "#1E40AF",
+            text: "#F9FAFB",
+            subtext: "#DBEAFE",
+        },
+
+        warning: {
+            primary: "#D97706",
+            secondary: "#B45309",
+            divider: "#92400E",
+            text: "#FFFBEB",
+            subtext: "#FDE68A",
+        },
+
+        danger: {
+            primary: "#DC2626",
+            secondary: "#B91C1C",
+            divider: "#991B1B",
+            text: "#FEF2F2",
+            subtext: "#FECACA",
+        },
     },
     typography: ThemeTypography,
     interfaces: {}
@@ -93,7 +149,21 @@ export const createDefaultThemes = () => {
     createTheme("light", {})
     createTheme("dark", {
         colors: {
-            common: "#0F172A",
+            common: {
+                primary: "#1F2937",   // base dark surface
+                secondary: "#111827", // deeper surface
+                divider: "#374151",   // strong divider
+                text: "#F9FAFB",      // primary text
+                subtext: "#9CA3AF",   // muted text
+            },
+
+            default: {
+                primary: "#111827",   // main app background
+                secondary: "#1F2937", // cards / panels
+                divider: "#374151",
+                text: "#F9FAFB",
+                subtext: "#9CA3AF",
+            },
         }
     })
 }

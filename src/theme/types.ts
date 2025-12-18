@@ -3,23 +3,12 @@ import { ColorScale } from "./createColorScale";
 export type ObjectType = { [key: string]: any }
 
 
-
-
 export type ThemeTypographyItem = {
     fontSize: number;
     lineHeight: number;
     fontWeight: number;
 }
 
-export type ThemeColor = {
-    common: ColorScale;
-    brand: ColorScale;
-    accent: ColorScale;
-    success: ColorScale
-    info: ColorScale
-    warning: ColorScale
-    danger: ColorScale
-};
 
 export type ThemeTypographyType = {
     h1: ThemeTypographyItem;
@@ -34,6 +23,14 @@ export type ThemeTypographyType = {
     small: ThemeTypographyItem;
 }
 
+export type ThemeColorOption = {
+    primary: string;
+    secondary: string;
+    divider: string;
+    text: string;
+    subtext: string;
+}
+
 export interface ThemeOptions {
     name: string;
     isDark: boolean;
@@ -42,33 +39,19 @@ export interface ThemeOptions {
     breakpoints: { [key in BreakpointKeys]: number };
     shadow: string[];
     interfaces: { [name: string]: <P extends object>(defaultProps: P, theme: ThemeOptions) => P };
-    colors: ThemeColor;
+    colors: {
+        common: ThemeColorOption;
+        default: ThemeColorOption;
+        brand: ThemeColorOption;
+        accent: ThemeColorOption;
+        success: ThemeColorOption
+        info: ThemeColorOption
+        warning: ThemeColorOption
+        danger: ThemeColorOption
+    };
     typography: ThemeTypographyType;
 }
 
-
-// Theme Input
-export type ThemeColorItemInput = string | {
-    base: string;
-    light?: string;
-    lighter?: string;
-    dark?: string;
-    darker?: string;
-    soft?: string;
-    softer?: string;
-    text?: string;
-    subtext?: string;
-};
-
-export type ThemeColorInput = {
-    common?: ThemeColorItemInput;
-    brand?: ThemeColorItemInput;
-    accent?: ThemeColorItemInput;
-    success?: ThemeColorItemInput
-    info?: ThemeColorItemInput
-    warning?: ThemeColorItemInput
-    danger?: ThemeColorItemInput
-};
 
 export type ThemeTypographyItemInput = Partial<ThemeTypographyItem>
 
@@ -87,7 +70,16 @@ export interface ThemeOptionInput {
     rtl?: boolean;
     globalStyle?: GlobalCSS,
     interfaces?: { [name: string]: <P extends object>(defaultProps: P, theme: ThemeOptions) => P };
-    colors?: ThemeColorInput;
+    colors?: {
+        common?: ThemeColorOption
+        default?: ThemeColorOption
+        brand?: ThemeColorOption
+        accent?: ThemeColorOption
+        success?: ThemeColorOption
+        info?: ThemeColorOption
+        warning?: ThemeColorOption
+        danger?: ThemeColorOption
+    };
     typography?: ThemeTypographyInputType;
 }
 
