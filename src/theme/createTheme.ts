@@ -2,7 +2,6 @@ import { ThemeOptions, ThemeOptionInput, ThemeOptionsColor } from "./types"
 import { mergeObject, ThemeFactory } from "./core"
 import { alpha, breakpoints } from "../css"
 import { lightThemeOptions } from "./ThemeDefaultOptions"
-import createColorScale from "./createColorScale"
 
 export const createTheme = (name: string, options: ThemeOptionInput): ThemeOptions => {
    if (ThemeFactory.has(name)) {
