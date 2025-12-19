@@ -19,12 +19,9 @@ const getProps = (prop: string, value: string, _css: CSSProps) => {
                 borderColor: `divider.secondary!important`,
             }
 
-
             if ((_css as any).bgcolor && (_css as any).bgcolor !== 'transparent') {
                 c.bgcolor = `divider.primary!important`
             }
-
-
             return c
         }
         return {}
@@ -65,13 +62,13 @@ const getProps = (prop: string, value: string, _css: CSSProps) => {
     if (value && typeof value === "number" && ["border", "borderRight", "borderLeft", "borderTop", "borderBottom"].includes(prop as any)) {
         const keys: any = Object.keys(_css)
         let p: any = {
-            [`${prop}Width`]: value + 'px' + (important || ""),
+            [`borderWidth`]: value + 'px' + (important || ""),
         }
-        if (!keys.includes(`${prop}Color`)) {
-            p[`${prop}Color`] = "common.dark"
+        if (!keys.includes(`borderColor`)) {
+            p[`borderColor`] = "divider.primary"
         }
-        if (!keys.includes(`${prop}Style`)) {
-            p[`${prop}Style`] = "solid"
+        if (!keys.includes(`borderStyle`)) {
+            p[`borderStyle`] = "solid"
         }
         return p
     }

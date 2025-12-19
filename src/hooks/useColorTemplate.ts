@@ -33,8 +33,8 @@ const useColorTemplate = (color: UseColorTemplateColor, type: UseColorTemplateTy
             secondary: {
                 bgcolor: `${color}.secondary`,
                 color: is_def ? `text.primary` : `${color}.text`,
-                border: 0,
-                borderColor: `transparent`,
+                border: 1,
+                borderColor: is_def ? `divider.secondary` : `${color}.secondary`,
             }
         }
     } else if (type === "text") {
