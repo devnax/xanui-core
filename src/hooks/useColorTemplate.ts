@@ -1,57 +1,68 @@
 export type UseColorTemplateType = "fill" | "outline" | "text" | "soft"
-export type UseColorTemplateColor = "common" | "brand" | "accent" | "success" | "info" | "warning" | "danger"
+export type UseColorTemplateColor = "default" | "brand" | "accent" | "success" | "info" | "warning" | "danger"
 
 const useColorTemplate = (color: UseColorTemplateColor, type: UseColorTemplateType) => {
-    const if_common = (a: string, b: string) => color === "common" ? a : b
+    const is_def = color === "default";
+    if (is_def) {
+        color = "divider" as any
+    }
 
     if (type === "outline") {
         return {
-            bgcolor: "transparent",
-            color: if_common(`${color}.text`, color),
-            border: 1,
-            borderColor: `${color}.dark`,
-            hover: {
-                bgcolor: "transparent",
-                color: if_common(`${color}.text`, color),
+            primary: {
+                bgcolor: `transparent`,
+                color: is_def ? `text.primary` : `${color}.primary`,
                 border: 1,
-                borderColor: `${color}.darker`,
+                borderColor: is_def ? `divider` : `${color}.primary`,
+            },
+            secondary: {
+                bgcolor: `transparent`,
+                color: is_def ? `text.primary` : `${color}.secondary`,
+                border: 1,
+                borderColor: is_def ? `divider.secondary` : `${color}.secondary`,
             }
         }
     } else if (type === "fill") {
         return {
-            bgcolor: if_common(`${color}.light`, color),
-            color: `${color}.text`,
-            border: 0,
-            borderColor: `transparent`,
-            hover: {
-                bgcolor: if_common(`${color}.lighter`, `${color}.dark`),
-                color: `${color}.text`,
+            primary: {
+                bgcolor: color,
+                color: is_def ? `text.primary` : `${color}.text`,
+                border: 1,
+                borderColor: is_def ? `divider.secondary` : `${color}.secondary`,
+            },
+            secondary: {
+                bgcolor: `${color}.secondary`,
+                color: is_def ? `text.primary` : `${color}.text`,
                 border: 0,
                 borderColor: `transparent`,
             }
         }
     } else if (type === "text") {
         return {
-            bgcolor: "transparent",
-            color: if_common(`${color}.text`, color),
-            border: 0,
-            borderColor: `transparent`,
-            hover: {
+            primary: {
                 bgcolor: "transparent",
-                color: if_common(`${color}.text`, `${color}.dark`),
+                color: is_def ? `text.primary` : `${color}.primary`,
+                border: 0,
+                borderColor: `transparent`,
+            },
+            secondary: {
+                bgcolor: "transparent",
+                color: is_def ? `text.primary` : `${color}.secondary`,
                 border: 0,
                 borderColor: `transparent`,
             }
         }
     } else if (type === "soft") {
         return {
-            bgcolor: `${color}.soft`,
-            color: if_common(`${color}.text`, color),
-            border: 0,
-            borderColor: `transparent`,
-            hover: {
-                bgcolor: `${color}.softer`,
-                color: if_common(`${color}.text`, color),
+            primary: {
+                bgcolor: `${color}.soft.primary`,
+                color: is_def ? `text.primary` : color,
+                border: 0,
+                borderColor: `transparent`,
+            },
+            secondary: {
+                bgcolor: `${color}.soft.secondary`,
+                color: is_def ? `text.primary` : `${color}.secondary`,
                 border: 0,
                 borderColor: `transparent`,
             }

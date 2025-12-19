@@ -1,5 +1,4 @@
 import { BreakpointKeys, GlobalCSS } from "../css/types";
-import { ColorScale } from "./createColorScale";
 export type ObjectType = { [key: string]: any }
 
 
@@ -26,28 +25,31 @@ export type ThemeTypographyType = {
 export type ThemeColorOption = {
     primary: string;
     secondary: string;
-    divider: string;
     text: string;
-    subtext: string;
 }
-
+export type ThemeOptionsColor = ThemeColorOption & {
+    soft: {
+        primary: string;
+        secondary: string;
+    }
+}
 export interface ThemeOptions {
     name: string;
-    isDark: boolean;
     rtl: boolean;
     globalStyle: GlobalCSS,
     breakpoints: { [key in BreakpointKeys]: number };
     shadow: string[];
     interfaces: { [name: string]: <P extends object>(defaultProps: P, theme: ThemeOptions) => P };
     colors: {
-        common: ThemeColorOption;
-        default: ThemeColorOption;
-        brand: ThemeColorOption;
-        accent: ThemeColorOption;
-        success: ThemeColorOption
-        info: ThemeColorOption
-        warning: ThemeColorOption
-        danger: ThemeColorOption
+        background: Omit<ThemeOptionsColor, 'text'>;
+        text: Omit<ThemeOptionsColor, 'text'>;
+        divider: Omit<ThemeOptionsColor, 'text'>;
+        brand: ThemeOptionsColor;
+        accent: ThemeOptionsColor;
+        success: ThemeOptionsColor
+        info: ThemeOptionsColor
+        warning: ThemeOptionsColor
+        danger: ThemeOptionsColor
     };
     typography: ThemeTypographyType;
 }
@@ -71,8 +73,9 @@ export interface ThemeOptionInput {
     globalStyle?: GlobalCSS,
     interfaces?: { [name: string]: <P extends object>(defaultProps: P, theme: ThemeOptions) => P };
     colors?: {
-        common?: ThemeColorOption
-        default?: ThemeColorOption
+        background?: Omit<ThemeColorOption, 'text'>;
+        text?: Omit<ThemeColorOption, 'text'>;
+        divider?: Omit<ThemeColorOption, 'text'>;
         brand?: ThemeColorOption
         accent?: ThemeColorOption
         success?: ThemeColorOption
@@ -98,72 +101,58 @@ export type TypographyRefTypes =
 
 export type ColorsRefTypes =
 
-    | "common"
-    | "common.light"
-    | "common.lighter"
-    | "common.dark"
-    | "common.darker"
-    | "common.soft"
-    | "common.softer"
-    | "common.text"
-    | "common.subtext"
+    | "background"
+    | "background.primary"
+    | "background.secondary"
+
+    | "text"
+    | "text.primary"
+    | "text.secondary"
+
+    | "divider"
+    | "divider.primary"
+    | "divider.secondary"
+    | "divider.soft.primary"
+    | "divider.soft.secondary"
 
     | "brand"
-    | "brand.light"
-    | "brand.lighter"
-    | "brand.dark"
-    | "brand.darker"
-    | "brand.soft"
-    | "brand.softer"
+    | "brand.primary"
+    | "brand.secondary"
     | "brand.text"
-    | "brand.subtext"
+    | "brand.soft.primary"
+    | "brand.soft.secondary"
 
     | "accent"
-    | "accent.light"
-    | "accent.lighter"
-    | "accent.dark"
-    | "accent.darker"
-    | "accent.soft"
-    | "accent.softer"
+    | "accent.primary"
+    | "accent.secondary"
     | "accent.text"
-    | "accent.subtext"
+    | "accent.soft.primary"
+    | "accent.soft.secondary"
 
     | "info"
-    | "info.light"
-    | "info.lighter"
-    | "info.dark"
-    | "info.darker"
-    | "info.soft"
-    | "info.softer"
+    | "info.primary"
+    | "info.secondary"
     | "info.text"
-    | "info.subtext"
+    | "info.soft.primary"
+    | "info.soft.secondary"
 
     | "success"
-    | "success.light"
-    | "success.lighter"
-    | "success.dark"
-    | "success.darker"
-    | "success.soft"
-    | "success.softer"
+    | "success.primary"
+    | "success.secondary"
     | "success.text"
-    | "success.subtext"
+    | "success.soft.primary"
+    | "success.soft.secondary"
 
     | "warning"
-    | "warning.light"
-    | "warning.lighter"
-    | "warning.dark"
-    | "warning.darker"
-    | "warning.soft"
-    | "warning.softer"
+    | "warning.primary"
+    | "warning.secondary"
     | "warning.text"
-    | "warning.subtext"
+    | "warning.soft.primary"
+    | "warning.soft.secondary"
 
     | "danger"
-    | "danger.light"
-    | "danger.lighter"
-    | "danger.dark"
-    | "danger.darker"
-    | "danger.soft"
-    | "danger.softer"
+    | "danger.primary"
+    | "danger.secondary"
     | "danger.text"
-    | "danger.subtext"
+    | "danger.soft.primary"
+    | "danger.soft.secondary"

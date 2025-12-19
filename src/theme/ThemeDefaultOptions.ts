@@ -76,68 +76,55 @@ export const lightThemeOptions: ThemeOptionInput = {
     shadow: lightShadows,
     globalStyle: {},
     colors: {
-        common: {
-            primary: "#FFFFFF",
-            secondary: "#E5E7EB",
-            divider: "#D1D5DB",
-            text: "#111827",
-            subtext: "#6B7280",
+        background: {
+            primary: "#FFFFFF",   // main app background
+            secondary: "#F3F4F6", // slightly darker surface for sections/cards
         },
 
-        default: {
-            primary: "#6C757D",
-            secondary: "#5A6268",
-            divider: "#343A40",
-            text: "#FFFFFF",
-            subtext: "#CED4DA",
+        divider: {
+            primary: "#E5E7EB",   // soft divider, visible on #FFFFFF
+            secondary: "#D1D5DB", // stronger divider for emphasis
+        },
+
+        text: {
+            primary: "#111827",
+            secondary: "#6B7280",
         },
 
         brand: {
             primary: "#2563EB",
             secondary: "#1D4ED8",
-            divider: "#1E40AF",
             text: "#F9FAFB",
-            subtext: "#BFDBFE",
         },
 
         accent: {
             primary: "#7C3AED",
             secondary: "#6D28D9",
-            divider: "#5B21B6",
             text: "#F9FAFB",
-            subtext: "#DDD6FE",
         },
 
         success: {
             primary: "#16A34A",
             secondary: "#15803D",
-            divider: "#166534",
             text: "#F9FAFB",
-            subtext: "#BBF7D0",
         },
 
         info: {
             primary: "#2563EB",
             secondary: "#1D4ED8",
-            divider: "#1E40AF",
             text: "#F9FAFB",
-            subtext: "#DBEAFE",
         },
 
         warning: {
             primary: "#D97706",
             secondary: "#B45309",
-            divider: "#92400E",
             text: "#FFFBEB",
-            subtext: "#FDE68A",
         },
 
         danger: {
             primary: "#DC2626",
             secondary: "#B91C1C",
-            divider: "#991B1B",
             text: "#FEF2F2",
-            subtext: "#FECACA",
         },
     },
     typography: ThemeTypography,
@@ -149,20 +136,55 @@ export const createDefaultThemes = () => {
     createTheme("light", {})
     createTheme("dark", {
         colors: {
-            common: {
-                primary: "#1F2937",   // base dark surface
-                secondary: "#111827", // deeper surface
-                divider: "#374151",   // strong divider
-                text: "#F9FAFB",      // primary text
-                subtext: "#9CA3AF",   // muted text
+            background: {
+                primary: "#121212",
+                secondary: "#1E1E1E",
             },
 
-            default: {
-                primary: "#111827",   // main app background
-                secondary: "#1F2937", // cards / panels
-                divider: "#374151",
+            divider: {
+                primary: "#262626",
+                secondary: "#2E2E2E",
+            },
+
+            text: {
+                primary: "#F3F4F6",   // main readable text
+                secondary: "#9CA3AF", // muted / secondary text
+            },
+
+            brand: {
+                primary: "#1D4ED8",
+                secondary: "#2563EB",
                 text: "#F9FAFB",
-                subtext: "#9CA3AF",
+            },
+
+            accent: {
+                primary: "#6D28D9",
+                secondary: "#7C3AED",
+                text: "#F9FAFB",
+            },
+
+            success: {
+                primary: "#15803D",
+                secondary: "#16A34A",
+                text: "#F9FAFB",
+            },
+
+            info: {
+                primary: "#1D4ED8",
+                secondary: "#2563EB",
+                text: "#F9FAFB",
+            },
+
+            warning: {
+                primary: "#B45309",
+                secondary: "#D97706",
+                text: "#FFFBEB",
+            },
+
+            danger: {
+                primary: "#B91C1C",
+                secondary: "#DC2626",
+                text: "#FEF2F2",
             },
         }
     })

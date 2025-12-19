@@ -12,9 +12,9 @@ export type useTagPropsReturn<T extends TagComponentType = "div"> = {
 const useTagProps = <T extends TagComponentType = "div">({ baseClass, classNames: clses, sx, sxr, style, hover, ...props }: TagPropsRoot<T>): useTagPropsReturn<T> => {
    const _css: any = {
       ...(sxr || {}),
+      ...props,
       ...(sx || {}),
       ...(style || {}),
-      ...props
    }
 
    if (hover) {

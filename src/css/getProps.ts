@@ -14,29 +14,14 @@ const getProps = (prop: string, value: string, _css: CSSProps) => {
                 pointerEvents: "none!important",
                 cursor: "default!important",
                 userSelect: "none!important",
+                opacity: "0.5!important",
+                color: `text.primary!important`,
+                borderColor: `divider.secondary!important`,
             }
 
-            let bgcolor = (_css as any).bgcolor
-            let colorname = ""
-            let names = ["brand", "accent", "success", "info", "warning", "danger", "common"]
 
-            if (bgcolor) {
-                const split = bgcolor.split(".")
-
-                if (names.includes(split[0])) {
-                    colorname = split[0]
-                }
-            } else if ((_css as any).color) {
-                const split = (_css as any).color.split(".")
-                if (names.includes(split[0])) {
-                    colorname = split[0]
-                }
-            }
-
-            if (colorname) {
-                c.bgcolor = `${colorname}.lighter!important`
-                c.color = `${colorname}.subtext!important`
-                c.borderColor = `${colorname}.lighter!important`
+            if ((_css as any).bgcolor && (_css as any).bgcolor !== 'transparent') {
+                c.bgcolor = `divider.primary!important`
             }
 
 

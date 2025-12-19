@@ -5,9 +5,8 @@ import { Tag, Transition, useBreakpoint, useColorTemplate } from './src';
 import AppRoot from './src/AppRoot';
 import usePortal from './src/hooks/usePortal';
 import { Renderar } from './src/AppRoot/Renderar';
-import createColorScale from './src/theme/createColorScale';
 
-const useThemeSwitcher = createThemeSwitcher("dark")
+const useThemeSwitcher = createThemeSwitcher("light")
 
 const ThemeBox = () => {
   const themeSwitcher = useThemeSwitcher()
@@ -100,32 +99,55 @@ const Trans = () => {
 }
 
 
+const Button = ({ children, color, variant, ...rest }: any) => {
+  const t = useColorTemplate(color || 'brand', variant || 'fill')
+  return (
+    <Tag
+      component={"button"}
+      cursor={"pointer"}
+      p={.5}
+      px={2}
+      radius={1}
+      minWidth={100}
+      {...t.primary}
+      hover={{ ...t.secondary }}
+      {...rest}
+    >
+      {children}
+    </Tag>
+  )
+}
+
 const App = () => {
   const themeSwitcher = useThemeSwitcher()
   const [toggled, setToggled] = React.useState(true)
-  const template = useColorTemplate('common', 'outline')
-  const color = createColorScale('#000000');
-  console.log(color);
 
   return (
     <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" p={2}>
+
+      <Tag
+        flexBox
+        spacing={2}
+        p={1}
+        bgcolor="background.secondary"
+        sx={{
+        }}
+      >
+        <Button color="default" >Filled</Button>
+        <Button color="default" variant="outline">Outlined</Button>
+        <Button color="default" variant="text">Text</Button>
+        <Button color="default" variant="soft">Soft</Button>
+      </Tag>
+
       <Tag
         flexBox
         spacing={2}
         p={1}
       >
-        <Tag
-          component={"button"}
-          cursor={"pointer"}
-          p={.5}
-          px={2}
-          radius={1}
-          minWidth={100}
-          {...template}
-        >
-          Lorem ipsum
-        </Tag>
-
+        <Button color="brand" >Filled</Button>
+        <Button color="brand" variant="outline">Outlined</Button>
+        <Button color="brand" variant="text">Text</Button>
+        <Button color="brand" variant="soft">Soft</Button>
       </Tag>
       <Tag
         height={200}
