@@ -59,19 +59,19 @@ const getProps = (prop: string, value: string, _css: CSSProps) => {
     }
 
 
-    if (value && typeof value === "number" && ["border", "borderRight", "borderLeft", "borderTop", "borderBottom"].includes(prop as any)) {
-        const keys: any = Object.keys(_css)
-        let p: any = {
-            [`${prop}Width`]: value + 'px' + (important || ""),
-        }
-        if (!keys.includes(`${prop}Color`)) {
-            p[`${prop}Color`] = "divider.primary"
-        }
-        if (!keys.includes(`${prop}Style`)) {
-            p[`${prop}Style`] = "solid"
-        }
-        return p
-    }
+    // if (value && typeof value === "number" && ["border", "borderRight", "borderLeft", "borderTop", "borderBottom"].includes(prop as any)) {
+    //     const keys: any = Object.keys(_css)
+    //     let p: any = {
+    //         [`${prop}Width`]: value + 'px' + (important || ""),
+    //     }
+    //     // if (!keys.includes(`${prop}Color`)) {
+    //     //     p[`${prop}Color`] = "divider.primary"
+    //     // }
+    //     if (!keys.includes(`${prop}Style`)) {
+    //         p[`${prop}Style`] = "solid"
+    //     }
+    //     return p
+    // }
 }
 
 export default getProps

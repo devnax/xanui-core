@@ -109,6 +109,7 @@ const Button = ({ children, color, variant, ...rest }: any) => {
       px={2}
       radius={1}
       minWidth={100}
+
       {...t.primary}
       hover={{ ...t.secondary }}
       {...rest}
@@ -155,7 +156,10 @@ const App = () => {
       >
         <Tag
           overflow="auto"
-
+          borderRight={1}
+          borderLeft={1}
+          border={1}
+          borderStyle='dashed'
           p={1}
           fontWeight={700}
         >
