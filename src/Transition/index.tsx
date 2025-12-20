@@ -138,6 +138,7 @@ const Transition = ({ children, open, ...props }: TransitionProps) => {
             height={0}
             overflow={'hidden'}
             position="fixed"
+            visibility="hidden"
         >
             {child}
         </Tag>
