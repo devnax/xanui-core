@@ -6,6 +6,7 @@ import { ThemeContex, ThemeFactory } from "./core"
 import ThemeCssVars from "./ThemeCssVars"
 import { css } from "../css"
 import { createDefaultThemes } from "./ThemeDefaultOptions"
+import ServerStyleTag from "../Tag/ServerStyleTag"
 
 export type ThemeProviderProps<T extends TagComponentType = 'div'> = TagProps<T> & {
    theme: string;
@@ -40,13 +41,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ..
 
    return (
       <ThemeContex.Provider value={theme}>
-         {
-            typeof window === 'undefined' && <style
-               precedence={globalStyle.classname}
-               href={globalStyle.classname}
-               dangerouslySetInnerHTML={{ __html: globalStyle.css }}
-            />
-         }
+         <ServerStyleTag factory={globalStyle} />
          <Tag
             minHeight="100%"
             bgcolor={THEME.colors.background.primary}

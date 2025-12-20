@@ -6,7 +6,6 @@ import useBreakpoint from './breakpoint/useBreakpoint'
 import useBreakpointProps from './breakpoint/useBreakpointProps'
 import useInterface from './hooks/useInterface'
 import Transition from './Transition'
-import useScrollbar from './hooks/useScrollbar'
 import AppRoot, { appRootElement } from './AppRoot'
 import usePortal from './hooks/usePortal'
 import { Renderar } from './AppRoot/Renderar'
@@ -41,5 +40,4 @@ export {
     useBreakpoint,
     useBreakpointProps,
     useInterface,
-    useScrollbar
 }

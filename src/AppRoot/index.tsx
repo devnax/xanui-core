@@ -1,13 +1,10 @@
-
 import React, { useEffect, useMemo } from 'react';
 import { TagComponentType } from '../Tag/types';
 import { ThemeProvider, ThemeProviderProps, themeRootClass } from '../theme';
 import { BreakpointProvider } from '../breakpoint';
-import useScrollbar from '../hooks/useScrollbar';
 import { css } from '../css';
 import { RenderRenderar } from './Renderar';
-
-
+import ServerStyleTag from '../Tag/ServerStyleTag';
 
 export type AppRootProps<T extends TagComponentType = "div"> = ThemeProviderProps<T> & {
    noScrollbarCss?: boolean;
@@ -22,9 +19,34 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
 
    const scrollbarCss: any = useMemo(() => {
       if (noScrollbarCss) return;
-      return useScrollbar({
-         root_cls: themeRootClass(theme)
-      })
+      const cls = (cls: string) => `${themeRootClass(theme)} ${cls}`
+      let thumbSize = 8
+      let thumbColor = "var(--color-text-secondary)"
+      let trackColor = "transparent"
+
+      return css({
+         "@global": {
+            [cls('*::-webkit-scrollbar')]: {
+               width: thumbSize,
+               height: thumbSize,
+            },
+            [cls("*::-webkit-scrollbar-thumb")]: {
+               backgroundColor: thumbColor,
+               borderRadius: "6px",
+               opacity: 0.6,
+            },
+            [cls("*::-webkit-scrollbar-thumb:hover")]: {
+               backgroundColor: thumbColor,
+               opacity: 0.0,
+            },
+            [cls("*::-webkit-scrollbar-track")]: {
+               backgroundColor: trackColor,
+               borderRadius: "6px",
+            },
+         }
+      }, {
+         injectStyle: typeof window !== 'undefined'
+      }) as any
    }, [noScrollbarCss, theme])
 
    const globalStyle = useMemo(() => {
@@ -106,21 +128,9 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
          }}
          classNames={[appRootClassName]}
       >
+         <ServerStyleTag factory={globalStyle} />
          {
-            typeof window === 'undefined' && <>
-               <style
-                  precedence={globalStyle.classname}
-                  href={globalStyle.classname}
-                  dangerouslySetInnerHTML={{ __html: globalStyle.css }}
-               />
-               {
-                  scrollbarCss && <style
-                     precedence={scrollbarCss.classname}
-                     href={scrollbarCss.classname}
-                     dangerouslySetInnerHTML={{ __html: scrollbarCss.css }}
-                  />
-               }
-            </>
+            scrollbarCss && <ServerStyleTag factory={scrollbarCss} />
          }
          <BreakpointProvider>
             {children}
