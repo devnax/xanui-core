@@ -14,9 +14,19 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
 
    const parsed = useMemo(() => {
       let _props: any = {}
-      let _css: any = {}
       let clss = []
+      let _css: any = {}
+
+      let sx = props.sx || {}
+      let sxr = props.sxr || {}
+      let hover = props.hover || {}
+      let style = props.style || {}
+
       for (let key in props) {
+         if (key === "sx" || key === "sxr" || key === "style") {
+            continue;
+         }
+
          let val = (props as any)[key];
          if (key === "className") {
             clss.push(val)
@@ -24,11 +34,6 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
             clss.push("xui-" + val)
          } else if (key === 'classNames') {
             clss.push(...val)
-         } else if (key === "sx" || key === "sxr" || key === "style") {
-            _css = {
-               ..._css,
-               ...val
-            }
          } else if (key === "hover") {
             _css['&:hover'] = { ...(_css['&:hover'] || {}), ...val }
          } else if (!cssPropList[key]) {
@@ -37,7 +42,8 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
             _css[key] = val
          }
       }
-      const styles = css(_css, {
+
+      const styles = css({ ...sxr, ..._css, ...sx, ...style }, {
          injectStyle: typeof window !== 'undefined',
       })
 
