@@ -71,6 +71,7 @@ export type ThemeTypographyInputType = {
 export interface ThemeOptionInput {
     rtl?: boolean;
     globalStyle?: GlobalCSS,
+    shadow?: string[];
     interfaces?: { [name: string]: <P extends object>(defaultProps: P, theme: ThemeOptions) => P };
     colors?: {
         background?: Omit<ThemeColorOption, 'text'>;

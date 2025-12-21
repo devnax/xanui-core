@@ -135,6 +135,7 @@ export const lightThemeOptions: ThemeOptionInput = {
 export const createDefaultThemes = () => {
     createTheme("light", {})
     createTheme("dark", {
+        shadow: darkShadows,
         colors: {
             background: {
                 primary: "#121212",
