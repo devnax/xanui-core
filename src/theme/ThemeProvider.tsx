@@ -44,16 +44,16 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ..
          <ServerStyleTag factory={globalStyle} />
          <Tag
             minHeight="100%"
-            bgcolor={THEME.colors.background.primary}
-            color={THEME.colors.text.primary}
-            fontSize={THEME.typography.text.fontSize}
-            fontWeight={THEME.typography.text.fontWeight}
-            lineHeight={THEME.typography.text.lineHeight}
+            bgcolor="background.primary"
+            color="text.primary"
+            fontSize="text"
+            fontWeight="text"
+            lineHeight="text"
             fontFamily={`system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`}
             {...props}
             sxr={{
                "& a": {
-                  color: THEME.colors.brand.primary || 'inherit',
+                  color: "brand.primary",
                },
             }}
             baseClass={`${theme}-theme-root`}
