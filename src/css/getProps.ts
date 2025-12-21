@@ -30,33 +30,19 @@ const getProps = (prop: string, value: string, _css: CSSProps) => {
 
     if (prop === "spacing" && typeof value === "number") {
         const val = value * 8;
-        const isFlex =
-            (_css as any)?.flexBox ||
-            (_css as any)?.flexRow ||
-            (_css as any)?.flexColumn ||
-            (_css as any)?.display === "flex";
 
-        if (isFlex) {
-            const isColumn = (_css as any)?.flexColumn === true;
-
-            return {
-                ...(isColumn
-                    ? { marginTop: `-${val}px${important || ""}` }
-                    : { marginLeft: `-${val}px${important || ""}` }),
-
-                "& > *": isColumn
-                    ? { marginTop: `${val}px${important || ""}` }
-                    : { marginLeft: `${val}px${important || ""}` },
-            } as any;
-        }
-
-        // non-flex fallback (safe & predictable)
         return {
-            "& > * + *": {
-                marginTop: `${val}px${important || ""}`,
+            marginLeft: `-${val}px`,
+            marginTop: `-${val}px`,
+            width: `calc(100% + ${val}px)`,
+
+            "& > *": {
+                paddingLeft: `${val}px`,
+                paddingTop: `${val}px`,
             },
         } as any;
     }
+
 
 
     // if (value && typeof value === "number" && ["border", "borderRight", "borderLeft", "borderTop", "borderBottom"].includes(prop as any)) {

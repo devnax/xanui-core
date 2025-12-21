@@ -1,10 +1,71 @@
 import React, { use } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createThemeSwitcher, ThemeProvider, useTheme } from './src/theme'
-import { Tag, Transition, useBreakpoint, useColorTemplate } from './src';
+import { Tag, TagComponentType, TagProps, Transition, useBreakpoint, useColorTemplate } from './src';
 import AppRoot from './src/AppRoot';
 import usePortal from './src/hooks/usePortal';
 import { Renderar } from './src/AppRoot/Renderar';
+
+
+export type GridContainerProps<T extends TagComponentType = "div"> = TagProps<T>
+const GridContainer = React.forwardRef(<T extends TagComponentType = "div">({ children, ...rest }: GridContainerProps<T>, ref?: React.Ref<any>) => {
+  return (
+    <Tag
+      {...rest}
+      sxr={{
+        display: "flex",
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: '100%',
+        // marginLeft: `-${spacing}px`,
+        // marginTop: `-${spacing}px`,
+        // "& > div": {
+        //   paddingLeft: `${spacing}px`,
+        //   paddingTop: `${spacing}px`,
+        //   boxSizing: "border-box",
+        // }
+      }}
+      baseClass='grid-container'
+      ref={ref}
+    >
+      {children}
+    </Tag>
+  )
+})
+
+
+export type GridItemProps<T extends TagComponentType = "div"> = TagProps<T> & {
+  xs?: number;
+  sm?: number;
+  md?: number;
+  lg?: number;
+  xl?: number;
+}
+
+const GridItem = React.forwardRef(<T extends TagComponentType = "div">({ children, xs, sm, md, lg, xl, ...rest }: GridItemProps<T>, ref?: React.Ref<any>) => {
+
+  let w: any = {}
+
+  xs && (w.xs = (100 / 12 * xs) + "%")
+  sm && (w.sm = (100 / 12 * sm) + "%")
+  md && (w.md = (100 / 12 * md) + "%")
+  lg && (w.lg = (100 / 12 * lg) + "%")
+  xl && (w.xl = (100 / 12 * xl) + "%")
+
+  return (
+    <Tag
+      ref={ref}
+      {...rest}
+      maxWidth={w}
+      flexBasis={w}
+      flexGrow={0}
+      baseClass="grid-item"
+
+    >
+      {children}
+    </Tag>
+  )
+})
 
 const useThemeSwitcher = createThemeSwitcher("light")
 
@@ -124,11 +185,57 @@ const App = () => {
   const [toggled, setToggled] = React.useState(true)
 
   return (
-    <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" p={2}>
-
+    <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" bgcolor="divider.soft.primary">
+      <GridContainer mb={2} spacing={1}>
+        <GridItem xs={12} sm={6} md={4} lg={3} >
+          <Tag
+            p={2}
+            bgcolor="background.primary"
+            border="1px solid"
+            borderColor="divider.primary"
+            radius={2}
+          >
+            <div>Grid Item 1</div>
+          </Tag>
+        </GridItem>
+        <GridItem xs={12} sm={6} md={4} lg={3} >
+          <Tag
+            p={2}
+            bgcolor="background.primary"
+            border="1px solid"
+            borderColor="divider.primary"
+            radius={2}
+          >
+            Grid Item 2
+          </Tag>
+        </GridItem>
+        <GridItem xs={12} sm={6} md={4} lg={3} >
+          <Tag
+            p={2}
+            bgcolor="background.primary"
+            border="1px solid"
+            borderColor="divider.primary"
+            radius={2}
+          >
+            Grid Item 3
+          </Tag>
+        </GridItem>
+        <GridItem xs={12} sm={6} md={4} lg={3} >
+          <Tag
+            p={2}
+            bgcolor="background.primary"
+            border="1px solid"
+            borderColor="divider.primary"
+            radius={2}
+          >
+            Grid Item 4
+          </Tag>
+        </GridItem>
+      </GridContainer>
       <Tag
+        mt={20}
         flexBox
-        spacing={2}
+        gap={2}
         p={1}
         bgcolor="background.secondary"
         sx={{
@@ -142,7 +249,7 @@ const App = () => {
 
       <Tag
         flexBox
-        spacing={2}
+        spacing={4}
         p={1}
       >
         <Button color="brand" >Filled</Button>
@@ -158,7 +265,7 @@ const App = () => {
           overflow="auto"
           borderRight={1}
           borderLeft={1}
-          border={1}
+          border="1px solid"
           borderStyle='dashed'
           p={1}
           fontWeight={700}

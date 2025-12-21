@@ -1,6 +1,6 @@
 {
    "name": "@xanui/core",
-   "version": "1.2.18",
+   "version": "1.2.19",
    "description": "",
    "private": false,
    "main": "./index.js",
