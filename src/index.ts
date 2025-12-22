@@ -5,11 +5,11 @@ import useColorTemplate from './hooks/useColorTemplate'
 import useBreakpoint from './breakpoint/useBreakpoint'
 import useBreakpointProps from './breakpoint/useBreakpointProps'
 import useInterface from './hooks/useInterface'
+import useTransition from './hooks/useTransition'
 import Transition from './Transition'
 import AppRoot, { appRootElement } from './AppRoot'
 import usePortal from './hooks/usePortal'
 import { Renderar } from './AppRoot/Renderar'
-import type { AppRootProps } from './AppRoot'
 
 export * from "./AppRoot"
 export * from './css'
@@ -22,10 +22,6 @@ export * from './hooks/useAnimation'
 export * from './Transition'
 export * from './Tag/types'
 export * from './breakpoint/useBreakpointProps'
-
-export type {
-    AppRootProps
-}
 
 export {
     Renderar,
@@ -40,4 +36,5 @@ export {
     useBreakpoint,
     useBreakpointProps,
     useInterface,
+    useTransition
 }

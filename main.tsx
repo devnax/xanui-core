@@ -130,11 +130,11 @@ const ThemeBox = () => {
 const Trans = () => {
   const theme = useTheme()
   const [v, setV] = React.useState<any>('fadeLeft')
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(true)
 
   useEffect(() => {
     setInterval(() => {
-      setOpen(i => !i)
+      // setOpen(i => !i)
     }, 1000)
   }, [])
   return (
@@ -151,13 +151,13 @@ const Trans = () => {
         overflow={"hidden"}
         height={300}
       >
-        <button onClick={() => setOpen(!open)}>Toggle Transition</button>
-        <Transition open={open} variant={v} >
+        <Transition open={open} variant={v} disableInitialTransition exitOnUnmount={true}>
           <Tag
+            className='test'
             component="div"
-            bgcolor="background.primary"
             radius={1}
             px={2}
+            bgcolor={"background.primary"}
           >
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </Tag>
