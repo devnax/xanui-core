@@ -1,9 +1,9 @@
-import { TransitionElementProps } from "."
 
-export const slideDown = (_arg: TransitionElementProps) => {
+export const slideDown = (rect: DOMRect) => {
+
     return {
         from: {
-            transform: `translateY(-${_arg.height}px)!important`,
+            transform: `translateY(-${rect.height}px)!important`,
         },
         to: {
             transform: `translateY(0)!important`,
@@ -11,7 +11,7 @@ export const slideDown = (_arg: TransitionElementProps) => {
     }
 }
 
-export const slideUp = (_arg: TransitionElementProps) => {
+export const slideUp = (_arg: DOMRect) => {
     return {
         from: {
             transform: `translateY(${_arg.height}px)!important`,
@@ -22,7 +22,7 @@ export const slideUp = (_arg: TransitionElementProps) => {
     }
 }
 
-export const slideRight = (_arg: TransitionElementProps) => {
+export const slideRight = (_arg: DOMRect) => {
     return {
         from: {
             transform: `translateX(-${_arg.width}px)!important`,
@@ -33,7 +33,7 @@ export const slideRight = (_arg: TransitionElementProps) => {
     }
 }
 
-export const slideLeft = (_arg: TransitionElementProps) => {
+export const slideLeft = (_arg: DOMRect) => {
     return {
         from: {
             transform: `translateX(${_arg.width}px)!important`,
@@ -44,7 +44,7 @@ export const slideLeft = (_arg: TransitionElementProps) => {
     }
 }
 
-export const fade = (_arg: TransitionElementProps) => {
+export const fade = (_arg: DOMRect) => {
     return {
         from: {
             opacity: 0
@@ -55,7 +55,7 @@ export const fade = (_arg: TransitionElementProps) => {
     }
 }
 
-export const fadeDown = (_arg: TransitionElementProps) => {
+export const fadeDown = (_arg: DOMRect) => {
     return {
         from: {
             transform: `translateY(-30px)!important`,
@@ -68,7 +68,7 @@ export const fadeDown = (_arg: TransitionElementProps) => {
     }
 }
 
-export const fadeUp = (_arg: TransitionElementProps) => {
+export const fadeUp = (_arg: DOMRect) => {
     return {
         from: {
             transform: `translateY(30px)!important`,
@@ -81,7 +81,7 @@ export const fadeUp = (_arg: TransitionElementProps) => {
     }
 }
 
-export const fadeRight = (_arg: TransitionElementProps) => {
+export const fadeRight = (_arg: DOMRect) => {
     return {
         from: {
             transform: `translateX(-30px)!important`,
@@ -94,7 +94,7 @@ export const fadeRight = (_arg: TransitionElementProps) => {
     }
 }
 
-export const fadeLeft = (_arg: TransitionElementProps) => {
+export const fadeLeft = (_arg: DOMRect) => {
     return {
         from: {
             transform: `translateX(30px)!important`,
@@ -107,7 +107,7 @@ export const fadeLeft = (_arg: TransitionElementProps) => {
     }
 }
 
-export const grow = (_arg: TransitionElementProps) => {
+export const grow = (_arg: DOMRect) => {
     return {
         from: {
             transform: "scale(.8, .6)!important",
@@ -120,7 +120,7 @@ export const grow = (_arg: TransitionElementProps) => {
     }
 }
 
-export const zoom = (_arg: TransitionElementProps) => {
+export const zoom = (_arg: DOMRect) => {
     return {
         from: {
             transform: "scale(.8)!important",
@@ -133,7 +133,7 @@ export const zoom = (_arg: TransitionElementProps) => {
     }
 }
 
-export const zoomOver = (_arg: TransitionElementProps) => {
+export const zoomOver = (_arg: DOMRect) => {
     return {
         from: {
             transform: "scale(1.2)!important",
@@ -146,21 +146,22 @@ export const zoomOver = (_arg: TransitionElementProps) => {
     }
 }
 
-export const collapsVerticle = (_arg: TransitionElementProps) => {
+export const collapsVerticle = (rect: DOMRect) => {
+
     return {
         from: {
-            height: 0 + "px!important",
+            maxHeight: 0 + "px!important",
             overflow: "hidden"
         },
         to: {
-            height: _arg?.height ? _arg?.height + "px!important" : "auto",
+            maxHeight: rect.height,
             overflow: "hidden"
         }
     }
 }
 
 
-export const collapsHorizental = (_arg: TransitionElementProps) => {
+export const collapsHorizental = (_arg: DOMRect) => {
     return {
         from: {
             width: 0 + "px!important",

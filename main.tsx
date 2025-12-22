@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import React, { use, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createThemeSwitcher, ThemeProvider, useTheme } from './src/theme'
 import { Tag, TagComponentType, TagProps, Transition, useBreakpoint, useColorTemplate } from './src';
@@ -129,32 +129,42 @@ const ThemeBox = () => {
 
 const Trans = () => {
   const theme = useTheme()
-  const [v, setV] = React.useState<any>('zoom')
-  const [open, setOpen] = React.useState(true)
+  const [v, setV] = React.useState<any>('slideLeft')
+  const [open, setOpen] = React.useState(false)
   return (
     <Tag>
       <button onClick={() => setOpen(!open)}>Click</button>
-      <button onClick={() => setV(v === 'zoom' ? { from: {}, to: { transform: "scale(.5)" } } : "zoom")}>change</button>
-      <Transition open={open} variant="fade" >
-        <Tag
-          component="div"
-          width={300}
-          bgcolor="green"
-          radius={2}
-          p={2}
-        >
-          <Transition open={open} variant={v}  >
-            <Tag
-              component="div"
-              bgcolor="background.primary"
-              radius={2}
-              px={2}
-            >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </Tag>
-          </Transition>
-        </Tag>
-      </Transition>
+      <button onClick={() => setV(v === 'slideLeft' ? {
+        from: {
+          transform: "scale(.8)!important",
+          opacity: 0
+        },
+        to: {
+          transform: "scale(1.4)!important",
+          opacity: 1
+        }
+      } : "slideLeft")}>change</button>
+      {/* <Transition open={open} variant={"fade"} > */}
+      <Tag
+        component="div"
+        width={300}
+        bgcolor="green"
+        radius={1}
+        p={2}
+      >
+        <button onClick={() => setOpen(!open)}>Toggle Transition</button>
+        <Transition open={open} variant={v} >
+          <Tag
+            component="div"
+            bgcolor="background.primary"
+            radius={1}
+            px={2}
+          >
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </Tag>
+        </Transition>
+      </Tag>
+      {/* </Transition> */}
     </Tag>
   )
 }
@@ -183,12 +193,16 @@ const Button = ({ children, color, variant, ...rest }: any) => {
 const App = () => {
   const themeSwitcher = useThemeSwitcher()
   const [toggled, setToggled] = React.useState(true)
+  const ref = useRef<any>(null)
+
 
   return (
     <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" bgcolor="divider.soft.primary">
+
       <GridContainer mb={2} spacing={1}>
         <GridItem xs={12} sm={6} md={4} lg={3} >
           <Tag
+            ref={ref}
             p={2}
             bgcolor="background.primary"
             border="1px solid"
