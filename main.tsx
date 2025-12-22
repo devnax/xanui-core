@@ -129,21 +129,18 @@ const ThemeBox = () => {
 
 const Trans = () => {
   const theme = useTheme()
-  const [v, setV] = React.useState<any>('slideLeft')
+  const [v, setV] = React.useState<any>('fadeLeft')
   const [open, setOpen] = React.useState(false)
+
+  useEffect(() => {
+    setInterval(() => {
+      setOpen(i => !i)
+    }, 1000)
+  }, [])
   return (
     <Tag>
       <button onClick={() => setOpen(!open)}>Click</button>
-      <button onClick={() => setV(v === 'slideLeft' ? {
-        from: {
-          transform: "scale(.8)!important",
-          opacity: 0
-        },
-        to: {
-          transform: "scale(1.4)!important",
-          opacity: 1
-        }
-      } : "slideLeft")}>change</button>
+      <button onClick={() => setV(v === 'fadeLeft' ? "zoom" : "fadeLeft")}>change</button>
       {/* <Transition open={open} variant={"fade"} > */}
       <Tag
         component="div"
@@ -151,6 +148,8 @@ const Trans = () => {
         bgcolor="green"
         radius={1}
         p={2}
+        overflow={"hidden"}
+        height={300}
       >
         <button onClick={() => setOpen(!open)}>Toggle Transition</button>
         <Transition open={open} variant={v} >
@@ -198,6 +197,7 @@ const App = () => {
 
   return (
     <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" bgcolor="divider.soft.primary">
+      <Trans />
 
       <GridContainer mb={2} spacing={1}>
         <GridItem xs={12} sm={6} md={4} lg={3} >
@@ -304,7 +304,6 @@ const App = () => {
         gap={1}
         p={2}
       >
-        <Trans />
         {
           Array.from({ length: 1 }).map((_, i) => (
             <Tag

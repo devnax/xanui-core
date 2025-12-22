@@ -1,4 +1,4 @@
-import React, { ReactElement, cloneElement, Children, useState, useEffect, useId, useRef, useMemo } from 'react';
+import React, { ReactElement, cloneElement, Children, useState, useEffect, useId, useRef, useMemo, use } from 'react';
 import Tag from '../Tag';
 import { animationEases } from '../hooks/useAnimation';
 import { css } from '../css';
@@ -35,6 +35,8 @@ export type TransitionProps = {
     onState?: (state: TransitionState) => void;
 }
 
+
+
 const Transition = ({ children, open, ...props }: TransitionProps) => {
     let {
         disableInitialTransition = false,
@@ -50,31 +52,64 @@ const Transition = ({ children, open, ...props }: TransitionProps) => {
         onState
     } = props as TransitionProps
     let _ease = ease || (animationEases as any)[easing as any] || animationEases.easeBounceOut
-
+    const id = useId();
     const ref = useRef<any>(null);
 
     const [state, setState] = useState({
         initial: false,
         classname: "",
         variant: variant,
-        rect: null as DOMRect | null
+        rect: null as DOMRect | null,
+        stage: open ? "open" : "closed"
     })
 
     const getVariant = (rect: any, variant: any) => {
         return typeof variant === 'string' ? (variants as any)[variant](rect) : variant
     }
 
+    const getEle = () => {
+        const ele = document.querySelector(`.${id}`) as HTMLElement;
+        return ele
+    }
+
+    const getBoundary = () => {
+        const ele = getEle();
+        return state.rect || ele.getBoundingClientRect();
+    }
+
     useEffect(() => {
-        const rect = state.rect || (ref.current as HTMLElement)?.getBoundingClientRect();
+        if (state.stage === 'closed') {
+            if (open) {
+                setState(s => ({
+                    ...s,
+                    stage: "open"
+                }))
+            } else {
+                setState(s => ({
+                    initial: false,
+                    classname: "",
+                    variant: variant,
+                    rect: null,
+                    stage: open ? "open" : "closed"
+                }))
+            }
+        }
+    }, [open, variant])
+
+
+    // initial effect
+    useEffect(() => {
+        const ele = getEle()
+        if (!ele) return
+
+        const rect = getBoundary();
         let { from } = getVariant(rect, state.variant)
-        const ele = ref.current as HTMLElement;
         if (open && !state.initial) {
             setState(s => ({
                 ...s,
                 classname: css(from).classname,
                 initial: true,
                 rect: rect,
-                stage: open ? "open" : "closed"
             }))
 
             ele.ontransitionstart = () => {
@@ -82,21 +117,31 @@ const Transition = ({ children, open, ...props }: TransitionProps) => {
                 (onOpen && isOpen) && onOpen();
                 (onClose && !isOpen) && onClose()
                 onState && onState(isOpen ? "open" : "close")
+                setState(s => ({
+                    ...s,
+                    stage: isOpen ? "open" : "close"
+                }))
             }
+
             ele.ontransitionend = () => {
                 const isOpen = Array.from(ele.classList).includes("trans-open");
                 (onOpened && isOpen) && onOpened();
                 (onClosed && !isOpen) && onClosed();
                 onState && onState(isOpen ? "opened" : "closed")
+                setState(s => ({
+                    ...s,
+                    stage: isOpen ? "opened" : "closed"
+                }))
             }
         } else if (!state.initial) {
             setState(s => ({
                 ...s,
                 classname: css(from).classname,
-                rect: rect
+                rect: rect,
             }))
         }
-    }, [open])
+    }, [open, state.stage, state.initial])
+
 
     useEffect(() => {
         if (state.initial) {
@@ -116,9 +161,13 @@ const Transition = ({ children, open, ...props }: TransitionProps) => {
         }
     }, [open, state.initial, variant])
 
+    if (state.stage === 'closed') {
+        return null;
+    }
+
     return cloneElement(Children.only(children), {
         ref: ref,
-        className: classNames(state.classname, (children.props as any).className, `trans-${(open ? "open" : "close")}`),
+        className: classNames(id, state.classname, (children.props as any).className, `trans-${(open ? "open" : "close")}`),
     } as any);
 }
 
