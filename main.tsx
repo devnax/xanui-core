@@ -127,6 +127,39 @@ const ThemeBox = () => {
   )
 }
 
+const TransBox = ({ open }: any) => {
+  const [closed, setClosed] = useState(false)
+  useEffect(() => {
+    if (closed && open) {
+      setClosed(false)
+    }
+  }, [open])
+  if (closed) return null
+  return (
+    <Transition open={open} variant="zoom" onClosed={() => setClosed(true)} >
+      <Tag
+        component="div"
+        width={300}
+        bgcolor="green"
+        radius={1}
+        p={2}
+        overflow={"hidden"}
+        height={300}
+      >
+        <Tag
+          className='test'
+          component="div"
+          radius={1}
+          px={2}
+          bgcolor={"background.primary"}
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </Tag>
+      </Tag>
+    </Transition>
+  )
+}
+
 const Trans = () => {
   const theme = useTheme()
   const [v, setV] = React.useState<any>('zoom')
@@ -138,11 +171,12 @@ const Trans = () => {
     }, 1000)
   }, [])
   return (
-    <Tag>
+    <Tag height={400}>
       <button onClick={() => setOpen(!open)}>Click</button>
       <button onClick={() => setV(v === 'fadeLeft' ? "zoom" : "fadeLeft")}>change</button>
       {/* <Transition open={open} variant={"fade"} > */}
-      <Tag
+      <TransBox open={open} />
+      {/* <Tag
         component="div"
         width={300}
         bgcolor="green"
@@ -165,7 +199,7 @@ const Trans = () => {
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </Tag>
         </Transition>
-      </Tag>
+      </Tag> */}
       {/* </Transition> */}
     </Tag >
   )

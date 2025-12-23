@@ -27,6 +27,10 @@ export type UseTransitionProps = {
 }
 
 
+const style = (obj?: any) => {
+   return css(obj || {}, { selector: "#" }).classname;
+}
+
 const getVariant = (rect: DOMRect | null, variant: UseTransitionProps['variant']) => {
    let fn = typeof variant === 'string' ? variants[variant] : variant
    if (!fn) throw new Error(`Transition variant "${variant}" not found.`)
@@ -52,7 +56,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
    const id = "xui-transition-" + useId()
    const [state, setState] = useState({
       initial: false,
-      classname: "",
+      classname: style({ visibility: "hidden" }),
       variant: variant,
       rect: null as DOMRect | null,
       stage: open ? "open" : "closed",
@@ -76,7 +80,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
             setState(s => ({
                ...s,
                variant: variant,
-               classname: css({ visibility: "hidden" }, { selector: "#" }).classname,
+               classname: style({ visibility: "hidden" }),
                stage: "open",
             }))
          }
@@ -94,7 +98,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       if (open && !state.initial) {
          setState(s => ({
             ...s,
-            classname: (!disableInitialTransition || state.unmounted) ? css(from, { selector: "#" }).classname : "",
+            classname: (!disableInitialTransition || state.unmounted) ? style(from) : "",
             initial: true,
             rect: rect,
          }))
@@ -130,7 +134,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       } else if (!state.initial) {
          setState(s => ({
             ...s,
-            classname: css(from, { selector: "#" }).classname,
+            classname: style(from),
             rect: rect,
          }))
       }
@@ -149,7 +153,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
          }
          setState(s => ({
             ...s,
-            classname: css(_, { selector: "#" }).classname,
+            classname: style(_),
             variant: _variant
          }))
       }
