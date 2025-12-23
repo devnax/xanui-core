@@ -11,10 +11,10 @@ export const slideDown = (rect: DOMRect) => {
     }
 }
 
-export const slideUp = (_arg: DOMRect) => {
+export const slideUp = (rect: DOMRect) => {
     return {
         from: {
-            transform: `translateY(${_arg.height}px)!important`,
+            transform: `translateY(${rect.height}px)!important`,
         },
         to: {
             transform: `translateY(0)!important`,
@@ -22,10 +22,10 @@ export const slideUp = (_arg: DOMRect) => {
     }
 }
 
-export const slideRight = (_arg: DOMRect) => {
+export const slideRight = (rect: DOMRect) => {
     return {
         from: {
-            transform: `translateX(-${_arg.width}px)!important`,
+            transform: `translateX(-${rect.width}px)!important`,
         },
         to: {
             transform: `translateX(0)!important`,
@@ -33,10 +33,10 @@ export const slideRight = (_arg: DOMRect) => {
     }
 }
 
-export const slideLeft = (_arg: DOMRect) => {
+export const slideLeft = (rect: DOMRect) => {
     return {
         from: {
-            transform: `translateX(${_arg.width}px)!important`,
+            transform: `translateX(${rect.width}px)!important`,
         },
         to: {
             transform: `translateX(0)!important`,
@@ -44,7 +44,7 @@ export const slideLeft = (_arg: DOMRect) => {
     }
 }
 
-export const fade = (_arg: DOMRect) => {
+export const fade = () => {
     return {
         from: {
             opacity: 0
@@ -55,7 +55,7 @@ export const fade = (_arg: DOMRect) => {
     }
 }
 
-export const fadeDown = (_arg: DOMRect) => {
+export const fadeDown = () => {
     return {
         from: {
             transform: `translateY(-30px)!important`,
@@ -68,7 +68,7 @@ export const fadeDown = (_arg: DOMRect) => {
     }
 }
 
-export const fadeUp = (_arg: DOMRect) => {
+export const fadeUp = () => {
     return {
         from: {
             transform: `translateY(30px)!important`,
@@ -81,7 +81,7 @@ export const fadeUp = (_arg: DOMRect) => {
     }
 }
 
-export const fadeRight = (_arg: DOMRect) => {
+export const fadeRight = () => {
     return {
         from: {
             transform: `translateX(-30px)!important`,
@@ -94,7 +94,7 @@ export const fadeRight = (_arg: DOMRect) => {
     }
 }
 
-export const fadeLeft = (_arg: DOMRect) => {
+export const fadeLeft = () => {
     return {
         from: {
             transform: `translateX(30px)!important`,
@@ -107,7 +107,7 @@ export const fadeLeft = (_arg: DOMRect) => {
     }
 }
 
-export const grow = (_arg: DOMRect) => {
+export const grow = () => {
     return {
         from: {
             transform: "scale(.8, .6)!important",
@@ -120,7 +120,7 @@ export const grow = (_arg: DOMRect) => {
     }
 }
 
-export const zoom = (_arg: DOMRect) => {
+export const zoom = () => {
     return {
         from: {
             transform: "scale(.8)!important",
@@ -133,7 +133,7 @@ export const zoom = (_arg: DOMRect) => {
     }
 }
 
-export const zoomOver = (_arg: DOMRect) => {
+export const zoomOver = () => {
     return {
         from: {
             transform: "scale(1.2)!important",
@@ -146,7 +146,7 @@ export const zoomOver = (_arg: DOMRect) => {
     }
 }
 
-export const collapsVerticle = (rect: DOMRect) => {
+export const collapseVertical = (rect: DOMRect) => {
 
     return {
         from: {
@@ -161,14 +161,14 @@ export const collapsVerticle = (rect: DOMRect) => {
 }
 
 
-export const collapsHorizental = (_arg: DOMRect) => {
+export const collapseHorizontal = (rect: DOMRect) => {
     return {
         from: {
             width: 0 + "px!important",
             overflow: "hidden"
         },
         to: {
-            width: _arg?.width ? _arg?.width + "px!important" : "auto",
+            width: rect?.width ? rect?.width + "px!important" : "auto",
             overflow: "hidden"
         }
     }

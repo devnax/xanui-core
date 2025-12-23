@@ -43,7 +43,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       delay,
       ease,
       easing,
-      exitOnUnmount = true,
+      exitOnUnmount = false,
       onOpen,
       onOpened,
       onClose,
@@ -79,7 +79,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
             setState(s => ({
                ...s,
                variant: variant,
-               classname: css({ visibility: "hidden" }).classname,
+               classname: css({ visibility: "hidden" }, { selector: "#" }).classname,
                stage: "open",
             }))
          }
@@ -97,7 +97,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       if (open && !state.initial) {
          setState(s => ({
             ...s,
-            classname: (!disableInitialTransition || state.unmounted) ? css(from).classname : "",
+            classname: (!disableInitialTransition || state.unmounted) ? css(from, { selector: "#" }).classname : "",
             initial: true,
             rect: rect,
          }))
@@ -126,7 +126,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       } else if (!state.initial) {
          setState(s => ({
             ...s,
-            classname: css(from).classname,
+            classname: css(from, { selector: "#" }).classname,
             rect: rect,
          }))
       }
@@ -145,7 +145,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
          }
          setState(s => ({
             ...s,
-            classname: css(_).classname,
+            classname: css(_, { selector: "#" }).classname,
             variant: _variant
          }))
       }
@@ -153,9 +153,9 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
 
    return {
       exited: exitOnUnmount && state.stage === 'closed',
+      id: state.classname,
       classname: classNames(
          id,
-         state.classname,
          `xui-transition-${open ? "open" : "close"}`,
          `xui-transition-${state.stage}`,
       )

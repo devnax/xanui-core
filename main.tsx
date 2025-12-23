@@ -134,7 +134,7 @@ const Trans = () => {
 
   useEffect(() => {
     setInterval(() => {
-      // setOpen(i => !i)
+      setOpen(i => !i)
     }, 1000)
   }, [])
   return (
@@ -172,19 +172,21 @@ const Trans = () => {
 const Button = ({ children, color, variant, ...rest }: any) => {
   const t = useColorTemplate(color || 'brand', variant || 'fill')
   return (
-    <Tag
-      component={"button"}
-      cursor={"pointer"}
-      p={.5}
-      px={2}
-      radius={1}
-      minWidth={100}
+    <Tag>
+      <Tag
+        component={"button"}
+        cursor={"pointer"}
+        p={.5}
+        px={2}
+        radius={1}
+        minWidth={100}
 
-      {...t.primary}
-      hover={{ ...t.secondary }}
-      {...rest}
-    >
-      {children}
+        {...t.primary}
+        hover={{ ...t.secondary }}
+        {...rest}
+      >
+        {children}
+      </Tag>
     </Tag>
   )
 }
@@ -252,6 +254,7 @@ const App = () => {
         gap={2}
         p={1}
         bgcolor="background.secondary"
+        spacing={4}
         sx={{
         }}
       >
@@ -263,7 +266,6 @@ const App = () => {
 
       <Tag
         flexBox
-        spacing={4}
         p={1}
       >
         <Button color="brand" >Filled</Button>

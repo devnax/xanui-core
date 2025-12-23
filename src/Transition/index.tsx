@@ -6,10 +6,11 @@ export type TransitionProps = UseTransitionProps & {
 }
 
 const Transition = ({ children, ...props }: TransitionProps) => {
-    const { exited, classname } = useTransition(props);
+    const { id, exited, classname } = useTransition(props);
     if (exited) return null;
     const clone: any = Children.only(children);
     return cloneElement(clone, {
+        id,
         className: `${clone?.props?.className || ''} ${classname || ''}`.trim()
     });
 }
