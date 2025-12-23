@@ -1,11 +1,9 @@
-import { ReactElement, cloneElement, Children, useState, useEffect, useId } from 'react';
+import { useState, useEffect, useId } from 'react';
 import { animationEases } from '../useAnimation';
 import { css } from '../../css';
 import { formatCSSProp } from 'oncss';
 import { CSSProps } from '../../css/types';
 import * as variants from './variants'
-import classNames from 'pretty-class';
-
 
 export type UseTransitionVariantTypes = keyof typeof variants
 export type UseTransitionState = "open" | "opened" | "close" | "closed"
@@ -29,10 +27,10 @@ export type UseTransitionProps = {
 }
 
 
-const getVariant = (rect: any, variant: UseTransitionProps['variant']) => {
+const getVariant = (rect: DOMRect | null, variant: UseTransitionProps['variant']) => {
    let fn = typeof variant === 'string' ? variants[variant] : variant
    if (!fn) throw new Error(`Transition variant "${variant}" not found.`)
-   return fn(rect)
+   return fn(rect as DOMRect);
 }
 
 const useTransition = ({ open, ...props }: UseTransitionProps) => {
@@ -50,9 +48,8 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       onClosed,
       onState
    } = props
-   let _ease = ease || (animationEases as any)[easing as any] || animationEases.easeBounceOut
-   const id = useId().replace(/:/g, "")
-
+   let _ease = ease || (animationEases as any)[easing as any] || animationEases.bounce
+   const id = "xui-transition-" + useId()
    const [state, setState] = useState({
       initial: false,
       classname: "",
@@ -62,7 +59,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       unmounted: false,
    })
 
-   const getEle = () => document.querySelector(`.${id}`) as HTMLElement;
+   const getEle = () => document.querySelector(`[data-transition="${id}"]`) as HTMLElement;
    const getBoundary = () => state.rect || getEle()?.getBoundingClientRect() || new DOMRect(0, 0, 0, 0);
 
    useEffect(() => {
@@ -101,27 +98,34 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
             initial: true,
             rect: rect,
          }))
-
+         let stimer: any = null
+         let etimer: any = null
          ele.ontransitionstart = () => {
-            const isOpen = Array.from(ele.classList).includes("xui-transition-open");
-            (onOpen && isOpen) && onOpen();
-            (onClose && !isOpen) && onClose()
-            onState && onState(isOpen ? "open" : "close")
-            setState(s => ({
-               ...s,
-               stage: isOpen ? "open" : "close"
-            }))
+            clearTimeout(stimer)
+            stimer = setTimeout(() => {
+               const isOpen = ele.getAttribute('data-transition-state') === 'open';
+               (onOpen && isOpen) && onOpen();
+               (onClose && !isOpen) && onClose()
+               onState && onState(isOpen ? "open" : "close")
+               setState(s => ({
+                  ...s,
+                  stage: isOpen ? "open" : "close"
+               }))
+            }, 1)
          }
 
          ele.ontransitionend = () => {
-            const isOpen = Array.from(ele.classList).includes("xui-transition-open");
-            (onOpened && isOpen) && onOpened();
-            (onClosed && !isOpen) && onClosed();
-            onState && onState(isOpen ? "opened" : "closed")
-            setState(s => ({
-               ...s,
-               stage: isOpen ? "opened" : "closed"
-            }))
+            clearTimeout(etimer)
+            etimer = setTimeout(() => {
+               const isOpen = ele.getAttribute('data-transition-state') === 'open';
+               (onOpened && isOpen) && onOpened();
+               (onClosed && !isOpen) && onClosed();
+               onState && onState(isOpen ? "opened" : "closed")
+               setState(s => ({
+                  ...s,
+                  stage: isOpen ? "opened" : "closed"
+               }))
+            }, 1)
          }
       } else if (!state.initial) {
          setState(s => ({
@@ -153,12 +157,11 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
 
    return {
       exited: exitOnUnmount && state.stage === 'closed',
-      id: state.classname,
-      classname: classNames(
-         id,
-         `xui-transition-${open ? "open" : "close"}`,
-         `xui-transition-${state.stage}`,
-      )
+      props: {
+         'id': state.classname,
+         'data-transition': id,
+         'data-transition-state': open ? 'open' : 'close',
+      }
    }
 }
 

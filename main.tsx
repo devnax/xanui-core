@@ -129,12 +129,12 @@ const ThemeBox = () => {
 
 const Trans = () => {
   const theme = useTheme()
-  const [v, setV] = React.useState<any>('fadeLeft')
+  const [v, setV] = React.useState<any>('zoom')
   const [open, setOpen] = React.useState(true)
 
   useEffect(() => {
     setInterval(() => {
-      setOpen(i => !i)
+      // setOpen(i => !i)
     }, 1000)
   }, [])
   return (
@@ -151,7 +151,10 @@ const Trans = () => {
         overflow={"hidden"}
         height={300}
       >
-        <Transition open={open} variant={v} disableInitialTransition exitOnUnmount={true}>
+        <Transition open={open} variant={v} disableInitialTransition
+          onOpened={() => console.log("opened")}
+        // onClosed={() => console.log("closed")}
+        >
           <Tag
             className='test'
             component="div"
@@ -164,7 +167,7 @@ const Trans = () => {
         </Transition>
       </Tag>
       {/* </Transition> */}
-    </Tag>
+    </Tag >
   )
 }
 

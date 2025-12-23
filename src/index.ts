@@ -22,6 +22,8 @@ export * from './hooks/useAnimation'
 export * from './Transition'
 export * from './Tag/types'
 export * from './breakpoint/useBreakpointProps'
+export * from './hooks/useTransition'
+
 
 export {
     Renderar,

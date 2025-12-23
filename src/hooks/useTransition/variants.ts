@@ -3,10 +3,10 @@ export const slideDown = (rect: DOMRect) => {
 
     return {
         from: {
-            transform: `translateY(-${rect.height}px)!important`,
+            transform: `translateY(-${rect.height}px)`,
         },
         to: {
-            transform: `translateY(0)!important`,
+            transform: `translateY(0)`,
         }
     }
 }
@@ -14,10 +14,10 @@ export const slideDown = (rect: DOMRect) => {
 export const slideUp = (rect: DOMRect) => {
     return {
         from: {
-            transform: `translateY(${rect.height}px)!important`,
+            transform: `translateY(${rect.height}px)`,
         },
         to: {
-            transform: `translateY(0)!important`,
+            transform: `translateY(0)`,
         }
     }
 }
@@ -25,10 +25,10 @@ export const slideUp = (rect: DOMRect) => {
 export const slideRight = (rect: DOMRect) => {
     return {
         from: {
-            transform: `translateX(-${rect.width}px)!important`,
+            transform: `translateX(-${rect.width}px)`,
         },
         to: {
-            transform: `translateX(0)!important`,
+            transform: `translateX(0)`,
         }
     }
 }
@@ -36,10 +36,10 @@ export const slideRight = (rect: DOMRect) => {
 export const slideLeft = (rect: DOMRect) => {
     return {
         from: {
-            transform: `translateX(${rect.width}px)!important`,
+            transform: `translateX(${rect.width}px)`,
         },
         to: {
-            transform: `translateX(0)!important`,
+            transform: `translateX(0)`,
         }
     }
 }
@@ -58,11 +58,11 @@ export const fade = () => {
 export const fadeDown = () => {
     return {
         from: {
-            transform: `translateY(-30px)!important`,
+            transform: `translateY(-30px)`,
             opacity: 0
         },
         to: {
-            transform: `translateY(0)!important`,
+            transform: `translateY(0)`,
             opacity: 1
         }
     }
@@ -71,11 +71,11 @@ export const fadeDown = () => {
 export const fadeUp = () => {
     return {
         from: {
-            transform: `translateY(30px)!important`,
+            transform: `translateY(30px)`,
             opacity: 0
         },
         to: {
-            transform: `translateY(0)!important`,
+            transform: `translateY(0)`,
             opacity: 1
         }
     }
@@ -84,11 +84,11 @@ export const fadeUp = () => {
 export const fadeRight = () => {
     return {
         from: {
-            transform: `translateX(-30px)!important`,
+            transform: `translateX(-30px)`,
             opacity: 0
         },
         to: {
-            transform: `translateX(0)!important`,
+            transform: `translateX(0)`,
             opacity: 1
         }
     }
@@ -97,11 +97,11 @@ export const fadeRight = () => {
 export const fadeLeft = () => {
     return {
         from: {
-            transform: `translateX(30px)!important`,
+            transform: `translateX(30px)`,
             opacity: 0
         },
         to: {
-            transform: `translateX(0)!important`,
+            transform: `translateX(0)`,
             opacity: 1
         }
     }
@@ -110,11 +110,11 @@ export const fadeLeft = () => {
 export const grow = () => {
     return {
         from: {
-            transform: "scale(.8, .6)!important",
+            transform: "scale(.8, .6)",
             opacity: 0
         },
         to: {
-            transform: "scale(1)!important",
+            transform: "scale(1)",
             opacity: 1
         }
     }
@@ -123,11 +123,11 @@ export const grow = () => {
 export const zoom = () => {
     return {
         from: {
-            transform: "scale(.8)!important",
+            transform: "scale(.8)",
             opacity: 0
         },
         to: {
-            transform: "scale(1)!important",
+            transform: "scale(1)",
             opacity: 1
         }
     }
@@ -136,11 +136,11 @@ export const zoom = () => {
 export const zoomOver = () => {
     return {
         from: {
-            transform: "scale(1.2)!important",
+            transform: "scale(1.2)",
             opacity: 0
         },
         to: {
-            transform: "scale(1)!important",
+            transform: "scale(1)",
             opacity: 1
         }
     }
@@ -150,7 +150,7 @@ export const collapseVertical = (rect: DOMRect) => {
 
     return {
         from: {
-            maxHeight: 0 + "px!important",
+            maxHeight: 0 + "px",
             overflow: "hidden"
         },
         to: {
@@ -164,11 +164,11 @@ export const collapseVertical = (rect: DOMRect) => {
 export const collapseHorizontal = (rect: DOMRect) => {
     return {
         from: {
-            width: 0 + "px!important",
+            width: 0 + "px",
             overflow: "hidden"
         },
         to: {
-            width: rect?.width ? rect?.width + "px!important" : "auto",
+            width: rect?.width ? rect?.width + "px" : "auto",
             overflow: "hidden"
         }
     }
