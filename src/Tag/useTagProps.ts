@@ -11,6 +11,9 @@ export type useTagPropsReturn<T extends TagComponentType = "div"> = {
 }
 
 const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>): useTagPropsReturn<T> => {
+   const cachekey = JSON.stringify(props, (key, value) => {
+      return key === '_owner' || key === '_store' ? undefined : value;
+   }, 2);
 
    const parsed = useMemo(() => {
       let _props: any = {}
@@ -49,7 +52,7 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
             styles.classname
          )
       }
-   }, [JSON.stringify(props)])
+   }, [cachekey])
 
    const _props: any = {};
    for (let prop in parsed.props) {

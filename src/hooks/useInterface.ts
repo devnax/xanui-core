@@ -2,12 +2,11 @@ import { useTheme } from "../theme"
 
 const useInterface = <P extends object>(name: string, userPorps: P, defaultProps: P) => {
     const theme = useTheme()
-    const _interface = theme.interfaces[name]
-
-    if (_interface) {
-        defaultProps = _interface<P>({ ...defaultProps, ...userPorps }, theme)
+    let _props = { ...defaultProps, ...userPorps } as P
+    if (name in theme.interfaces) {
+        return theme.interfaces[name](_props, theme)
     }
-    return [{ ...defaultProps, ...userPorps }, theme]
+    return [_props, theme]
 }
 
 export default useInterface
