@@ -1,7 +1,7 @@
 import React, { use, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createThemeSwitcher, ThemeProvider, useTheme } from './src/theme'
-import { Tag, TagComponentType, TagProps, Transition, useBreakpoint, useColorTemplate } from './src';
+import { Tag, TagComponentType, TagProps, Transition, useBreakpoint, useBreakpointProps, useColorTemplate, useInterface } from './src';
 import AppRoot from './src/AppRoot';
 import usePortal from './src/hooks/usePortal';
 import { Renderar } from './src/AppRoot/Renderar';
@@ -205,7 +205,6 @@ const Trans = () => {
   )
 }
 
-
 const Button = ({ children, color, variant, ...rest }: any) => {
   const t = useColorTemplate(color || 'brand', variant || 'fill')
   return (
@@ -228,16 +227,53 @@ const Button = ({ children, color, variant, ...rest }: any) => {
   )
 }
 
+const Input = (props: any) => {
+
+  const [_p]: any = useInterface("Input", props, {})
+  const { icon, ...rest } = useBreakpointProps(_p)
+
+  return (
+    <Tag>
+      <Tag
+        component={"input"}
+        p={1}
+        px={2}
+        radius={1}
+        border="1px solid"
+        borderColor="divider.primary"
+        bgcolor="background.primary"
+        color="text.primary"
+        {...rest}
+      />
+      {icon && <Tag
+        component={"span"}
+      >
+        {icon}
+      </Tag>}
+    </Tag>
+  )
+}
+
 const App = () => {
   const themeSwitcher = useThemeSwitcher()
   const [toggled, setToggled] = React.useState(true)
   const ref = useRef<any>(null)
+  const [text, setText] = React.useState("Click")
 
 
   return (
     <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" bgcolor="divider.soft.primary">
       <Trans />
-
+      <Input
+        type={text}
+        icon={<button
+          onClick={() => {
+            setText(text === "Click" ? "Clicked" : "Click")
+          }}
+        >
+          {text}
+        </button>}
+      />
       <GridContainer mb={2} spacing={1}>
         <GridItem xs={12} sm={6} md={4} lg={3} >
           <Tag

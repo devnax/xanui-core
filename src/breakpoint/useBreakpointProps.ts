@@ -6,7 +6,7 @@ export type useBreakpointPropsType<P> = P | {
    [key in BreakpointKeys]?: P
 }
 
-const useBreakpoinProps = <P extends object>(props: useBreakpointPropsType<P>): useBreakpointPropsType<P> => {
+const useBreakpointProps = <P extends object>(props: useBreakpointPropsType<P>): useBreakpointPropsType<P> => {
    const bpoint = useBreakpoint()
    const stringifiedElement = JSON.stringify(props, (key, value) => {
       if (key === '_owner' || key === '_store') {
@@ -54,4 +54,4 @@ const useBreakpoinProps = <P extends object>(props: useBreakpointPropsType<P>): 
 
 
 
-export default useBreakpoinProps
+export default useBreakpointProps

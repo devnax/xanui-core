@@ -14,44 +14,40 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
 
    const parsed = useMemo(() => {
       let _props: any = {}
-      let clss = []
       let _css: any = {}
 
-      let sx = props.sx || {}
-      let sxr = props.sxr || {}
-      let hover = props.hover || {}
-      let style = props.style || {}
+      if (props.hover && Object.keys(props.hover).length > 0) {
+         _css['&:hover'] = {
+            ...props.hover
+         }
+      }
 
       for (let key in props) {
-         if (key === "sx" || key === "sxr" || key === "style") {
+         const keys = ["sx", "sxr", "style", "hover", "className", "classNames", "baseClass"];
+         if (keys.includes(key)) {
             continue;
          }
-
          let val = (props as any)[key];
-         if (key === "className") {
-            clss.push(val)
-         } else if (key === 'baseClass') {
-            clss.push("xui-" + val)
-         } else if (key === 'classNames') {
-            clss.push(...val)
-         } else if (key === "hover") {
-            _css['&:hover'] = { ...(_css['&:hover'] || {}), ...val }
-         } else if (!cssPropList[key]) {
+         if (!cssPropList[key]) {
             _props[key] = val
          } else {
             _css[key] = val
          }
       }
 
-      const styles = css({ ...sxr, ..._css, ...sx, ...style }, {
+      const styles = css({ ...props.sxr, ..._css, ...props.sx, ...props.style }, {
          injectStyle: typeof window !== 'undefined',
       })
 
-      clss.push(styles.classname)
       return {
          props: _props,
          styles,
-         className: classNames(clss)
+         className: classNames(
+            props.baseClass ? "xui-" + props.baseClass : undefined,
+            props.classNames,
+            props.className,
+            styles.classname
+         )
       }
    }, [JSON.stringify(props)])
 
