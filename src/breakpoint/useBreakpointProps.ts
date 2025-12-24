@@ -50,7 +50,11 @@ const useBreakpointProps = <P extends object>(props: useBreakpointPropsType<P>):
          _props = { ..._props, ...format[key] };
       }
    }
-   return _props;
+
+   return {
+      ...props,
+      ..._props
+   };
 }
 
 
