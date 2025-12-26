@@ -1,6 +1,6 @@
 import { createBucket, xv } from "react-state-bucket"
 import { getTheme } from "./core"
-import { BucketOptions } from "react-state-bucket/Bucket"
+import { BucketOptions } from "react-state-bucket"
 
 export type ThemeSwitcherOption = {
    store?: BucketOptions['store'],
@@ -19,9 +19,9 @@ const createThemeSwitcher = (defaultTheme: string, option?: ThemeSwitcherOption)
    const useThemeSwitcher = () => {
       const state = useThemeState()
       return {
-         name: state.get("name"),
-         theme: getTheme(state.get("name")),
-         change: (theme: string) => state.set("name", theme)
+         name: state.name,
+         theme: getTheme(state.name),
+         change: (theme: string) => state.name = theme
       }
    }
    return useThemeSwitcher
