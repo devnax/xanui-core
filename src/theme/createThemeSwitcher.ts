@@ -9,7 +9,7 @@ export type ThemeSwitcherOption = {
 
 const createThemeSwitcher = (defaultTheme: string, option?: ThemeSwitcherOption) => {
 
-   const useThemeState = createBucket({ name: xv.string().default(defaultTheme) }, {
+   const useThemeBucket = createBucket({ name: xv.string().default(defaultTheme) }, {
       store: option?.store || "memory",
       onChange: (_key, value) => {
          option?.onChange && option?.onChange(value)
@@ -17,11 +17,11 @@ const createThemeSwitcher = (defaultTheme: string, option?: ThemeSwitcherOption)
    })
 
    const useThemeSwitcher = () => {
-      const state = useThemeState()
+      const bucket = useThemeBucket()
       return {
-         name: state.name,
-         theme: getTheme(state.name),
-         change: (theme: string) => state.name = theme
+         name: bucket.state.name,
+         theme: getTheme(bucket.state.name),
+         change: (theme: string) => bucket.set('name', theme)
       }
    }
    return useThemeSwitcher
