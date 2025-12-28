@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useMemo } from "react";
 import { createRoot } from "react-dom/client";
 import { ThemeProvider, useTheme } from "../theme";

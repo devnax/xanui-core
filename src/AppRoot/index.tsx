@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useMemo } from 'react';
 import { TagComponentType } from '../Tag/types';
 import { ThemeProvider, ThemeProviderProps, themeRootClass } from '../theme';

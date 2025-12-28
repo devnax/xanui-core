@@ -1,3 +1,4 @@
+"use client";
 import { createBucket, xv } from "react-state-bucket"
 import { getTheme } from "./core"
 import { BucketOptions } from "react-state-bucket"

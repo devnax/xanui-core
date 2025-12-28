@@ -1,15 +1,7 @@
+"use client";
 import { css } from '../css'
 import { useId } from 'react'
 import { CSSProps } from '../css/types'
-
-// export const animationEases = {
-//     easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
-//     easeOut: "cubic-bezier(0.0, 0, 0.2, 1)",
-//     easeIn: "cubic-bezier(0.4, 0, 1, 1)",
-//     sharp: "cubic-bezier(0.4, 0, 0.6, 1)",
-//     linear: "cubic-bezier(0, 0, 1, 1)",
-//     easeBounceOut: "cubic-bezier(0.68, -0.55, 0.265, 1.55)"
-// }
 
 export const animationEases = {
     standard: "cubic-bezier(0.4, 0, 0.2, 1)",
@@ -18,8 +10,6 @@ export const animationEases = {
     linear: "cubic-bezier(0, 0, 1, 1)",
     bounce: "cubic-bezier(0.34, 1.50, 0.64, 1)",
 };
-
-
 
 export interface UseAnimationProps {
     delay?: number;

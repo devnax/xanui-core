@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useId } from 'react';
 import { animationEases } from '../useAnimation';
 import { css } from '../../css';

@@ -1,3 +1,4 @@
+"use client";
 import { cloneElement, Children } from 'react';
 import useTransition, { UseTransitionProps } from '../hooks/useTransition';
 

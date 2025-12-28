@@ -1,3 +1,4 @@
+"use client";
 export type UseColorTemplateType = "fill" | "outline" | "text" | "soft"
 export type UseColorTemplateColor = "default" | "brand" | "accent" | "success" | "info" | "warning" | "danger"
 
