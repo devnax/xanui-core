@@ -1,3 +1,4 @@
+"use client";
 import React, { ReactNode, useState, useCallback } from "react";
 import { breakpoints } from "../css";
 import { BreakpointKeys } from "../css/types";
@@ -9,7 +10,7 @@ export const BreakpointCtx = React.createContext<BreakpointKeys>("xs");
  */
 const getKey = (): BreakpointKeys => {
     if (typeof window === 'undefined') {
-        return "xs";
+        return "xl";
     }
 
     const width = window.innerWidth;
