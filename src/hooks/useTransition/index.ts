@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useId, useRef } from 'react';
+import { useState, useEffect, useId } from 'react';
 import { animationEases } from '../useAnimation';
 import { css } from '../../css';
 import { formatCSSProp } from 'oncss';
@@ -38,7 +38,7 @@ const getVariant = (rect: DOMRect | null, variant: UseTransitionProps['variant']
    return fn(rect as DOMRect);
 }
 
-const useTransition = (id: string, { open, ...props }: UseTransitionProps) => {
+const useTransition = ({ open, ...props }: UseTransitionProps) => {
    let {
       disableInitialTransition = false,
       variant = "fade",
@@ -54,9 +54,7 @@ const useTransition = (id: string, { open, ...props }: UseTransitionProps) => {
       onState
    } = props
    let _ease = ease || (animationEases as any)[easing as any] || animationEases.bounce
-   // const id = "xui-transition-" + useId()
-   id = `xui-transition-${id}`
-
+   const id = "xui-transition-" + useId()
    const [state, setState] = useState({
       initial: false,
       classname: style({ visibility: "hidden" }),
