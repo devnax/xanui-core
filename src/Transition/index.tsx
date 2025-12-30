@@ -6,8 +6,11 @@ export type TransitionProps = UseTransitionProps & {
     children: React.ReactElement;
 }
 
+
+
 const Transition = ({ children, ...options }: TransitionProps) => {
     const id = useId();
+
     const { props, exited } = useTransition(id, options);
     if (exited) return null;
     const clone: any = Children.only(children);
