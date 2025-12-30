@@ -38,7 +38,7 @@ const getVariant = (rect: DOMRect | null, variant: UseTransitionProps['variant']
    return fn(rect as DOMRect);
 }
 
-const useTransition = ({ open, ...props }: UseTransitionProps) => {
+const useTransition = (id: string, { open, ...props }: UseTransitionProps) => {
    let {
       disableInitialTransition = false,
       variant = "fade",
@@ -55,8 +55,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
    } = props
    let _ease = ease || (animationEases as any)[easing as any] || animationEases.bounce
    // const id = "xui-transition-" + useId()
-   const reactId = useId();
-   const id = useRef(`xui-transition-${reactId}`).current;
+   id = `xui-transition-${id}`
 
    const [state, setState] = useState({
       initial: false,

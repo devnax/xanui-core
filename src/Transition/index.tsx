@@ -1,5 +1,5 @@
 "use client";
-import { cloneElement, Children } from 'react';
+import { cloneElement, Children, useId } from 'react';
 import useTransition, { UseTransitionProps } from '../hooks/useTransition';
 
 export type TransitionProps = UseTransitionProps & {
@@ -7,7 +7,8 @@ export type TransitionProps = UseTransitionProps & {
 }
 
 const Transition = ({ children, ...options }: TransitionProps) => {
-    const { props, exited } = useTransition(options);
+    const id = useId();
+    const { props, exited } = useTransition(id, options);
     if (exited) return null;
     const clone: any = Children.only(children);
     return cloneElement(clone, props);
