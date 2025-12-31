@@ -159,41 +159,39 @@ export const createDefaultThemes = () => {
             },
 
             brand: {
-                primary: "#3F5AE0",
-                secondary: "#5F78F0",
-                text: "#0B1220",
+                primary: "#1D4ED8",
+                secondary: "#2563EB",
+                text: "#F9FAFB",
             },
 
             accent: {
-                primary: "#6B4FE8",
-                secondary: "#856FF2",
-                text: "#0C0824",
+                primary: "#6D28D9",
+                secondary: "#7C3AED",
+                text: "#F9FAFB",
             },
 
-
             success: {
-                primary: "#22985A",
-                secondary: "#3AB97C",
-                text: "#052A18",
+                primary: "#15803D",
+                secondary: "#16A34A",
+                text: "#F9FAFB",
             },
 
             info: {
-                primary: "#3F70E0",
-                secondary: "#5F8CE8",
-                text: "#0A1024",
+                primary: "#1D4ED8",
+                secondary: "#2563EB",
+                text: "#F9FAFB",
             },
 
-
             warning: {
-                primary: "#B7832B",
-                secondary: "#D09B45",
-                text: "#1F1304",
+                primary: "#B45309",
+                secondary: "#D97706",
+                text: "#FFFBEB",
             },
 
             danger: {
-                primary: "#C44040",
-                secondary: "#DE6161",
-                text: "#2A0808",
+                primary: "#B91C1C",
+                secondary: "#DC2626",
+                text: "#FEF2F2",
             },
         }
     })
