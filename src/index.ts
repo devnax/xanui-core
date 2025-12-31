@@ -6,6 +6,7 @@ import useBreakpoint from './breakpoint/useBreakpoint'
 import useBreakpointProps from './breakpoint/useBreakpointProps'
 import useInterface from './hooks/useInterface'
 import useTransition from './hooks/useTransition'
+import useMergeRefs from './hooks/useMergeRefs'
 import Transition from './Transition'
 import AppRoot, { appRootElement } from './AppRoot'
 import usePortal from './hooks/usePortal'
@@ -38,5 +39,6 @@ export {
     useBreakpoint,
     useBreakpointProps,
     useInterface,
-    useTransition
+    useTransition,
+    useMergeRefs
 }
