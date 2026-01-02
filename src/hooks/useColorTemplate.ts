@@ -13,13 +13,13 @@ const useColorTemplate = (color: UseColorTemplateColor, type: UseColorTemplateTy
             primary: {
                 bgcolor: `transparent`,
                 color: is_def ? `text.primary` : `${color}.primary`,
-                border: 1,
+                border: "1px solid",
                 borderColor: is_def ? `divider` : `${color}.primary`,
             },
             secondary: {
                 bgcolor: `transparent`,
                 color: is_def ? `text.primary` : `${color}.secondary`,
-                border: 1,
+                border: "1px solid",
                 borderColor: is_def ? `divider.secondary` : `${color}.secondary`,
             }
         }
@@ -28,13 +28,13 @@ const useColorTemplate = (color: UseColorTemplateColor, type: UseColorTemplateTy
             primary: {
                 bgcolor: color,
                 color: is_def ? `text.primary` : `${color}.text`,
-                border: 1,
+                border: "1px solid",
                 borderColor: is_def ? `divider.secondary` : `${color}.secondary`,
             },
             secondary: {
                 bgcolor: `${color}.secondary`,
                 color: is_def ? `text.primary` : `${color}.text`,
-                border: 1,
+                border: "1px solid",
                 borderColor: is_def ? `divider.secondary` : `${color}.secondary`,
             }
         }
