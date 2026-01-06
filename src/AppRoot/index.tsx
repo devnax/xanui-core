@@ -21,7 +21,7 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
    const scrollbarCss: any = useMemo(() => {
       if (noScrollbarCss) return;
       const cls = (cls: string) => `${themeRootClass(theme)} ${cls}`
-      let thumbSize = 8
+      let thumbSize = 6
       let thumbColor = "var(--color-text-secondary)"
       let trackColor = "transparent"
 
