@@ -2,20 +2,21 @@
 import React, { useEffect, useMemo } from "react";
 import { createRoot } from "react-dom/client";
 import { ThemeProvider, useTheme } from "../theme";
-import { appRootElement } from "../AppRoot";
+import { useAppRootElement } from "../AppRoot/context";
 
 export type UsePortalOptions = {
    container?: HTMLElement;
    autoMount?: boolean;
 }
 
-export function usePortal(children: React.ReactNode, options?: UsePortalOptions) {
+function usePortal(children: React.ReactNode, options?: UsePortalOptions) {
    options = options || {};
    if (options.autoMount === undefined) {
       options.autoMount = true;
    }
    const [mounted, setMounted] = React.useState(options.autoMount);
    const theme = useTheme();
+   const appRoot = useAppRootElement();
    const { el, root } = useMemo(() => {
       const el = document.createElement("div");
       const root = createRoot(el);
@@ -23,8 +24,7 @@ export function usePortal(children: React.ReactNode, options?: UsePortalOptions)
    }, [options.autoMount]);
 
    const container = () => {
-      const rootEle = appRootElement();
-      const container = options?.container || rootEle
+      const container = options?.container || appRoot
       if (!container) throw new Error(`Container not found for portal. Please ensure that AppRoot is present in the application tree.`);
       return container;
    }

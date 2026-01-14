@@ -4,6 +4,7 @@ import { css } from '../css';
 import { classNames } from 'pretty-class';
 import { CSSFactoryType } from 'oncss';
 import { useMemo } from 'react';
+import { useDocument } from '../Document';
 
 export type useTagPropsReturn<T extends TagComponentType = "div"> = {
    props: TagProps<T>,
@@ -14,6 +15,8 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
    const cachekey = JSON.stringify(props, (key, value) => {
       return key === '_owner' || key === '_store' ? undefined : value;
    }, 2);
+
+   const doc = useDocument();
 
    const parsed = useMemo(() => {
       let _props: any = {}
@@ -39,7 +42,8 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
       }
 
       const styles = css({ ...props.sxr, ..._css, ...props.sx, ...props.style }, {
-         injectStyle: typeof window !== 'undefined',
+         injectStyle: typeof doc !== 'undefined',
+         container: doc,
       })
 
       return {
@@ -52,7 +56,7 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
             styles.classname
          )
       }
-   }, [cachekey])
+   }, [cachekey, doc])
 
    const _props: any = {};
    for (let prop in parsed.props) {

@@ -6,16 +6,20 @@ import { BreakpointProvider } from '../breakpoint';
 import { css } from '../css';
 import { RenderRenderar } from './Renderar';
 import ServerStyleTag from '../Tag/ServerStyleTag';
+import { DocumentProvider } from '../Document';
+import { AppRootProvider } from './context';
 
 export type AppRootProps<T extends TagComponentType = "div"> = ThemeProviderProps<T> & {
    noScrollbarCss?: boolean;
+   document?: Document;
 }
 
-const appRootClassName = "xui-app-root"
-export const appRootElement = () => document.querySelector(`.${appRootClassName}`) as HTMLDivElement;
+export const APP_ROOT_CLASSNAME = "xui-app-root"
 
-const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children, noScrollbarCss, theme, ...props }: AppRootProps<T>, ref: React.Ref<any>) => {
+const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children, noScrollbarCss, theme, document: _document, ...props }: AppRootProps<T>, ref: React.Ref<any>) => {
    noScrollbarCss ??= false
+   _document ??= document
+
    const [visibility, setVisibility] = React.useState<string>("hidden");
 
    const scrollbarCss: any = useMemo(() => {
@@ -46,7 +50,8 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
             },
          }
       }, {
-         injectStyle: typeof window !== 'undefined'
+         injectStyle: typeof window !== 'undefined',
+         container: _document,
       }) as any
    }, [noScrollbarCss, theme])
 
@@ -95,49 +100,47 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
             },
          }
       }, {
-         injectStyle: typeof window !== 'undefined'
+         injectStyle: typeof window !== 'undefined',
+         container: _document,
       })
    }, [])
 
    useEffect(() => {
-
-      const root = document.querySelectorAll(`.${appRootClassName}`)
-      if (!root || root.length > 1) {
-         throw new Error("Multiple AppRoot detected in the application tree. Please ensure that there is only one AppRoot component wrapping your application.");
-      }
-
       setVisibility("visible");
 
       // move oncss style tags to head
-      if (typeof window === 'undefined') return;
-      const head = document.getElementsByTagName('head')[0];
-      const styles = Array.from(document.querySelectorAll('body style[data-oncss]'));
+      if (typeof _document === 'undefined') return;
+      const styles = Array.from(_document.querySelectorAll('body style[data-oncss]'));
       styles.forEach((style) => {
-         head.appendChild(style);
+         _document.head.appendChild(style);
       });
 
    }, [])
 
    return (
-      <ThemeProvider
-         ref={ref}
-         theme={theme}
-         {...props}
-         sx={{
-            ...props.sx,
-            ...(visibility === "hidden" ? { visibility: "hidden" } : {})
-         }}
-         classNames={[appRootClassName]}
-      >
-         <ServerStyleTag factory={globalStyle} />
-         {
-            scrollbarCss && <ServerStyleTag factory={scrollbarCss} />
-         }
-         <BreakpointProvider>
-            {children}
-            <RenderRenderar />
-         </BreakpointProvider>
-      </ThemeProvider>
+      <DocumentProvider document={_document}>
+         <AppRootProvider element={() => _document.querySelector(`.${APP_ROOT_CLASSNAME}`)!}>
+            <ThemeProvider
+               ref={ref}
+               theme={theme}
+               {...props}
+               sx={{
+                  ...props.sx,
+                  ...(visibility === "hidden" ? { visibility: "hidden" } : {})
+               }}
+               classNames={[APP_ROOT_CLASSNAME]}
+            >
+               <ServerStyleTag factory={globalStyle} />
+               {
+                  scrollbarCss && <ServerStyleTag factory={scrollbarCss} />
+               }
+               <BreakpointProvider>
+                  {children}
+                  <RenderRenderar />
+               </BreakpointProvider>
+            </ThemeProvider>
+         </AppRootProvider>
+      </DocumentProvider>
    )
 })
 

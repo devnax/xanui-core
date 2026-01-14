@@ -8,6 +8,7 @@ import ThemeCssVars from "./ThemeCssVars"
 import { css } from "../css"
 import { createDefaultThemes } from "./ThemeDefaultOptions"
 import ServerStyleTag from "../Tag/ServerStyleTag"
+import { useDocument } from "../Document";
 
 export type ThemeProviderProps<T extends TagComponentType = 'div'> = TagProps<T> & {
    theme: string;
@@ -21,6 +22,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ..
       console.error(`ThemeProvider: The theme '${theme}' is not defined. Please make sure to use a valid theme name.`)
       THEME = ThemeFactory.get("light") as ThemeOptions
    }
+   const doc = useDocument();
 
    const globalStyle: any = React.useMemo(() => {
       const root_cls = `.xui-${theme}-theme-root`
@@ -36,7 +38,8 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, ..
             [root_cls]: ThemeCssVars(THEME)
          }
       }, {
-         injectStyle: typeof window !== 'undefined'
+         injectStyle: typeof window !== 'undefined',
+         container: doc,
       })
    }, [theme])
 

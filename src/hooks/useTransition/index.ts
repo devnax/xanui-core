@@ -5,6 +5,7 @@ import { css } from '../../css';
 import { formatCSSProp } from 'oncss';
 import { CSSProps } from '../../css/types';
 import * as variants from './variants'
+import { useDocument } from '../../Document';
 
 export type UseTransitionVariantTypes = keyof typeof variants
 export type UseTransitionState = "open" | "opened" | "close" | "closed"
@@ -28,8 +29,8 @@ export type UseTransitionProps = {
 }
 
 
-const style = (obj?: any) => {
-   return css(obj || {}, { selector: "#" }).classname;
+const style = (obj = {}, doc: Document) => {
+   return css(obj, { selector: "#", container: doc }).classname;
 }
 
 const getVariant = (rect: DOMRect | null, variant: UseTransitionProps['variant']) => {
@@ -53,18 +54,19 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       onClosed,
       onState
    } = props
+   const doc = useDocument();
    let _ease = ease || (animationEases as any)[easing as any] || animationEases.bounce
    const id = "xui-transition-" + useId()
    const [state, setState] = useState({
       initial: false,
-      classname: style({ visibility: "hidden" }),
+      classname: style({ visibility: "hidden" }, doc),
       variant: variant,
       rect: null as DOMRect | null,
       stage: open ? "open" : "closed",
       unmounted: false,
    })
 
-   const getEle = () => document.querySelector(`[data-transition="${id}"]`) as HTMLElement;
+   const getEle = () => doc.querySelector(`[data-transition="${id}"]`) as HTMLElement;
    const getBoundary = () => state.rect || getEle()?.getBoundingClientRect() || new DOMRect(0, 0, 0, 0);
 
    useEffect(() => {
@@ -81,7 +83,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
             setState(s => ({
                ...s,
                variant: variant,
-               classname: style({ visibility: "hidden" }),
+               classname: style({ visibility: "hidden" }, doc),
                stage: "open",
             }))
          }
@@ -99,7 +101,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       if (open && !state.initial) {
          setState(s => ({
             ...s,
-            classname: (!disableInitialTransition || state.unmounted) ? style(from) : "",
+            classname: (!disableInitialTransition || state.unmounted) ? style(from, doc) : "",
             initial: true,
             rect: rect,
          }))
@@ -135,7 +137,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       } else if (!state.initial) {
          setState(s => ({
             ...s,
-            classname: style(from),
+            classname: style(from, doc),
             rect: rect,
          }))
       }
@@ -154,7 +156,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
          }
          setState(s => ({
             ...s,
-            classname: style(_),
+            classname: style(_, doc),
             variant: _variant
          }))
       }

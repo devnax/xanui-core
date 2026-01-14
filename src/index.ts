@@ -8,9 +8,14 @@ import useInterface from './hooks/useInterface'
 import useTransition from './hooks/useTransition'
 import useMergeRefs from './hooks/useMergeRefs'
 import Transition from './Transition'
-import AppRoot, { appRootElement } from './AppRoot'
+import AppRoot from './AppRoot'
 import usePortal from './hooks/usePortal'
 import { Renderar } from './AppRoot/Renderar'
+import { useDocument } from './Document'
+import { useAppRootElement } from './AppRoot/context'
+import Iframe from './Iframe'
+
+export type * from './Iframe'
 
 export * from "./AppRoot"
 export * from './css'
@@ -29,8 +34,10 @@ export * from './hooks/useTransition'
 export {
     Renderar,
     AppRoot,
-    appRootElement,
+    Iframe,
     Tag,
+    useAppRootElement,
+    useDocument,
     usePortal,
     useTagProps,
     useAnimation,

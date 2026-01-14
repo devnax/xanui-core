@@ -1,11 +1,11 @@
-import React, { use, useEffect, useRef, useState } from 'react';
+import React, { createContext, use, useContext, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createThemeSwitcher, ThemeProvider, useTheme } from './src/theme'
 import { Tag, TagComponentType, TagProps, Transition, useBreakpoint, useBreakpointProps, useColorTemplate, useInterface } from './src';
 import AppRoot from './src/AppRoot';
 import usePortal from './src/hooks/usePortal';
 import { Renderar } from './src/AppRoot/Renderar';
-
+import Iframe from './src/Iframe'
 
 export type GridContainerProps<T extends TagComponentType = "div"> = TagProps<T>
 const GridContainer = React.forwardRef(<T extends TagComponentType = "div">({ children, ...rest }: GridContainerProps<T>, ref?: React.Ref<any>) => {
@@ -259,11 +259,21 @@ const App = () => {
   const [toggled, setToggled] = React.useState(true)
   const ref = useRef<any>(null)
   const [text, setText] = React.useState("Click")
-
+  const [count, setCount] = React.useState(0)
 
   return (
     <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" bgcolor="divider.soft.primary">
+      <Iframe theme="dark" >
+        <Tag
+          color="red"
+          radius={1}
+          m={2}
+        >
+          Hello
+        </Tag>
+      </Iframe>
       <Trans />
+      {/* 
       <Input
         type={text}
         icon={<button
@@ -400,7 +410,7 @@ const App = () => {
             >Tagas</Tag>
           ))
         }
-      </Tag>
+      </Tag> */}
     </AppRoot>
   );
 }
