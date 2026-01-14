@@ -15,13 +15,13 @@ const IframeContext = createContext<{ document: Document | null; window: Window 
 
 export type IframeProps = Omit<TagPropsRoot<"iframe">, "component"> & {
    theme?: string;
+   CSSCacheId?: string;
 }
 
-const Iframe = ({ children, sxr, theme, ...props }: IframeProps, ref: React.Ref<HTMLIFrameElement>) => {
+const Iframe = ({ children, sxr, theme, CSSCacheId, ...props }: IframeProps, ref: React.Ref<HTMLIFrameElement>) => {
+   const [doc, setDoc] = useState<Document | null>(null);
    const iframeRef = useRef<HTMLIFrameElement>(null);
    const _ref = useMergeRefs(iframeRef, ref)
-
-   const [doc, setDoc] = useState<Document | null>(null);
    const parentTheme = useTheme()
    theme ??= parentTheme.name
 
@@ -57,7 +57,7 @@ const Iframe = ({ children, sxr, theme, ...props }: IframeProps, ref: React.Ref<
                      window: doc.defaultView,
                   }}
                >
-                  <AppRoot theme={theme} document={doc as Document}>
+                  <AppRoot theme={theme} document={doc as Document} CSSCacheId={CSSCacheId}>
                      {children}
                   </AppRoot>
                </IframeContext.Provider>,

@@ -2,6 +2,8 @@
 import { css } from '../css'
 import { useId } from 'react'
 import { CSSProps } from '../css/types'
+import { useDocument } from '../Document';
+import { useCSSCacheId } from '../css/CSSCacheProvider';
 
 export const animationEases = {
     standard: "cubic-bezier(0.4, 0, 0.2, 1)",
@@ -24,6 +26,9 @@ const useAnimation = ({ from, to, delay, ease, duration }: UseAnimationProps) =>
     let _duration = duration || 600;
     let _ease = ease || "standard"
     const id = "anim" + useId().replace(/:/g, "")
+    const doc = useDocument()
+    const cacheId = useCSSCacheId()
+
     const anim = css({
         animationName: id,
         animationDelay: _delay + "ms",
@@ -33,6 +38,9 @@ const useAnimation = ({ from, to, delay, ease, duration }: UseAnimationProps) =>
             from: from as any,
             to: to as any
         }
+    }, {
+        container: doc,
+        cacheId
     })
     return anim.classname
 }

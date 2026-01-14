@@ -12,7 +12,8 @@ import AppRoot from './AppRoot'
 import usePortal from './hooks/usePortal'
 import { Renderar } from './AppRoot/Renderar'
 import { useDocument } from './Document'
-import { useAppRootElement } from './AppRoot/context'
+import { useAppRootElement } from './AppRoot/AppRootProvider'
+import { useCSSCache, useCSSCacheId, getCSSCache } from './css/CSSCacheProvider'
 import Iframe from './Iframe'
 
 export type * from './Iframe'
@@ -47,5 +48,8 @@ export {
     useBreakpointProps,
     useInterface,
     useTransition,
-    useMergeRefs
+    useMergeRefs,
+    useCSSCache,
+    useCSSCacheId,
+    getCSSCache
 }

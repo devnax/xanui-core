@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo } from "react";
 import { createRoot } from "react-dom/client";
 import { ThemeProvider, useTheme } from "../theme";
-import { useAppRootElement } from "../AppRoot/context";
+import { useAppRootElement } from "../AppRoot/AppRootProvider";
 
 export type UsePortalOptions = {
    container?: HTMLElement;

@@ -6,6 +6,7 @@ import { formatCSSProp } from 'oncss';
 import { CSSProps } from '../../css/types';
 import * as variants from './variants'
 import { useDocument } from '../../Document';
+import { useCSSCacheId } from '../../css/CSSCacheProvider';
 
 export type UseTransitionVariantTypes = keyof typeof variants
 export type UseTransitionState = "open" | "opened" | "close" | "closed"
@@ -29,8 +30,8 @@ export type UseTransitionProps = {
 }
 
 
-const style = (obj = {}, doc: Document) => {
-   return css(obj, { selector: "#", container: doc }).classname;
+const style = (obj = {}, doc: Document, cacheId: string) => {
+   return css(obj, { selector: "#", container: doc, cacheId }).classname;
 }
 
 const getVariant = (rect: DOMRect | null, variant: UseTransitionProps['variant']) => {
@@ -55,11 +56,12 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       onState
    } = props
    const doc = useDocument();
+   const cacheId = useCSSCacheId()
    let _ease = ease || (animationEases as any)[easing as any] || animationEases.bounce
    const id = "xui-transition-" + useId()
    const [state, setState] = useState({
       initial: false,
-      classname: style({ visibility: "hidden" }, doc),
+      classname: style({ visibility: "hidden" }, doc, cacheId),
       variant: variant,
       rect: null as DOMRect | null,
       stage: open ? "open" : "closed",
@@ -83,7 +85,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
             setState(s => ({
                ...s,
                variant: variant,
-               classname: style({ visibility: "hidden" }, doc),
+               classname: style({ visibility: "hidden" }, doc, cacheId),
                stage: "open",
             }))
          }
@@ -101,7 +103,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       if (open && !state.initial) {
          setState(s => ({
             ...s,
-            classname: (!disableInitialTransition || state.unmounted) ? style(from, doc) : "",
+            classname: (!disableInitialTransition || state.unmounted) ? style(from, doc, cacheId) : "",
             initial: true,
             rect: rect,
          }))
@@ -137,7 +139,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       } else if (!state.initial) {
          setState(s => ({
             ...s,
-            classname: style(from, doc),
+            classname: style(from, doc, cacheId),
             rect: rect,
          }))
       }
@@ -156,7 +158,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
          }
          setState(s => ({
             ...s,
-            classname: style(_, doc),
+            classname: style(_, doc, cacheId),
             variant: _variant
          }))
       }

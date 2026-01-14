@@ -5,6 +5,7 @@ import { classNames } from 'pretty-class';
 import { CSSFactoryType } from 'oncss';
 import { useMemo } from 'react';
 import { useDocument } from '../Document';
+import { useCSSCacheId } from '../css/CSSCacheProvider';
 
 export type useTagPropsReturn<T extends TagComponentType = "div"> = {
    props: TagProps<T>,
@@ -17,6 +18,7 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
    }, 2);
 
    const doc = useDocument();
+   const cacheId = useCSSCacheId()
 
    const parsed = useMemo(() => {
       let _props: any = {}
@@ -44,6 +46,7 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
       const styles = css({ ...props.sxr, ..._css, ...props.sx, ...props.style }, {
          injectStyle: typeof doc !== 'undefined',
          container: doc,
+         cacheId
       })
 
       return {
@@ -56,7 +59,7 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
             styles.classname
          )
       }
-   }, [cachekey, doc])
+   }, [cachekey])
 
    const _props: any = {};
    for (let prop in parsed.props) {

@@ -265,7 +265,7 @@ const App = () => {
     <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" bgcolor="divider.soft.primary">
       <Input />
 
-      <Iframe theme="dark" >
+      <Iframe >
         <Tag
           color="red"
           radius={1}
