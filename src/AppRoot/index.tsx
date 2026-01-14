@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { TagComponentType } from '../Tag/types';
 import { ThemeProvider, ThemeProviderProps, themeRootClass } from '../theme';
 import { BreakpointProvider } from '../breakpoint';
@@ -8,6 +8,7 @@ import { RenderRenderar } from './Renderar';
 import ServerStyleTag from '../Tag/ServerStyleTag';
 import { DocumentProvider } from '../Document';
 import { AppRootProvider } from './context';
+import useMergeRefs from '../hooks/useMergeRefs';
 
 export type AppRootProps<T extends TagComponentType = "div"> = ThemeProviderProps<T> & {
    noScrollbarCss?: boolean;
@@ -21,6 +22,8 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
    _document ??= document
 
    const [visibility, setVisibility] = React.useState<string>("hidden");
+   const rootRef = useRef(null)
+   const mergeRef = useMergeRefs(rootRef, ref)
 
    const scrollbarCss: any = useMemo(() => {
       if (noScrollbarCss) return;
@@ -119,9 +122,9 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
 
    return (
       <DocumentProvider document={_document}>
-         <AppRootProvider element={() => _document.querySelector(`.${APP_ROOT_CLASSNAME}`)!}>
+         <AppRootProvider element={rootRef.current}>
             <ThemeProvider
-               ref={ref}
+               ref={mergeRef}
                theme={theme}
                {...props}
                sx={{

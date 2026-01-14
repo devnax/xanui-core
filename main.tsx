@@ -1,7 +1,7 @@
 import React, { createContext, use, useContext, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createThemeSwitcher, ThemeProvider, useTheme } from './src/theme'
-import { Tag, TagComponentType, TagProps, Transition, useBreakpoint, useBreakpointProps, useColorTemplate, useInterface } from './src';
+import { Tag, TagComponentType, TagProps, Transition, useAppRootElement, useBreakpoint, useBreakpointProps, useColorTemplate, useInterface } from './src';
 import AppRoot from './src/AppRoot';
 import usePortal from './src/hooks/usePortal';
 import { Renderar } from './src/AppRoot/Renderar';
@@ -263,6 +263,8 @@ const App = () => {
 
   return (
     <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" bgcolor="divider.soft.primary">
+      <Input />
+
       <Iframe theme="dark" >
         <Tag
           color="red"
