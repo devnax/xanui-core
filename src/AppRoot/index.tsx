@@ -55,8 +55,8 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
                   }}
                >
                   <BreakpointProvider>
-                     {children}
                      <RenderRenderar />
+                     {children}
                   </BreakpointProvider>
                </ThemeProvider>
             </AppRootProvider>

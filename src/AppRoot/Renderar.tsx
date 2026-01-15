@@ -70,7 +70,7 @@ export const RenderRenderar = () => {
       const updateProps = Renderar.updateProps
       Renderar.render = ((component: React.FunctionComponent, props?: any) => {
          Renderar.doc = doc
-         render(component, { ...props, $doc: doc })
+         render(component, props)
          Renderar.doc = null
       }) as any
 
