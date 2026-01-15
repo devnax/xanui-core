@@ -1,6 +1,6 @@
 {
    "name": "@xanui/core",
-   "version": "1.2.51",
+   "version": "1.2.52",
    "description": "Xanui Core Library",
    "private": false,
    "main": "./index.cjs",
@@ -14,7 +14,7 @@
       "release": "makepack release"
    },
    "dependencies": {
-      "oncss": "^1.2.10",
+      "oncss": "^1.2.11",
       "pretty-class": "^1.0.8",
       "react-state-bucket": "^1.2.17"
    },
