@@ -39,7 +39,7 @@ const useAnimation = ({ from, to, delay, ease, duration }: UseAnimationProps) =>
             to: to as any
         }
     }, {
-        container: doc,
+        container: doc.document,
         cacheId
     })
     return anim.classname

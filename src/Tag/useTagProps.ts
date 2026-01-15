@@ -17,7 +17,7 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
       return key === '_owner' || key === '_store' ? undefined : value;
    }, 2);
 
-   const doc = useDocument();
+   const doc = useDocument().document;
    const cacheId = useCSSCacheId()
 
    const parsed = useMemo(() => {

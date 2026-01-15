@@ -26,7 +26,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, is
       console.error(`ThemeProvider: The theme '${theme}' is not defined. Please make sure to use a valid theme name.`)
       THEME = ThemeFactory.get("light") as ThemeOptions
    }
-   const doc = useDocument();
+   const doc = useDocument().document;
    const cacheId = useCSSCacheId()
 
    const themeGlobalStyle: any = React.useMemo(() => {

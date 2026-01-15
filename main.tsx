@@ -254,6 +254,8 @@ const Input = (props: any) => {
   )
 }
 
+
+
 const App = () => {
   const themeSwitcher = useThemeSwitcher()
   const [toggled, setToggled] = React.useState(true)
@@ -265,15 +267,21 @@ const App = () => {
     <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" bgcolor="divider.soft.primary">
       <Input />
 
-      <Iframe >
-        <Tag
-          color="red"
-          radius={1}
-          m={2}
-        >
-          Hello
-        </Tag>
-      </Iframe>
+      <button
+        onClick={() => {
+          Renderar.render(() => <Iframe>
+            <Tag
+              color="red"
+              radius={1}
+              m={2}
+            >
+              Hello
+            </Tag>
+          </Iframe>)
+        }}
+      >render</button>
+
+
       <Trans />
       {/* 
       <Input

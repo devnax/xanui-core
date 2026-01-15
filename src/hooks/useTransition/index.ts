@@ -55,7 +55,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       onClosed,
       onState
    } = props
-   const doc = useDocument();
+   const doc = useDocument().document;
    const cacheId = useCSSCacheId()
    let _ease = ease || (animationEases as any)[easing as any] || animationEases.bounce
    const id = "xui-transition-" + useId()

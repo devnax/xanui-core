@@ -3,6 +3,7 @@ import React, { useEffect, useMemo } from "react";
 import { createRoot } from "react-dom/client";
 import { ThemeProvider, useTheme } from "../theme";
 import { useAppRootElement } from "../AppRoot/AppRootProvider";
+import { useDocument } from "../Document";
 
 export type UsePortalOptions = {
    container?: HTMLElement;
@@ -17,8 +18,9 @@ function usePortal(children: React.ReactNode, options?: UsePortalOptions) {
    const [mounted, setMounted] = React.useState(options.autoMount);
    const theme = useTheme();
    const appRoot = useAppRootElement();
+   const doc = useDocument()
    const { el, root } = useMemo(() => {
-      const el = document.createElement("div");
+      const el = doc.document.createElement("div");
       const root = createRoot(el);
       return { el, root };
    }, [options.autoMount]);
@@ -42,19 +44,12 @@ function usePortal(children: React.ReactNode, options?: UsePortalOptions) {
       el.remove();
    }
 
-
    useEffect(() => {
-      if (mounted) {
-         mount()
-      } else {
-         unmount()
-      }
+      mounted ? mount() : unmount()
    }, [mounted]);
 
    useEffect(() => {
-      if (mounted) {
-         mount()
-      }
+      if (mounted) mount()
    }, [children]);
 
    useEffect(() => {

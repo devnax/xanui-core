@@ -1,10 +1,10 @@
 {
    "name": "@xanui/core",
-   "version": "1.2.43",
+   "version": "1.2.44",
    "description": "Xanui Core Library",
    "private": false,
-   "main": "./index.js",
-   "module": "./index.mjs",
+   "main": "./index.cjs",
+   "module": "./index.js",
    "types": "./index.d.ts",
    "type": "module",
    "sideEffects": false,
@@ -21,15 +21,8 @@
    "devDependencies": {
       "@types/react": "^19.2.7",
       "@types/react-dom": "^19.2.3",
-      "makepack": "^1.7.24",
+      "makepack": "^1.7.27",
       "typescript": "^5.9.3"
    },
-   "keywords": [],
-   "exports": {
-      ".": {
-         "import": "./index.mjs",
-         "require": "./index.js",
-         "types": "./index.d.ts"
-      }
-   }
+   "keywords": []
 }
