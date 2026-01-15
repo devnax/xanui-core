@@ -61,7 +61,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, is
                verticalAlign: "baseline",
             },
             "html, body": {
-               minHeight: "100%",
+               height: "100%",
                "-webkit-font-smoothing": "antialiased",
                "-moz-osx-font-smoothing": "grayscale",
             } as any,
