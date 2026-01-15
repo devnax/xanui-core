@@ -268,19 +268,19 @@ const App = () => {
     <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" bgcolor="divider.soft.primary">
       <Input />
 
-      {/* <button
+      <button
         onClick={() => {
-          Renderar.render(() => <Iframe>
+          const rr = Renderar.render(() => <Iframe>
             <Tag
               color="red"
               radius={1}
               m={2}
             >
-              Hello
+              Hello <button onClick={() => rr.unrender()}>un</button>
             </Tag>
           </Iframe>)
         }}
-      >render</button> */}
+      >render</button>
 
 
       {/* <Trans /> */}

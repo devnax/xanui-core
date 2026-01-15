@@ -40,7 +40,7 @@ function usePortal(children: React.ReactNode, options?: UsePortalOptions) {
       if (!cont.contains(el)) {
          cont.appendChild(el);
       }
-      root.render(<AppRoot theme={theme.name} CSSCacheId={cacheId} document={doc.document}>{children}</AppRoot>)
+      root.render(<AppRoot disableRenderar theme={theme.name} CSSCacheId={cacheId} document={doc.document}>{children}</AppRoot>)
    }
 
    const unmount = () => {

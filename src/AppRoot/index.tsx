@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { TagComponentType } from '../Tag/types';
 import { ThemeProvider, ThemeProviderProps } from '../theme';
 import { BreakpointProvider } from '../breakpoint';
@@ -13,21 +13,20 @@ export type AppRootProps<T extends TagComponentType = "div"> = ThemeProviderProp
    noScrollbarCss?: boolean;
    document?: Document;
    CSSCacheId?: string;
+   disableRenderar?: boolean;
 }
 
-const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children, noScrollbarCss, CSSCacheId, theme, document: _document, ...props }: AppRootProps<T>, ref: React.Ref<any>) => {
+const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children, noScrollbarCss, CSSCacheId, theme, disableRenderar, document: _document, ...props }: AppRootProps<T>, ref: React.Ref<any>) => {
    noScrollbarCss ??= false
    _document ??= document
+   disableRenderar ??= false
    const docid = useId()
-
    const csscacheId = useId()
    CSSCacheId ??= csscacheId
 
    const [visibility, setVisibility] = React.useState<string>("hidden");
-   const [doc, setDoc] = useState(_document ??= document)
    const rootRef = useRef(null)
    const mergeRef = useMergeRefs(rootRef, ref)
-   // console.log(_document);
 
    useEffect(() => {
       setVisibility("visible");
@@ -41,7 +40,7 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
    }, [])
 
    return (
-      <DocumentProvider document={doc} id={docid}>
+      <DocumentProvider document={_document} id={docid}>
          <CSSCacheProvider cacheId={CSSCacheId}>
             <AppRootProvider element={() => rootRef.current}>
                <ThemeProvider
@@ -55,8 +54,8 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
                   }}
                >
                   <BreakpointProvider>
-                     <RenderRenderar />
                      {children}
+                     {!disableRenderar && <RenderRenderar />}
                   </BreakpointProvider>
                </ThemeProvider>
             </AppRootProvider>

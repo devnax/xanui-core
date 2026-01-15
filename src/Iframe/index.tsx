@@ -57,7 +57,7 @@ const Iframe = ({ children, sxr, theme, CSSCacheId, ...props }: IframeProps, ref
                      window: doc.defaultView,
                   }}
                >
-                  <AppRoot theme={theme} document={doc as Document} CSSCacheId={CSSCacheId}>
+                  <AppRoot disableRenderar theme={theme} document={doc as Document} CSSCacheId={CSSCacheId}>
                      {children}
                   </AppRoot>
                </IframeContext.Provider>,
