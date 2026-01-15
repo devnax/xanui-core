@@ -15,8 +15,8 @@ export const BreakpointCtx = React.createContext<BreakpointKeys>("xl");
 /**
  * SSR-safe breakpoint detection
  */
-const getKey = (doc: Document): BreakpointKeys => {
-    if (typeof window === "undefined" || typeof document === "undefined") {
+const getKey = (doc?: Document): BreakpointKeys => {
+    if (!doc || typeof window === "undefined" || typeof document === "undefined") {
         return "xl";
     }
 

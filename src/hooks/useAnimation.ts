@@ -39,8 +39,9 @@ const useAnimation = ({ from, to, delay, ease, duration }: UseAnimationProps) =>
             to: to as any
         }
     }, {
-        container: doc.document,
-        cacheId
+        container: doc?.document,
+        cacheId,
+        injectStyle: typeof window !== 'undefined'
     })
     return anim.classname
 }

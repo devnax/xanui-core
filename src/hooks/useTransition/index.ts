@@ -30,7 +30,7 @@ export type UseTransitionProps = {
 }
 
 
-const style = (obj = {}, doc: Document, cacheId: string) => {
+const style = (obj = {}, cacheId: string, doc?: Document) => {
    return css(obj, { selector: "#", container: doc, cacheId }).classname;
 }
 
@@ -61,14 +61,14 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
    const id = "xui-transition-" + useId()
    const [state, setState] = useState({
       initial: false,
-      classname: style({ visibility: "hidden" }, doc.document, cacheId),
+      classname: style({ visibility: "hidden" }, cacheId, doc?.document),
       variant: variant,
       rect: null as DOMRect | null,
       stage: open ? "open" : "closed",
       unmounted: false,
    })
 
-   const getEle = () => doc.document.querySelector(`[data-transition="${id}"]`) as HTMLElement;
+   const getEle = () => doc?.document.querySelector(`[data-transition="${id}"]`) as HTMLElement;
    const getBoundary = () => state.rect || getEle()?.getBoundingClientRect() || new DOMRect(0, 0, 0, 0);
 
    useEffect(() => {
@@ -85,7 +85,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
             setState(s => ({
                ...s,
                variant: variant,
-               classname: style({ visibility: "hidden" }, doc.document, cacheId),
+               classname: style({ visibility: "hidden" }, cacheId, doc?.document),
                stage: "open",
             }))
          }
@@ -103,7 +103,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       if (open && !state.initial) {
          setState(s => ({
             ...s,
-            classname: (!disableInitialTransition || state.unmounted) ? style(from, doc.document, cacheId) : "",
+            classname: (!disableInitialTransition || state.unmounted) ? style(from, cacheId, doc?.document) : "",
             initial: true,
             rect: rect,
          }))
@@ -139,7 +139,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       } else if (!state.initial) {
          setState(s => ({
             ...s,
-            classname: style(from, doc.document, cacheId),
+            classname: style(from, cacheId, doc?.document),
             rect: rect,
          }))
       }
@@ -158,7 +158,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
          }
          setState(s => ({
             ...s,
-            classname: style(_, doc.document, cacheId),
+            classname: style(_, cacheId, doc?.document),
             variant: _variant
          }))
       }

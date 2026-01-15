@@ -24,8 +24,8 @@ function usePortal(children: React.ReactNode, options?: UsePortalOptions) {
    const cacheId = useCSSCacheId()
 
    const { el, root } = useMemo(() => {
-      const el = doc.document.createElement("div");
-      const root = createRoot(el);
+      const el = doc?.document.createElement("div");
+      const root = createRoot(el!);
       return { el, root };
    }, [options.autoMount]);
 
@@ -37,15 +37,15 @@ function usePortal(children: React.ReactNode, options?: UsePortalOptions) {
 
    const mount = () => {
       const cont = container();
-      if (!cont.contains(el)) {
-         cont.appendChild(el);
+      if (!cont.contains(el!)) {
+         cont.appendChild(el!);
       }
-      root.render(<AppRoot disableRenderar theme={theme.name} CSSCacheId={cacheId} document={doc.document}>{children}</AppRoot>)
+      root.render(<AppRoot disableRenderar theme={theme.name} CSSCacheId={cacheId} document={doc?.document}>{children}</AppRoot>)
    }
 
    const unmount = () => {
       root.render(null)
-      el.remove();
+      el?.remove();
    }
 
    useEffect(() => {

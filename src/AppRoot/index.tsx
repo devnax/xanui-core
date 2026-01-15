@@ -18,7 +18,9 @@ export type AppRootProps<T extends TagComponentType = "div"> = ThemeProviderProp
 
 const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children, noScrollbarCss, CSSCacheId, theme, disableRenderar, document: _document, ...props }: AppRootProps<T>, ref: React.Ref<any>) => {
    noScrollbarCss ??= false
-   _document ??= document
+   if (typeof window !== "undefined") {
+      _document ??= document
+   }
    disableRenderar ??= false
    const docid = useId()
    const csscacheId = useId()
@@ -40,7 +42,7 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
    }, [])
 
    return (
-      <DocumentProvider document={_document} id={docid}>
+      <DocumentProvider value={_document ? { document: _document, id: docid } : undefined}>
          <CSSCacheProvider cacheId={CSSCacheId}>
             <AppRootProvider element={() => rootRef.current}>
                <ThemeProvider
