@@ -231,6 +231,7 @@ const Input = (props: any) => {
 
   const [_p]: any = useInterface("Input", props, {})
   const { icon, ...rest } = useBreakpointProps(_p)
+  const portal = usePortal(<>Hello</>)
 
   return (
     <Tag>
@@ -267,7 +268,7 @@ const App = () => {
     <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" bgcolor="divider.soft.primary">
       <Input />
 
-      <button
+      {/* <button
         onClick={() => {
           Renderar.render(() => <Iframe>
             <Tag
@@ -279,10 +280,10 @@ const App = () => {
             </Tag>
           </Iframe>)
         }}
-      >render</button>
+      >render</button> */}
 
 
-      <Trans />
+      {/* <Trans /> */}
       {/* 
       <Input
         type={text}

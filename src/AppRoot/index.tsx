@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useId, useRef } from 'react';
+import React, { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { TagComponentType } from '../Tag/types';
 import { ThemeProvider, ThemeProviderProps } from '../theme';
 import { BreakpointProvider } from '../breakpoint';
@@ -23,10 +23,11 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
    const csscacheId = useId()
    CSSCacheId ??= csscacheId
 
-
    const [visibility, setVisibility] = React.useState<string>("hidden");
+   const [doc, setDoc] = useState(_document ??= document)
    const rootRef = useRef(null)
    const mergeRef = useMergeRefs(rootRef, ref)
+   // console.log(_document);
 
    useEffect(() => {
       setVisibility("visible");
@@ -40,13 +41,13 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
    }, [])
 
    return (
-      <DocumentProvider document={_document} id={docid}>
+      <DocumentProvider document={doc} id={docid}>
          <CSSCacheProvider cacheId={CSSCacheId}>
-            <AppRootProvider element={rootRef.current}>
+            <AppRootProvider element={() => rootRef.current}>
                <ThemeProvider
-                  ref={mergeRef}
                   theme={theme}
                   {...props}
+                  ref={mergeRef}
                   isRoot
                   sx={{
                      ...props.sx,

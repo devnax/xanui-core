@@ -19,5 +19,6 @@ export const useDocument = (): DocumentContextValue => {
    if (typeof window === 'undefined') {
       return null as any;
    }
+
    return context as DocumentContextValue
 }

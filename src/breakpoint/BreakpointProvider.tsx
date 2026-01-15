@@ -1,19 +1,26 @@
 "use client";
-import React, { ReactNode, useState, useCallback } from "react";
+
+import React, {
+    ReactNode,
+    useState,
+    useCallback,
+    useLayoutEffect,
+} from "react";
 import { breakpoints } from "../css";
 import { BreakpointKeys } from "../css/types";
+import { useDocument } from "../Document";
 
-export const BreakpointCtx = React.createContext<BreakpointKeys>("xs");
+export const BreakpointCtx = React.createContext<BreakpointKeys>("xl");
 
 /**
  * SSR-safe breakpoint detection
  */
-const getKey = (): BreakpointKeys => {
-    if (typeof window === 'undefined') {
+const getKey = (doc: Document): BreakpointKeys => {
+    if (typeof window === "undefined" || typeof document === "undefined") {
         return "xl";
     }
 
-    const width = window.innerWidth;
+    const width = doc.documentElement.clientWidth || window.innerWidth;
 
     if (width < breakpoints.sm) return "xs";
     if (width < breakpoints.md) return "sm";
@@ -23,16 +30,21 @@ const getKey = (): BreakpointKeys => {
 };
 
 export const BreakpointProvider = ({ children }: { children?: ReactNode }) => {
-    const [current, setCurrent] = useState<BreakpointKeys>("xl");
+    // hydrate-safe initial state
+    const doc = useDocument()
+    const [current, setCurrent] = useState<BreakpointKeys>(() => getKey(doc?.document));
 
     const handler = useCallback(() => {
-        const newKey = getKey();
-        setCurrent(prev => (prev === newKey ? prev : newKey));
-    }, []);
+        if (doc) {
+            const next = getKey(doc.document)
+            setCurrent(prev => (prev === next ? prev : next));
+        }
+    }, [doc]);
 
-    React.useEffect(() => {
-        window.addEventListener("resize", handler);
-        handler(); // detect on mount
+    // useLayoutEffect avoids visual flicker on first paint
+    useLayoutEffect(() => {
+        handler();
+        window.addEventListener("resize", handler, { passive: true });
         return () => window.removeEventListener("resize", handler);
     }, [handler]);
 

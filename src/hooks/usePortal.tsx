@@ -4,6 +4,8 @@ import { createRoot } from "react-dom/client";
 import { ThemeProvider, useTheme } from "../theme";
 import { useAppRootElement } from "../AppRoot/AppRootProvider";
 import { useDocument } from "../Document";
+import AppRoot from "../AppRoot";
+import { useCSSCacheId } from "../css/CSSCacheProvider";
 
 export type UsePortalOptions = {
    container?: HTMLElement;
@@ -17,8 +19,10 @@ function usePortal(children: React.ReactNode, options?: UsePortalOptions) {
    }
    const [mounted, setMounted] = React.useState(options.autoMount);
    const theme = useTheme();
-   const appRoot = useAppRootElement();
    const doc = useDocument()
+   const appRoot = useAppRootElement();
+   const cacheId = useCSSCacheId()
+
    const { el, root } = useMemo(() => {
       const el = doc.document.createElement("div");
       const root = createRoot(el);
@@ -36,7 +40,7 @@ function usePortal(children: React.ReactNode, options?: UsePortalOptions) {
       if (!cont.contains(el)) {
          cont.appendChild(el);
       }
-      root.render(<ThemeProvider theme={theme.name}>{children}</ThemeProvider>)
+      root.render(<AppRoot theme={theme.name} CSSCacheId={cacheId} document={doc.document}>{children}</AppRoot>)
    }
 
    const unmount = () => {
@@ -45,12 +49,12 @@ function usePortal(children: React.ReactNode, options?: UsePortalOptions) {
    }
 
    useEffect(() => {
-      mounted ? mount() : unmount()
-   }, [mounted]);
+      (mounted && appRoot) ? mount() : unmount()
+   }, [mounted, appRoot]);
 
    useEffect(() => {
-      if (mounted) mount()
-   }, [children]);
+      if (mounted && appRoot) mount()
+   }, [children, appRoot]);
 
    useEffect(() => {
       return () => {

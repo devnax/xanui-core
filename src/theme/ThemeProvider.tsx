@@ -26,7 +26,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, is
       console.error(`ThemeProvider: The theme '${theme}' is not defined. Please make sure to use a valid theme name.`)
       THEME = ThemeFactory.get("light") as ThemeOptions
    }
-   const doc = useDocument().document;
+   const doc = useDocument()
    const cacheId = useCSSCacheId()
 
    const themeGlobalStyle: any = React.useMemo(() => {
@@ -44,7 +44,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, is
          }
       }, {
          injectStyle: typeof window !== 'undefined',
-         container: doc,
+         container: doc?.document,
          cacheId
       })
    }, [theme, doc])
@@ -96,7 +96,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, is
          }
       }, {
          injectStyle: typeof window !== 'undefined',
-         container: doc,
+         container: doc?.document,
          cacheId
       })
    }, [])
@@ -130,7 +130,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, is
          }
       }, {
          injectStyle: typeof window !== 'undefined',
-         container: doc,
+         container: doc?.document,
          cacheId
       }) as any
    }, [noScrollbarCss, theme])

@@ -1,8 +1,8 @@
 import React from "react";
 
-const AppRootContext = React.createContext<HTMLElement | null>(null);
+const AppRootContext = React.createContext<(() => HTMLElement | null) | null>(null);
 
-export const AppRootProvider: React.FC<{ element: HTMLElement | null; children: React.ReactNode }> = ({ element, children }) => {
+export const AppRootProvider: React.FC<{ element: () => HTMLElement | null; children: React.ReactNode }> = ({ element, children }) => {
    return (
       <AppRootContext.Provider value={element}>
          {children}
@@ -15,5 +15,6 @@ export const useAppRootElement = (): HTMLElement => {
    if (typeof window === 'undefined') {
       return null as any;
    }
-   return context as HTMLElement
+
+   return context!() as HTMLElement
 }
