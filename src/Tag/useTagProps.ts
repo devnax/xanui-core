@@ -44,8 +44,8 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
       }
 
       const styles = css({ ...props.sxr, ..._css, ...props.sx, ...props.style }, {
-         injectStyle: typeof doc.document !== 'undefined',
-         container: doc.document,
+         injectStyle: typeof window !== 'undefined',
+         container: doc?.document,
          cacheId
       })
 
