@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useId, useRef } from 'react';
 import { TagComponentType } from '../Tag/types';
 import { ThemeProvider, ThemeProviderProps } from '../theme';
 import { BreakpointProvider } from '../breakpoint';
@@ -14,10 +14,12 @@ export type AppRootProps<T extends TagComponentType = "div"> = ThemeProviderProp
    document?: Document;
    CSSCacheId?: string;
    disableRenderar?: boolean;
+   selectionColor?: "default" | "brand" | "accent" | "success" | "info" | "warning" | "danger";
 }
 
-const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children, noScrollbarCss, CSSCacheId, theme, disableRenderar, document: _document, ...props }: AppRootProps<T>, ref: React.Ref<any>) => {
+const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children, noScrollbarCss, CSSCacheId, theme, disableRenderar, selectionColor, document: _document, ...props }: AppRootProps<T>, ref: React.Ref<any>) => {
    noScrollbarCss ??= false
+   selectionColor ??= "brand"
    if (typeof window !== "undefined") {
       _document ??= document
    }
@@ -40,6 +42,15 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
          _document.head.appendChild(style);
       });
    }, [])
+   let selection: any = {}
+   if (selectionColor && selectionColor !== 'default') {
+      selection = {
+         "&::selection": {
+            bgcolor: `${selectionColor}.primary`,
+            color: `${selectionColor}.text`
+         }
+      }
+   }
 
    return (
       <DocumentProvider value={_document ? { document: _document, id: docid } : undefined}>
@@ -52,7 +63,8 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
                   isRoot
                   sx={{
                      ...props.sx,
-                     ...(visibility === "hidden" ? { visibility: "hidden" } : {})
+                     ...(visibility === "hidden" ? { visibility: "hidden" } : {}),
+                     ...selection
                   }}
                >
                   <BreakpointProvider>
