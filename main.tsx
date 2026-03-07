@@ -7,67 +7,10 @@ import usePortal from './src/hooks/usePortal';
 import { Renderar } from './src/AppRoot/Renderar';
 import Iframe from './src/Iframe'
 
-export type GridContainerProps<T extends TagComponentType = "div"> = TagProps<T>
-const GridContainer = React.forwardRef(<T extends TagComponentType = "div">({ children, ...rest }: GridContainerProps<T>, ref?: React.Ref<any>) => {
-  return (
-    <Tag
-      {...rest}
-      sxr={{
-        display: "flex",
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        width: '100%',
-        // marginLeft: `-${spacing}px`,
-        // marginTop: `-${spacing}px`,
-        // "& > div": {
-        //   paddingLeft: `${spacing}px`,
-        //   paddingTop: `${spacing}px`,
-        //   boxSizing: "border-box",
-        // }
-      }}
-      baseClass='grid-container'
-      ref={ref}
-    >
-      {children}
-    </Tag>
-  )
-})
-
-
-export type GridItemProps<T extends TagComponentType = "div"> = TagProps<T> & {
-  xs?: number;
-  sm?: number;
-  md?: number;
-  lg?: number;
-  xl?: number;
-}
-
-const GridItem = React.forwardRef(<T extends TagComponentType = "div">({ children, xs, sm, md, lg, xl, ...rest }: GridItemProps<T>, ref?: React.Ref<any>) => {
-
-  let w: any = {}
-
-  xs && (w.xs = (100 / 12 * xs) + "%")
-  sm && (w.sm = (100 / 12 * sm) + "%")
-  md && (w.md = (100 / 12 * md) + "%")
-  lg && (w.lg = (100 / 12 * lg) + "%")
-  xl && (w.xl = (100 / 12 * xl) + "%")
-
-  return (
-    <Tag
-      ref={ref}
-      {...rest}
-      maxWidth={w}
-      flexBasis={w}
-      flexGrow={0}
-      baseClass="grid-item"
-
-    >
-      {children}
-    </Tag>
-  )
-})
 
 const useThemeSwitcher = createThemeSwitcher("light")
+
+
 
 const ThemeBox = () => {
   const themeSwitcher = useThemeSwitcher()
@@ -256,6 +199,36 @@ const Input = (props: any) => {
 }
 
 
+const ACtx = createContext<any>(null)
+const AuthProvider = ({ children, value }: any) => {
+  return (
+    <ACtx.Provider value={value}>
+      {children}
+    </ACtx.Provider>
+  )
+}
+
+const useAuth = () => useContext(ACtx)
+
+const Auth = () => {
+  const au = useAuth()
+  console.log(au);
+
+  return (
+    <h1>Auth</h1>
+  )
+}
+
+const RND = () => {
+  return (
+    <button
+      onClick={() => {
+        const rr = Renderar.render(Auth)
+      }}
+    >render</button>
+  )
+}
+
 
 const App = () => {
   const themeSwitcher = useThemeSwitcher()
@@ -265,26 +238,15 @@ const App = () => {
   const [count, setCount] = React.useState(0)
 
   return (
-    <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" bgcolor="divider.soft.primary">
-      <Input />
+    <AuthProvider value={{ auth: "naxrul" }}>
+      <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" bgcolor="divider.soft.primary">
+        <Input />
 
-      <button
-        onClick={() => {
-          const rr = Renderar.render(() => <Iframe>
-            <Tag
-              color="red"
-              radius={1}
-              m={2}
-            >
-              Hello <button onClick={() => rr.unrender()}>un</button>
-            </Tag>
-          </Iframe>)
-        }}
-      >render</button>
+        <RND />
 
 
-      {/* <Trans /> */}
-      {/* 
+        {/* <Trans /> */}
+        {/* 
       <Input
         type={text}
         icon={<button
@@ -422,7 +384,8 @@ const App = () => {
           ))
         }
       </Tag> */}
-    </AppRoot>
+      </AppRoot>
+    </AuthProvider>
   );
 }
 const rootEle = document.getElementById('root')
