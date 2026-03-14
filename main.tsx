@@ -212,14 +212,17 @@ const useAuth = () => useContext(ACtx)
 
 const Auth = () => {
   const au = useAuth()
-  console.log(au);
-
   return (
     <h1>Auth</h1>
   )
 }
 
 const RND = () => {
+  const bp = useBreakpoint()
+  const isup = bp.isUp("sm")
+  // console.log(bp.value, isup);
+
+
   return (
     <button
       onClick={() => {
@@ -240,7 +243,7 @@ const App = () => {
   return (
     <AuthProvider value={{ auth: "naxrul" }}>
       <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" bgcolor="divider.soft.primary">
-        <Input />
+
 
         <RND />
 
