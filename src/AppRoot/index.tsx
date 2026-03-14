@@ -28,12 +28,12 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
    const csscacheId = useId()
    CSSCacheId ??= csscacheId
 
-   const [visibility, setVisibility] = React.useState<string>("hidden");
+   // const [visibility, setVisibility] = React.useState<string>("hidden");
    const rootRef = useRef(null)
    const mergeRef = useMergeRefs(rootRef, ref)
 
    useEffect(() => {
-      setVisibility("visible");
+      // setVisibility("visible");
 
       // move oncss style tags to head
       if (typeof _document === 'undefined') return;
@@ -63,7 +63,7 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
                   isRoot
                   sx={{
                      ...props.sx,
-                     ...(visibility === "hidden" ? { visibility: "hidden" } : {}),
+                     // ...(visibility === "hidden" ? { visibility: "hidden" } : {}),
                      ...selection
                   }}
                >
