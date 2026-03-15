@@ -93,7 +93,7 @@ export const lightThemeOptions: ThemeOptionInput = {
         },
 
         text: {
-            primary: "#111827",
+            primary: "#2E2E2E",
             secondary: "#6B7280",
         },
 
@@ -154,7 +154,7 @@ export const createDefaultThemes = () => {
             },
 
             text: {
-                primary: "#F3F4F6",   // main readable text
+                primary: "#E5E7EB",   // main readable text
                 secondary: "#9CA3AF", // muted / secondary text
             },
 
