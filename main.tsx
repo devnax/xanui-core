@@ -3,72 +3,12 @@ import { createRoot } from 'react-dom/client';
 import { createThemeSwitcher, ThemeProvider, useTheme } from './src/theme'
 import { Tag, TagComponentType, TagProps, Transition, useAppRootElement, useBreakpoint, useBreakpointProps, useColorTemplate, useInterface } from './src';
 import AppRoot from './src/AppRoot';
-import usePortal from './src/hooks/usePortal';
 import { Renderar } from './src/AppRoot/Renderar';
 import Iframe from './src/Iframe'
 
 
 const useThemeSwitcher = createThemeSwitcher("light")
 
-
-
-const ThemeBox = () => {
-  const themeSwitcher = useThemeSwitcher()
-  const bp = useBreakpoint()
-  const [count, setCount] = React.useState(0);
-
-  const portal = usePortal(
-    <Tag
-      position="fixed"
-      bottom={10}
-      right={10}
-      p={2}
-      bgcolor="rgba(0,0,0,.5)"
-      color="#fff"
-      radius={2}
-    >
-      This is portal content {count}
-    </Tag>
-    , { autoMount: false })
-
-
-  const C = (props: any) => (
-    <Tag
-      p={2}
-      bgcolor="blue"
-      color="#fff"
-      radius={2}
-      {...props}
-    >
-      Rendered Component
-    </Tag>
-  )
-
-  return (
-    <div>
-      <button
-        onClick={() => {
-          const r = Renderar.render(C, {
-            bgcolor: 'red',
-          })
-
-          setTimeout(() => {
-            r.updateProps({ bgcolor: 'green' })
-          }, 1000);
-        }}
-      >Render</button>
-      <button onClick={() => setCount(count + 1)}>Increase Count {count}</button>
-      <button onClick={() => portal.isMount() ? portal.unmount() : portal.mount()}>Mount Portal</button>
-      <button
-        onClick={() => {
-          themeSwitcher.change(themeSwitcher.name === 'light' ? "dark" : "light")
-        }}
-      >
-        change
-      </button>
-    </div>
-  )
-}
 
 const TransBox = ({ open }: any) => {
   const [closed, setClosed] = useState(false)
@@ -174,7 +114,6 @@ const Input = (props: any) => {
 
   const [_p]: any = useInterface("Input", props, {})
   const { icon, ...rest } = useBreakpointProps(_p)
-  const portal = usePortal(<>Hello</>)
 
   return (
     <Tag>
@@ -219,8 +158,8 @@ const Auth = () => {
 
 const RND = () => {
   const bp = useBreakpoint()
-  const isup = bp.isUp("sm")
-  // console.log(bp.value, isup);
+  const isup = bp.isUp("md")
+  console.log("is up md:", isup);
 
 
   return (
@@ -243,7 +182,26 @@ const App = () => {
   return (
     <AuthProvider value={{ auth: "naxrul" }}>
       <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" bgcolor="divider.soft.primary">
-
+        <Tag
+          height={40}
+          width={"sm"}
+          bgcolor="red"
+        >SM</Tag>
+        <Tag
+          height={40}
+          width={"md"}
+          bgcolor="green"
+        >MD</Tag>
+        <Tag
+          height={40}
+          width={"lg"}
+          bgcolor="yellow"
+        >LG</Tag>
+        <Tag
+          height={40}
+          width={"xl"}
+          bgcolor="blue"
+        >XL</Tag>
 
         <RND />
 

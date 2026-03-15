@@ -1,31 +1,29 @@
-import { useContext } from "react"
-import { BreakpointCtx } from "./BreakpointProvider"
-import { breakpoints } from "../css"
-import { BreakpointKeys } from "../css/types"
-import { useDocument } from "../Document"
+import { useContext } from "react";
+import { BreakpointCtx } from "./BreakpointProvider";
+import { breakpoints } from "../css";
+import { BreakpointKeys } from "../css/types";
 
 const useBreakpoint = () => {
-   const value = useContext(BreakpointCtx)
-   const doc = useDocument()
-   const getWidth = () => {
-      if (!doc) return 99999
-      return doc.document.documentElement.clientWidth
-   }
+   const { key: value, width } = useContext(BreakpointCtx);
 
-   const is = (key: BreakpointKeys) => value === key
-   const isUp = (key: BreakpointKeys) => {
-      return !is(key) && getWidth() > breakpoints[key]
-   }
-   const isDown = (key: BreakpointKeys) => getWidth() < breakpoints[key]
+   const is = (k: BreakpointKeys) => value === k;
+   const isUp = (k: BreakpointKeys) => width >= breakpoints[k];
+   const isDown = (k: BreakpointKeys) => width < breakpoints[k];
+   const isOrUp = (k: BreakpointKeys) => isUp(k) || is(k);
+   const isOrDown = (k: BreakpointKeys) => isDown(k) || is(k);
+   const isBetween = (start: BreakpointKeys, end: BreakpointKeys) =>
+      width >= breakpoints[start] && width < breakpoints[end];
 
    return {
-      value,
+      value,   // current breakpoint key
+      width,   // current width
       is,
       isUp,
       isDown,
-      isOrUp: (key: BreakpointKeys) => is(key) || isUp(key),
-      isOrDown: (key: BreakpointKeys) => is(key) || isDown(key)
-   }
-}
+      isOrUp,
+      isOrDown,
+      isBetween
+   };
+};
 
-export default useBreakpoint
+export default useBreakpoint;

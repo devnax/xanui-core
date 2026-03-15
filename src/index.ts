@@ -9,7 +9,7 @@ import useTransition from './hooks/useTransition'
 import useMergeRefs from './hooks/useMergeRefs'
 import Transition from './Transition'
 import AppRoot from './AppRoot'
-import usePortal from './hooks/usePortal'
+import Portal from './Portal'
 import { Renderar } from './AppRoot/Renderar'
 import { useDocument } from './Document'
 import { useAppRootElement } from './AppRoot/AppRootProvider'
@@ -30,6 +30,7 @@ export * from './Transition'
 export * from './Tag/types'
 export * from './breakpoint/useBreakpointProps'
 export * from './hooks/useTransition'
+export * from './Portal'
 
 
 export {
@@ -37,9 +38,9 @@ export {
     AppRoot,
     Iframe,
     Tag,
+    Portal,
     useAppRootElement,
     useDocument,
-    usePortal,
     useTagProps,
     useAnimation,
     Transition,

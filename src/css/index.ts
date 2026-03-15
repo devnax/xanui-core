@@ -11,10 +11,10 @@ export {
 
 export const breakpoints = {
     xs: 0,
-    sm: 600,
-    md: 900,
-    lg: 1200,
-    xl: 1536
+    sm: 640,
+    md: 768,
+    lg: 1024,
+    xl: 1280,
 }
 
 export const css = (props: CSSProps, options?: CSSOptionProps) => {
