@@ -1,15 +1,15 @@
 import { ThemeOptions, ThemeOptionInput, ThemeOptionsColor } from "./types"
 import { mergeObject, ThemeFactory } from "./core"
 import { alpha, breakpoints } from "../css"
-import { lightThemeOptions } from "./ThemeDefaultOptions"
+import { darkThemeOptions, lightThemeOptions } from "./ThemeDefaultOptions"
 
-export const createTheme = (name: string, options: ThemeOptionInput): ThemeOptions => {
+export const createTheme = (name: string, options: ThemeOptionInput, mode: "light" | "dark" = "light"): ThemeOptions => {
    if (ThemeFactory.has(name)) {
       console.error(`createTheme: The theme '${name}' is already defined. Please choose a different name for the theme.`)
       return ThemeFactory.get(name) as ThemeOptions
    }
-
-   let theme: any = mergeObject(lightThemeOptions, {
+   const defaultOptions = mode === 'light' ? lightThemeOptions : darkThemeOptions
+   let theme: any = mergeObject(defaultOptions, {
       ...options,
       name,
       breakpoints: breakpoints

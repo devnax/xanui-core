@@ -2,6 +2,7 @@ import { createTheme } from "./createTheme"
 import ThemeProvider from './ThemeProvider'
 import createThemeSwitcher from './createThemeSwitcher'
 import { getTheme, useTheme } from './core'
+import { lightThemeOptions, darkThemeOptions } from './ThemeDefaultOptions'
 export type { ThemeProviderProps } from './ThemeProvider'
 export type { ThemeSwitcherOption } from './createThemeSwitcher'
 
@@ -12,6 +13,8 @@ export {
     createThemeSwitcher,
     createTheme,
     getTheme,
-    useTheme
+    useTheme,
+    lightThemeOptions,
+    darkThemeOptions
 }
 

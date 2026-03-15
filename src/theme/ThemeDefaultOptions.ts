@@ -137,62 +137,69 @@ export const lightThemeOptions: ThemeOptionInput = {
     interfaces: {}
 } as ThemeOptionInput
 
+export const darkThemeOptions: ThemeOptionInput = {
+    name: "light",
+    rtl: false,
+    shadow: darkShadows,
+    globalStyle: {},
+    colors: {
+        background: {
+            primary: "#121212",
+            secondary: "#1E1E1E",
+        },
+
+        divider: {
+            primary: "#262626",
+            secondary: "#2E2E2E",
+        },
+
+        text: {
+            primary: "#E5E7EB",   // main readable text
+            secondary: "#9CA3AF", // muted / secondary text
+        },
+
+        brand: {
+            primary: "#1D4ED8",
+            secondary: "#2563EB",
+            text: "#F9FAFB",
+        },
+
+        accent: {
+            primary: "#6D28D9",
+            secondary: "#7C3AED",
+            text: "#F9FAFB",
+        },
+
+        success: {
+            primary: "#15803D",
+            secondary: "#16A34A",
+            text: "#F9FAFB",
+        },
+
+        info: {
+            primary: "#1D4ED8",
+            secondary: "#2563EB",
+            text: "#F9FAFB",
+        },
+
+        warning: {
+            primary: "#B45309",
+            secondary: "#D97706",
+            text: "#FFFBEB",
+        },
+
+        danger: {
+            primary: "#B91C1C",
+            secondary: "#DC2626",
+            text: "#FEF2F2",
+        },
+    },
+    typography: ThemeTypography,
+    interfaces: {}
+} as ThemeOptionInput
+
 
 export const createDefaultThemes = () => {
     createTheme("light", {})
-    createTheme("dark", {
-        shadow: darkShadows,
-        colors: {
-            background: {
-                primary: "#121212",
-                secondary: "#1E1E1E",
-            },
-
-            divider: {
-                primary: "#262626",
-                secondary: "#2E2E2E",
-            },
-
-            text: {
-                primary: "#E5E7EB",   // main readable text
-                secondary: "#9CA3AF", // muted / secondary text
-            },
-
-            brand: {
-                primary: "#1D4ED8",
-                secondary: "#2563EB",
-                text: "#F9FAFB",
-            },
-
-            accent: {
-                primary: "#6D28D9",
-                secondary: "#7C3AED",
-                text: "#F9FAFB",
-            },
-
-            success: {
-                primary: "#15803D",
-                secondary: "#16A34A",
-                text: "#F9FAFB",
-            },
-
-            info: {
-                primary: "#1D4ED8",
-                secondary: "#2563EB",
-                text: "#F9FAFB",
-            },
-
-            warning: {
-                primary: "#B45309",
-                secondary: "#D97706",
-                text: "#FFFBEB",
-            },
-
-            danger: {
-                primary: "#B91C1C",
-                secondary: "#DC2626",
-                text: "#FEF2F2",
-            },
-        }
-    })
+    createTheme("dark", darkThemeOptions)
 }
