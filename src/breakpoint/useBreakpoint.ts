@@ -3,25 +3,23 @@ import { BreakpointCtx } from "./BreakpointProvider";
 import { breakpoints } from "../css";
 import { BreakpointKeys } from "../css/types";
 
-const useBreakpoint = () => {
-   const { key: value, width } = useContext(BreakpointCtx);
+const keys = Object.keys(breakpoints) as BreakpointKeys[];
 
-   const is = (k: BreakpointKeys) => value === k;
-   const isUp = (k: BreakpointKeys) => width >= breakpoints[k];
-   const isDown = (k: BreakpointKeys) => width < breakpoints[k];
-   const isOrUp = (k: BreakpointKeys) => isUp(k) || is(k);
-   const isOrDown = (k: BreakpointKeys) => isDown(k) || is(k);
+const useBreakpoint = () => {
+   const value = useContext(BreakpointCtx);
+   const index = keys.indexOf(value);
+
+   const is = (key: BreakpointKeys) => value === key;
+   const isUp = (key: BreakpointKeys) => index >= keys.indexOf(key);
+   const isDown = (key: BreakpointKeys) => index < keys.indexOf(key);
    const isBetween = (start: BreakpointKeys, end: BreakpointKeys) =>
-      width >= breakpoints[start] && width < breakpoints[end];
+      index >= keys.indexOf(start) && index < keys.indexOf(end);
 
    return {
-      value,   // current breakpoint key
-      width,   // current width
+      value,
       is,
       isUp,
       isDown,
-      isOrUp,
-      isOrDown,
       isBetween
    };
 };

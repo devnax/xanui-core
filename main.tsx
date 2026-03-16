@@ -159,8 +159,7 @@ const Auth = () => {
 const RND = () => {
   const bp = useBreakpoint()
   const isup = bp.isUp("md")
-  console.log("is up md:", isup);
-
+  console.log(bp.value, "is up md:", isup);
 
   return (
     <button
