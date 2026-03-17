@@ -6,7 +6,7 @@ import { BreakpointKeys } from "../css/types";
 const keys = Object.keys(breakpoints) as BreakpointKeys[];
 
 const useBreakpoint = () => {
-   const value = useContext(BreakpointCtx);
+   const value = useContext(BreakpointCtx) as BreakpointKeys
    const index = keys.indexOf(value);
 
    const is = (key: BreakpointKeys) => value === key;

@@ -1,13 +1,12 @@
 import React, { createContext, use, useContext, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createThemeSwitcher, ThemeProvider, useTheme } from './src/theme'
+import { ThemeProvider, useTheme } from './src/theme'
 import { Tag, TagComponentType, TagProps, Transition, useAppRootElement, useBreakpoint, useBreakpointProps, useColorTemplate, useInterface } from './src';
 import AppRoot from './src/AppRoot';
 import { Renderar } from './src/AppRoot/Renderar';
 import Iframe from './src/Iframe'
 
 
-const useThemeSwitcher = createThemeSwitcher("light")
 
 
 const TransBox = ({ open, trans }: any) => {
@@ -159,12 +158,15 @@ const Auth = () => {
 const RND = () => {
   const bp = useBreakpoint()
   const isup = bp.isUp("md")
+  // const theme = useThemeSwitcher()
+  const theme = useTheme()
   // console.log(bp.value, "is up md:", isup);
 
   return (
     <button
       onClick={() => {
-        const rr = Renderar.render(Auth)
+        // const rr = Renderar.render(Auth)
+        theme.change(theme.name === "light" ? "dark" : "light")
       }}
     >render</button>
   )
@@ -172,15 +174,22 @@ const RND = () => {
 
 
 const App = () => {
-  const themeSwitcher = useThemeSwitcher()
   const [toggled, setToggled] = React.useState(true)
   const ref = useRef<any>(null)
   const [text, setText] = React.useState("Click")
+  const [theme, setTheme] = React.useState("light")
   const [count, setCount] = React.useState(0)
 
   return (
     <AuthProvider value={{ auth: "naxrul" }}>
-      <AppRoot theme={themeSwitcher.name} fontFamily="inter,sans-serif" bgcolor="divider.soft.primary">
+      <AppRoot
+        theme={theme}
+        onThemeChange={(t) => {
+          setTheme(t)
+        }}
+        defaultBreakpoint='xl'
+        fontFamily="inter,sans-serif"
+      >
         <Tag
           height={40}
           width={"sm"}

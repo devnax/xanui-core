@@ -14,13 +14,14 @@ import { useCSSCacheId } from "../css/CSSCacheProvider";
 
 export type ThemeProviderProps<T extends TagComponentType = 'div'> = TagProps<T> & {
    theme: string;
+   onThemeChange?: (theme: string) => void
    isRoot?: boolean;
    noScrollbarCss?: boolean;
 }
 
 createDefaultThemes()
 
-const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, isRoot, noScrollbarCss, ...props }: ThemeProviderProps<T>) => {
+const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, onThemeChange, isRoot, noScrollbarCss, ...props }: ThemeProviderProps<T>) => {
    let THEME = ThemeFactory.get(theme) as ThemeOptions
    if (!THEME) {
       console.error(`ThemeProvider: The theme '${theme}' is not defined. Please make sure to use a valid theme name.`)
@@ -136,7 +137,12 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, is
    }, [noScrollbarCss, theme])
 
    return (
-      <ThemeContex.Provider value={theme}>
+      <ThemeContex.Provider value={{
+         theme,
+         onChange: (t) => {
+            onThemeChange && onThemeChange(t)
+         }
+      }}>
          {
             isRoot && <>
                <ServerStyleTag factory={resetCss as any} />

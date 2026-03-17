@@ -8,18 +8,19 @@ import { DocumentProvider } from '../Document';
 import { AppRootProvider } from './AppRootProvider';
 import useMergeRefs from '../hooks/useMergeRefs';
 import { CSSCacheProvider } from '../css/CSSCacheProvider';
+import { BreakpointKeys } from '../css/types';
 
 export type AppRootProps<T extends TagComponentType = "div"> = ThemeProviderProps<T> & {
    noScrollbarCss?: boolean;
    document?: Document;
    CSSCacheId?: string;
    disableRenderar?: boolean;
-   disableFlashing?: boolean;
+   defaultBreakpoint?: BreakpointKeys
    selectionColor?: "default" | "brand" | "accent" | "success" | "info" | "warning" | "danger";
 }
 
-const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children, disableFlashing, noScrollbarCss, CSSCacheId, theme, disableRenderar, selectionColor, document: _document, ...props }: AppRootProps<T>, ref: React.Ref<any>) => {
-   disableFlashing ??= false
+const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children, defaultBreakpoint, noScrollbarCss, CSSCacheId, theme, onThemeChange, disableRenderar, selectionColor, document: _document, ...props }: AppRootProps<T>, ref: React.Ref<any>) => {
+
    noScrollbarCss ??= false
    selectionColor ??= "brand"
    if (typeof window !== "undefined") {
@@ -30,22 +31,21 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
    const csscacheId = useId()
    CSSCacheId ??= csscacheId
 
-   const [visibility, setVisibility] = React.useState<string>(!disableFlashing ? "hidden" : "");
+   const [visibility, setVisibility] = React.useState<string>(!defaultBreakpoint ? "hidden" : "");
    const rootRef = useRef(null)
    const mergeRef = useMergeRefs(rootRef, ref)
 
    useLayoutEffect(() => {
-      !disableFlashing && setVisibility("");
+      !defaultBreakpoint && setVisibility("");
    }, [])
 
-   // useEffect(() => {
-   //    // move oncss style tags to head
-   //    if (typeof _document === 'undefined') return;
-   //    const styles = Array.from(_document.querySelectorAll('body style[data-oncss]'));
-   //    styles.forEach((style) => {
-   //       _document.head.appendChild(style);
-   //    });
-   // }, [])
+   useEffect(() => {
+      if (typeof _document === 'undefined') return;
+      const styles = Array.from(_document.querySelectorAll('body style[data-oncss]'));
+      styles.forEach((style) => {
+         _document.head.appendChild(style);
+      });
+   }, [])
 
    let selection: any = {}
    if (selectionColor && selectionColor !== 'default') {
@@ -63,6 +63,10 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
             <AppRootProvider element={() => rootRef.current}>
                <ThemeProvider
                   theme={theme}
+                  onThemeChange={(t) => {
+                     onThemeChange && onThemeChange(t)
+                     document.cookie = `xuitm=${t};path=/`
+                  }}
                   {...props}
                   ref={mergeRef}
                   isRoot
@@ -72,7 +76,7 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
                      ...selection
                   }}
                >
-                  <BreakpointProvider>
+                  <BreakpointProvider defaultKey={defaultBreakpoint ?? "xl"}>
                      {children}
                      {!disableRenderar && <RenderRenderar />}
                   </BreakpointProvider>

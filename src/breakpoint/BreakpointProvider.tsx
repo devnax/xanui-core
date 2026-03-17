@@ -4,7 +4,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import { breakpoints } from "../css";
 import { BreakpointKeys } from "../css/types";
 
-export const BreakpointCtx = React.createContext<BreakpointKeys>("xl");
+export const BreakpointCtx = React.createContext<BreakpointKeys | null>(null);
 
 const queries: Record<BreakpointKeys, string> = {
     xs: `(max-width:${breakpoints.sm - 0.02}px)`,
@@ -14,28 +14,30 @@ const queries: Record<BreakpointKeys, string> = {
     xl: `(min-width:${breakpoints.xl}px)`
 };
 
-const getCurrent = (): BreakpointKeys => {
-    if (typeof window === "undefined") return "xs";
+const getCurrent = (def: BreakpointKeys): BreakpointKeys => {
+    if (typeof window === "undefined") return def;
     const entries = Object.entries(queries) as [BreakpointKeys, string][];
     for (const [key, query] of entries) {
         if (window.matchMedia(query).matches) {
             return key;
         }
     }
-    return "xs";
+    return def;
 };
 
-export const BreakpointProvider = ({ children }: { children?: ReactNode }) => {
-    const [current, setCurrent] = useState<BreakpointKeys>(() => getCurrent());
+export const BreakpointProvider = ({ children, defaultKey }: { children?: ReactNode, defaultKey: BreakpointKeys }) => {
+    const [current, setCurrent] = useState<BreakpointKeys>(defaultKey);
 
     useEffect(() => {
-        if (typeof window === "undefined") return;
+        const current = getCurrent(defaultKey)
+        setCurrent(current)
+        document.cookie = `xuibp=${current};path=/`
         const mqls = Object.entries(queries).map(([key, query]) => {
             const mql = window.matchMedia(query);
-
             const handler = () => {
                 if (mql.matches) {
                     setCurrent(key as BreakpointKeys);
+                    document.cookie = `xuibp=${key};path=/`
                 }
             };
 
