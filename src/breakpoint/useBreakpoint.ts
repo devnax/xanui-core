@@ -14,13 +14,17 @@ const useBreakpoint = () => {
    const isDown = (key: BreakpointKeys) => index < keys.indexOf(key);
    const isBetween = (start: BreakpointKeys, end: BreakpointKeys) =>
       index >= keys.indexOf(start) && index < keys.indexOf(end);
+   const isOrUp = (k: BreakpointKeys) => isUp(k) || is(k);
+   const isOrDown = (k: BreakpointKeys) => isDown(k) || is(k);
 
    return {
       value,
       is,
       isUp,
       isDown,
-      isBetween
+      isBetween,
+      isOrUp,
+      isOrDown
    };
 };
 

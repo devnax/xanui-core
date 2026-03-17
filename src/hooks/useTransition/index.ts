@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useId } from 'react';
+import { useState, useEffect, useId, useLayoutEffect } from 'react';
 import { animationEases } from '../useAnimation';
 import { css } from '../../css';
 import { formatCSSProp } from 'oncss';
@@ -93,7 +93,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
    }, [open, state.stage, exitOnUnmount, variant])
 
    // initial effect
-   useEffect(() => {
+   useLayoutEffect(() => {
       const ele = getEle()
       if (!ele) return
       if (exitOnUnmount && state.stage === 'closed') return

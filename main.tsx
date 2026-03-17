@@ -10,7 +10,7 @@ import Iframe from './src/Iframe'
 const useThemeSwitcher = createThemeSwitcher("light")
 
 
-const TransBox = ({ open }: any) => {
+const TransBox = ({ open, trans }: any) => {
   const [closed, setClosed] = useState(false)
   useEffect(() => {
     if (closed && open) {
@@ -19,7 +19,7 @@ const TransBox = ({ open }: any) => {
   }, [open])
   if (closed) return null
   return (
-    <Transition open={open} variant="zoom" onClosed={() => setClosed(true)} >
+    <Transition open={open} variant={trans} onClosed={() => setClosed(true)} >
       <Tag
         component="div"
         width={300}
@@ -58,7 +58,7 @@ const Trans = () => {
       <button onClick={() => setOpen(!open)}>Click</button>
       <button onClick={() => setV(v === 'fadeLeft' ? "zoom" : "fadeLeft")}>change</button>
       {/* <Transition open={open} variant={"fade"} > */}
-      <TransBox open={open} />
+      <TransBox open={open} trans={v} />
       {/* <Tag
         component="div"
         width={300}
@@ -159,7 +159,7 @@ const Auth = () => {
 const RND = () => {
   const bp = useBreakpoint()
   const isup = bp.isUp("md")
-  console.log(bp.value, "is up md:", isup);
+  // console.log(bp.value, "is up md:", isup);
 
   return (
     <button
@@ -203,6 +203,8 @@ const App = () => {
         >XL</Tag>
 
         <RND />
+
+        <Trans />
 
 
         {/* <Trans /> */}
