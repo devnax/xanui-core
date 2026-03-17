@@ -1,5 +1,5 @@
 "use client";
-import React, { useId, useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useId, useLayoutEffect, useRef } from 'react';
 import { TagComponentType } from '../Tag/types';
 import { ThemeProvider, ThemeProviderProps } from '../theme';
 import { BreakpointProvider } from '../breakpoint';
@@ -36,14 +36,16 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
 
    useLayoutEffect(() => {
       !disableFlashing && setVisibility("");
-
-      // move oncss style tags to head
-      if (typeof _document === 'undefined') return;
-      const styles = Array.from(_document.querySelectorAll('body style[data-oncss]'));
-      styles.forEach((style) => {
-         _document.head.appendChild(style);
-      });
    }, [])
+
+   // useEffect(() => {
+   //    // move oncss style tags to head
+   //    if (typeof _document === 'undefined') return;
+   //    const styles = Array.from(_document.querySelectorAll('body style[data-oncss]'));
+   //    styles.forEach((style) => {
+   //       _document.head.appendChild(style);
+   //    });
+   // }, [])
 
    let selection: any = {}
    if (selectionColor && selectionColor !== 'default') {
