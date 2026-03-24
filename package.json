@@ -1,6 +1,6 @@
 {
    "name": "@xanui/core",
-   "version": "1.2.61",
+   "version": "1.2.62",
    "description": "Xanui Core Library",
    "private": false,
    "main": "./index.cjs",
