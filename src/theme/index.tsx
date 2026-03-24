@@ -1,3 +1,4 @@
+"use client"
 import { createTheme } from "./createTheme"
 import ThemeProvider from './ThemeProvider'
 import { getTheme, useTheme } from './core'

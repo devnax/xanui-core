@@ -1,3 +1,4 @@
+"use client"
 import { ThemeOptions, ThemeOptionInput, ThemeOptionsColor } from "./types"
 import { mergeObject, ThemeFactory } from "./core"
 import { alpha, breakpoints } from "../css"
