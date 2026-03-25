@@ -12,19 +12,34 @@ import Iframe from './src/Iframe'
 const TransBox = ({ open, trans }: any) => {
   const [closed, setClosed] = useState(false)
   useEffect(() => {
-    if (closed && open) {
-      setClosed(false)
-    }
+    // if (closed && open) {
+    //   setClosed(false)
+    // }
   }, [open])
-  if (closed) return null
+  // if (closed) return null
   return (
-    <Transition open={open} variant={trans} onClosed={() => setClosed(true)} >
+    <Transition
+      open={open}
+      variant={trans}
+      // disableInitialTransition
+      onOpen={() => {
+        console.log("Open");
+      }}
+      onOpened={() => {
+        console.log("Opened");
+      }}
+      onClose={() => {
+        console.log("close");
+      }}
+      onClosed={() => {
+        console.log("closed");
+      }}
+    >
       <Tag
         component="div"
         width={300}
         bgcolor="green"
         radius={1}
-        p={2}
         overflow={"hidden"}
         height={300}
       >
@@ -44,8 +59,8 @@ const TransBox = ({ open, trans }: any) => {
 
 const Trans = () => {
   const theme = useTheme()
-  const [v, setV] = React.useState<any>('zoom')
-  const [open, setOpen] = React.useState(true)
+  const [v, setV] = React.useState<any>('collapseVertical')
+  const [open, setOpen] = React.useState(false)
 
   useEffect(() => {
     setInterval(() => {
@@ -54,10 +69,10 @@ const Trans = () => {
   }, [])
   return (
     <Tag height={400}>
+      <TransBox open={open} trans={v} />
       <button onClick={() => setOpen(!open)}>Click</button>
       <button onClick={() => setV(v === 'fadeLeft' ? "zoom" : "fadeLeft")}>change</button>
       {/* <Transition open={open} variant={"fade"} > */}
-      <TransBox open={open} trans={v} />
       {/* <Tag
         component="div"
         width={300}
@@ -179,7 +194,6 @@ const App = () => {
   const [text, setText] = React.useState("Click")
   const [theme, setTheme] = React.useState(createTheme("light", {}))
   const [count, setCount] = React.useState(0)
-  console.log(theme);
 
   return (
     <AuthProvider value={{ auth: "naxrul" }}>

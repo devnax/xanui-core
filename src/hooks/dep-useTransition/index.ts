@@ -41,6 +41,7 @@ const getVariant = (rect: DOMRect | null, variant: UseTransitionProps['variant']
 }
 
 const useTransition = ({ open, ...props }: UseTransitionProps) => {
+
    let {
       disableInitialTransition = false,
       variant = "fade",
@@ -55,6 +56,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
       onClosed,
       onState
    } = props
+
    const doc = useDocument();
    const cacheId = useCSSCacheId()
    let _ease = ease || (animationEases as any)[easing as any] || animationEases.bounce
@@ -93,7 +95,7 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
    }, [open, state.stage, exitOnUnmount, variant])
 
    // initial effect
-   useLayoutEffect(() => {
+   useEffect(() => {
       const ele = getEle()
       if (!ele) return
       if (exitOnUnmount && state.stage === 'closed') return
@@ -144,7 +146,6 @@ const useTransition = ({ open, ...props }: UseTransitionProps) => {
          }))
       }
    }, [open, state.initial, state.stage, exitOnUnmount])
-
 
    useEffect(() => {
       if (state.initial) {

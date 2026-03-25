@@ -5,7 +5,6 @@ import useColorTemplate from './hooks/useColorTemplate'
 import useBreakpoint from './breakpoint/useBreakpoint'
 import useBreakpointProps from './breakpoint/useBreakpointProps'
 import useInterface from './hooks/useInterface'
-import useTransition from './hooks/useTransition'
 import useMergeRefs from './hooks/useMergeRefs'
 import Transition from './Transition'
 import AppRoot from './AppRoot'
@@ -29,7 +28,6 @@ export * from './hooks/useAnimation'
 export * from './Transition'
 export * from './Tag/types'
 export * from './breakpoint/useBreakpointProps'
-export * from './hooks/useTransition'
 export * from './Portal'
 
 
@@ -48,7 +46,6 @@ export {
     useBreakpoint,
     useBreakpointProps,
     useInterface,
-    useTransition,
     useMergeRefs,
     useCSSCache,
     useCSSCacheId,
