@@ -1,4 +1,3 @@
-import { createTheme } from './createTheme'
 import { ThemeOptionInput, ThemeTypographyType } from './types'
 
 export const lightShadows = [
@@ -60,7 +59,6 @@ export const darkShadows = [
     "0px 26px 40px rgba(0,0,0,0.98), inset 0px 1px 0px rgba(255,255,255,0.09)",
     "0px 28px 42px rgba(0,0,0,0.99), inset 0px 1px 0px rgba(255,255,255,0.1)",
 ]
-
 
 
 export const ThemeTypography: ThemeTypographyType = {
@@ -197,9 +195,3 @@ export const darkThemeOptions: ThemeOptionInput = {
     typography: ThemeTypography,
     interfaces: {}
 } as ThemeOptionInput
-
-
-export const createDefaultThemes = () => {
-    createTheme("light", {})
-    createTheme("dark", darkThemeOptions)
-}

@@ -52,6 +52,7 @@ export interface ThemeOptions {
         danger: ThemeOptionsColor
     };
     typography: ThemeTypographyType;
+    change: (theme: ThemeOptions) => void;
 }
 
 

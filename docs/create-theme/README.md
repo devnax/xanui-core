@@ -33,10 +33,9 @@ Creates a hook that manages the current theme name (persisted via `react-state-b
 
 Calling the hook returns `{ name, theme, change }`.
 
-## `useTheme()` / `getTheme(name)`
+## `useTheme()` 
 
 - `useTheme()` – Reads the active `ThemeOptions` from context inside React components.
-- `getTheme(name)` – Fetches a theme synchronously outside React (e.g., in utilities such as `useScrollbar`).
 
 ## Usage Example
 

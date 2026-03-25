@@ -1,31 +1,8 @@
+"use client"
 import React, { useContext } from "react"
-import { ObjectType, ThemeOptions } from "./types"
-
-export type ThemeCntextProps = {
-   theme: string,
-   onChange: (theme: string) => void
-}
-export const ThemeFactory = new Map<string, ThemeOptions>()
-export const ThemeContex = React.createContext<ThemeCntextProps>({
-   theme: "light",
-   onChange: () => { }
-})
-export const getTheme = (theme: string) => ThemeFactory.get(theme)
-
-export type UseThemeOptions = ThemeOptions & { change: (theme: string) => void }
-export const useTheme = (): UseThemeOptions => {
-   const ctx = useContext(ThemeContex)
-   const theme = ThemeFactory.get(ctx?.theme) as any
-   if (!theme) {
-      console.error("Theme not found, returning light theme as fallback")
-      return ThemeFactory.get("light") as any
-   }
-
-   theme.change = (theme: string) => {
-      ctx.onChange(theme)
-   }
-   return theme as UseThemeOptions
-}
+import { ObjectType, ThemeOptions, ThemeOptionInput, ThemeOptionsColor } from "./types"
+import { alpha, breakpoints } from "../css"
+import { darkThemeOptions, lightThemeOptions } from "./ThemeDefaultOptions"
 
 export const mergeObject = (a: ObjectType, b: ObjectType) => {
    a = { ...a }
@@ -40,3 +17,43 @@ export const mergeObject = (a: ObjectType, b: ObjectType) => {
    }
    return a
 }
+
+
+export const createTheme = (name: string, options: ThemeOptionInput, mode: "light" | "dark" = "light"): ThemeOptions => {
+   const defaultOptions = mode === 'light' ? lightThemeOptions : darkThemeOptions
+   let theme: any = mergeObject(defaultOptions, {
+      ...options,
+      name,
+      breakpoints: breakpoints
+   })
+
+   // add alpha colors
+   for (let color in theme.colors) {
+      const c = theme.colors[color] as ThemeOptionsColor
+      const is_common = color === 'divider' || color === 'background' || color === 'text'
+      c.soft = {
+         primary: is_common ? alpha(c.primary, 0.60) : alpha(c.primary, 0.08),
+         secondary: is_common ? alpha(c.primary, 0.90) : alpha(c.primary, 0.12)
+      }
+   }
+
+   return theme as ThemeOptions
+}
+
+export type ThemeCntextProps = {
+   theme: ThemeOptions,
+   onChange: (theme: ThemeOptions) => void
+}
+
+export const ThemeContex = React.createContext<ThemeCntextProps>({
+   theme: createTheme("light", {}),
+   onChange(theme) { },
+})
+
+export const useTheme = () => {
+   const ctx = useContext(ThemeContex)
+   const theme = ctx.theme
+   theme.change = (theme: ThemeOptions) => ctx.onChange(theme)
+   return theme
+}
+

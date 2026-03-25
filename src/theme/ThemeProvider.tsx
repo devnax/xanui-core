@@ -3,45 +3,37 @@ import * as React from "react"
 import { ThemeOptions } from "./types"
 import Tag from "../Tag"
 import { TagComponentType, TagProps } from "../Tag/types"
-import { ThemeContex, ThemeFactory } from "./core"
+import { ThemeContex } from "./core"
 import ThemeCssVars from "./ThemeCssVars"
 import { css } from "../css"
-import { createDefaultThemes } from "./ThemeDefaultOptions"
 import ServerStyleTag from "../Tag/ServerStyleTag"
 import { useDocument } from "../Document";
 import { themeRootClass } from ".";
 import { useCSSCacheId } from "../css/CSSCacheProvider";
 
 export type ThemeProviderProps<T extends TagComponentType = 'div'> = TagProps<T> & {
-   theme: string;
-   onThemeChange?: (theme: string) => void
+   theme: ThemeOptions;
+   onThemeChange?: (theme: ThemeOptions) => void
    isRoot?: boolean;
    noScrollbarCss?: boolean;
 }
 
-createDefaultThemes()
-
 const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, onThemeChange, isRoot, noScrollbarCss, ...props }: ThemeProviderProps<T>) => {
-   let THEME = ThemeFactory.get(theme) as ThemeOptions
-   if (!THEME) {
-      console.error(`ThemeProvider: The theme '${theme}' is not defined. Please make sure to use a valid theme name.`)
-      THEME = ThemeFactory.get("light") as ThemeOptions
-   }
    const doc = useDocument()
    const cacheId = useCSSCacheId()
 
    const themeGlobalStyle: any = React.useMemo(() => {
-      const root_cls = `.xui-${theme}-theme-root`
-      let gkeys = Object.keys(THEME.globalStyle || {})
+      const root_cls = `.xui-${theme.name}-theme-root`
+      let gkeys = Object.keys(theme.globalStyle || {})
       let gstyles: any = {}
       gkeys.forEach((key) => {
-         gstyles[`${root_cls} ${key}`] = THEME.globalStyle[key as any]
+         gstyles[`${root_cls} ${key}`] = theme.globalStyle[key as any]
       })
 
       return css({
          "@global": {
             ...gstyles,
-            [root_cls]: ThemeCssVars(THEME)
+            [root_cls]: ThemeCssVars(theme)
          }
       }, {
          injectStyle: typeof window !== 'undefined',
@@ -104,7 +96,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, on
 
    const scrollbarCss: any = React.useMemo(() => {
       if (noScrollbarCss) return;
-      const cls = (cls: string) => `${themeRootClass(theme)} ${cls}`
+      const cls = (cls: string) => `${themeRootClass(theme.name)} ${cls}`
       let thumbSize = 6
       let thumbColor = "var(--color-text-secondary)"
       let trackColor = "transparent"
@@ -137,12 +129,14 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, on
    }, [noScrollbarCss, theme])
 
    return (
-      <ThemeContex.Provider value={{
-         theme,
-         onChange: (t) => {
-            onThemeChange && onThemeChange(t)
-         }
-      }}>
+      <ThemeContex.Provider
+         value={{
+            theme,
+            onChange: (t) => {
+               onThemeChange && onThemeChange(t)
+            }
+         }}
+      >
          {
             isRoot && <>
                <ServerStyleTag factory={resetCss as any} />
@@ -166,8 +160,8 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, on
                   color: "brand.primary",
                },
             }}
-            baseClass={`${theme}-theme-root`}
-            direction={THEME.rtl ? "rtl" : "ltr"}
+            baseClass={`${theme.name}-theme-root`}
+            direction={theme.rtl ? "rtl" : "ltr"}
          >
             {children}
          </Tag>

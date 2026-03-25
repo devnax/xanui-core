@@ -1,6 +1,6 @@
 import React, { createContext, use, useContext, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ThemeProvider, useTheme } from './src/theme'
+import { createTheme, ThemeProvider, useTheme } from './src/theme'
 import { Tag, TagComponentType, TagProps, Transition, useAppRootElement, useBreakpoint, useBreakpointProps, useColorTemplate, useInterface } from './src';
 import AppRoot from './src/AppRoot';
 import { Renderar } from './src/AppRoot/Renderar';
@@ -166,7 +166,7 @@ const RND = () => {
     <button
       onClick={() => {
         // const rr = Renderar.render(Auth)
-        theme.change(theme.name === "light" ? "dark" : "light")
+        theme.change(theme.name === "light" ? createTheme("dark", {}, 'dark') : createTheme("light", {}))
       }}
     >render</button>
   )
@@ -177,8 +177,9 @@ const App = () => {
   const [toggled, setToggled] = React.useState(true)
   const ref = useRef<any>(null)
   const [text, setText] = React.useState("Click")
-  const [theme, setTheme] = React.useState("light")
+  const [theme, setTheme] = React.useState(createTheme("light", {}))
   const [count, setCount] = React.useState(0)
+  console.log(theme);
 
   return (
     <AuthProvider value={{ auth: "naxrul" }}>

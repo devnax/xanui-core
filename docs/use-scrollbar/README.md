@@ -11,7 +11,6 @@
 
 ## Behavior
 
-- Looks up the theme via `getTheme(themeName)`.
 - Generates rules for `scrollbar-width`, `scrollbar-color`, thumb/track size, colors, and hover states using theme tokens.
 - Writes the rules using the `css` utility's global mode.
 

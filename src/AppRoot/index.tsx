@@ -41,6 +41,7 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
 
    useEffect(() => {
       if (typeof _document === 'undefined') return;
+      document.cookie = `xuitm=${theme.name};path=/`
       const styles = Array.from(_document.querySelectorAll('body style[data-oncss]'));
       styles.forEach((style) => {
          _document.head.appendChild(style);
@@ -65,7 +66,7 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
                   theme={theme}
                   onThemeChange={(t) => {
                      onThemeChange && onThemeChange(t)
-                     document.cookie = `xuitm=${t};path=/`
+                     document.cookie = `xuitm=${t.name};path=/`
                   }}
                   {...props}
                   ref={mergeRef}
