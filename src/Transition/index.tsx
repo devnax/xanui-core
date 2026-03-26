@@ -153,7 +153,7 @@ function Transition({ children, ...options }: TransitionProps) {
                         onState?.("closed");
                     }
                 }, _duration + _delay)
-            }, 5);
+            }, 50);
         }
     }, [rect, open, variant])
 
