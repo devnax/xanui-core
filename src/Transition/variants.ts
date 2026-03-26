@@ -63,6 +63,7 @@ export const scaleYDown = () => ({
     from: {
         transform: "scaleY(0.8)",
         opacity: 0,
+        pointerEvents: 'none',
         transformOrigin: "top"
     },
     to: {
@@ -76,7 +77,8 @@ export const scaleYUp = () => ({
     from: {
         transform: "scaleY(0.8)",
         transformOrigin: "bottom",
-        opacity: 0
+        opacity: 0,
+        pointerEvents: 'none'
     },
     to: {
         transform: "scaleY(1)",
@@ -88,7 +90,8 @@ export const scaleYUp = () => ({
 export const fade = () => {
     return {
         from: {
-            opacity: 0
+            opacity: 0,
+            pointerEvents: 'none'
         },
         to: {
             opacity: 1
@@ -103,7 +106,8 @@ export const fadeDown = (rect?: DOMRect) => {
     return {
         from: {
             transform: `translateY(-${y}px) scale(0.98)`,
-            opacity: 0
+            opacity: 0,
+            pointerEvents: 'none'
         },
         to: {
             transform: `translateY(0) scale(1)`,
@@ -118,7 +122,8 @@ export const fadeUp = (rect?: DOMRect) => {
     return {
         from: {
             transform: `translateY(${y}px) scale(0.98)`,
-            opacity: 0
+            opacity: 0,
+            pointerEvents: 'none'
         },
         to: {
             transform: `translateY(0) scale(1)`,
@@ -133,7 +138,8 @@ export const fadeRight = (rect?: DOMRect) => {
     return {
         from: {
             transform: `translateX(-${x}px) scale(0.98)`,
-            opacity: 0
+            opacity: 0,
+            pointerEvents: 'none'
         },
         to: {
             transform: `translateX(0) scale(1)`,
@@ -148,7 +154,8 @@ export const fadeLeft = (rect?: DOMRect) => {
     return {
         from: {
             transform: `translateX(${x}px) scale(0.98)`,
-            opacity: 0
+            opacity: 0,
+            pointerEvents: 'none'
         },
         to: {
             transform: `translateX(0) scale(1)`,
@@ -161,7 +168,8 @@ export const grow = () => {
     return {
         from: {
             transform: "scale(.8, .6)",
-            opacity: 0
+            opacity: 0,
+            pointerEvents: 'none'
         },
         to: {
             transform: "scale(1)",
@@ -175,7 +183,8 @@ export const zoom = () => {
         from: {
             transform: "scale(.8)",
             transformOrigin: "center",
-            opacity: 0
+            opacity: 0,
+            pointerEvents: 'none'
         },
         to: {
             transform: "scale(1)",
@@ -190,7 +199,8 @@ export const zoomOver = () => {
         from: {
             transform: "scale(1.2)",
             transformOrigin: "center",
-            opacity: 0
+            opacity: 0,
+            pointerEvents: 'none'
         },
         to: {
             transform: "scale(1)",

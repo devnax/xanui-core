@@ -1,5 +1,5 @@
 "use client";
-import React, { cloneElement, Children, useState, useLayoutEffect, useEffect, useRef } from 'react';
+import React, { cloneElement, Children, useState, useEffect, useRef } from 'react';
 import * as variants from './variants'
 import { css } from '../css';
 import { useDocument } from '../Document';
@@ -50,6 +50,8 @@ function Transition({ children, ...options }: TransitionProps) {
         onState
     } = options
 
+    const endTimer = useRef<any>(null)
+    const animId = useRef(0)
     const [rect, setRect] = useState<DOMRect>()
     const [isDisableInitial, setIsDisableInitial] = useState(disableInitialTransition)
     const ref = useRef<HTMLElement>(null)
@@ -63,64 +65,119 @@ function Transition({ children, ...options }: TransitionProps) {
 
     let [cls, setCls] = useState(() => {
         let props: any = {}
-        if (!isDisableInitial) {
-            props.visibility = 'hidden'
-        } else if (isDisableInitial && !open) {
-            props.visibility = 'hidden'
+        if (!isDisableInitial || (isDisableInitial && !open)) {
+            props.opacity = 0
+            props.pointerEvents = 'none'
         }
         return style(props)
     })
 
+    // useEffect(() => {
+    //     const node = ref.current
+    //     if (!node) return
+    //     const observer = new ResizeObserver(() => {
+    //         const rect = node.getBoundingClientRect()
+    //         setRect(rect)
+    //     })
+    //     observer.observe(node)
+    //     return () => observer.disconnect()
+    // }, [])
 
     useEffect(() => {
-        const rect = ref.current?.getBoundingClientRect() as DOMRect
-        const v = getVariant(rect, variant)
-        setCls(style(open ? v.from : v.to))
-        setRect(rect)
+        let frame: any
+
+        const measure = () => {
+            const node = ref.current
+            if (!node) {
+                frame = requestAnimationFrame(measure) // ⬅️ retry next frame
+                return
+            }
+
+            const rect = node.getBoundingClientRect()
+            const v = getVariant(rect, variant)
+
+            if (isDisableInitial) {
+                setCls(style(open ? v.to : v.from))
+            } else {
+                setCls(style(open ? v.from : v.to))
+            }
+
+            setRect(rect)
+        }
+
+        frame = requestAnimationFrame(measure)
+
+        return () => {
+            if (endTimer.current) {
+                clearTimeout(endTimer.current)
+            }
+            cancelAnimationFrame(frame)
+        }
+
     }, [])
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (rect) {
-            const v = getVariant(rect, variant)
-            let _css: any = open ? v.to : v.from
-            let trans = ` ${duration}ms ${_ease} ${delay || 0}ms`
+            let _duration = isDisableInitial ? 0 : duration
+            let _delay = isDisableInitial ? 0 : (delay || 0)
+
             if (isDisableInitial) {
-                trans = ''
                 setIsDisableInitial(false)
             }
+            const v = getVariant(rect, variant)
+            let _css: any = open ? v.to : v.from
+
             let _ = {
                 ..._css,
-                transition: Object.keys(_css || {}).map(k => formatCSSProp(k)).join(trans + ", ") + trans,
+                transition: Object.keys(_css || {})
+                    .map(k => `${formatCSSProp(k)} ${_duration}ms ${_ease} ${_delay}ms`)
+                    .join(", "),
+                willChange: Object.keys(_css || {})
+                    .map(formatCSSProp)
+                    .join(", "),
+            }
+
+            if (open) {
+                onOpen?.();
+                onState?.("open");
+            } else {
+                onClose?.();
+                onState?.("close");
             }
 
             setCls(style(_))
-
-            const ele = ref.current as HTMLElement
-            let stimer: any = null
-            let etimer: any = null
-            ele.ontransitionstart = () => {
-                clearTimeout(stimer)
-                stimer = setTimeout(() => {
-                    (onOpen && open) && onOpen();
-                    (onClose && !open) && onClose()
-                    onState && onState(open ? "open" : "close")
-                }, 1)
+            if (endTimer.current) {
+                clearTimeout(endTimer.current)
             }
-            ele.ontransitionend = () => {
-                clearTimeout(etimer)
-                etimer = setTimeout(() => {
-                    if (onOpened && open) onOpened();
-                    if (onClosed && !open) onClosed();
-                    onState && onState(open ? "opened" : "closed")
-                }, 1)
-            }
+            animId.current++
+            const id = animId.current
+            endTimer.current = setTimeout(() => {
+                if (id !== animId.current) return
+                if (open) {
+                    onOpened?.();
+                    onState?.("opened");
+                } else {
+                    onClosed?.();
+                    onState?.("closed");
+                }
+            }, _duration + _delay)
         }
     }, [rect, open, variant])
 
     const clone: any = Children.only(children);
+
     return cloneElement(clone, {
         className: cls,
-        ref
+        ref: (node: HTMLElement) => {
+            ref.current = node;
+
+            const childRef = (clone as any).ref;
+            if (typeof childRef === "function") {
+                childRef(node);
+            } else if (childRef) {
+                childRef.current = node;
+            }
+        }
     });
 }
 

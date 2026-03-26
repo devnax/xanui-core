@@ -19,9 +19,10 @@ const TransBox = ({ open, trans }: any) => {
   // if (closed) return null
   return (
     <Transition
+      duration={400}
       open={open}
       variant={trans}
-      // disableInitialTransition
+      disableInitialTransition
       onOpen={() => {
         console.log("Open");
       }}
@@ -59,7 +60,7 @@ const TransBox = ({ open, trans }: any) => {
 
 const Trans = () => {
   const theme = useTheme()
-  const [v, setV] = React.useState<any>('collapseVertical')
+  const [v, setV] = React.useState<any>('zoom')
   const [open, setOpen] = React.useState(false)
 
   useEffect(() => {
