@@ -1,5 +1,5 @@
 "use client";
-import React, { cloneElement, Children, useState, useEffect, useRef } from 'react';
+import React, { cloneElement, Children, useState, useEffect, useRef, isValidElement } from 'react';
 import * as variants from './variants'
 import { css } from '../css';
 import { useDocument } from '../Document';
@@ -157,21 +157,30 @@ function Transition({ children, ...options }: TransitionProps) {
         }
     }, [rect, open, variant])
 
-    const clone: any = Children.only(children);
 
-    return cloneElement(clone, {
+
+    const childs = Children.toArray(children)
+    if (childs.length !== 1) {
+        throw new Error("Transition expects exactly one child.");
+    }
+    const child = childs[0]
+    if (!isValidElement(child)) {
+        throw new Error("Transition expects a valid React element.");
+    }
+
+    return cloneElement(child, {
         className: cls,
         ref: (node: HTMLElement) => {
             ref.current = node;
 
-            const childRef = (clone as any).ref;
+            const childRef = (child as any).ref;
             if (typeof childRef === "function") {
                 childRef(node);
             } else if (childRef) {
                 childRef.current = node;
             }
         }
-    });
+    } as any);
 }
 
 export default Transition
