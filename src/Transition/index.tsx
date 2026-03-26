@@ -136,22 +136,24 @@ function Transition({ children, ...options }: TransitionProps) {
                 onState?.("close");
             }
 
-            setCls(style(_))
-            if (endTimer.current) {
-                clearTimeout(endTimer.current)
-            }
-            animId.current++
-            const id = animId.current
-            endTimer.current = setTimeout(() => {
-                if (id !== animId.current) return
-                if (open) {
-                    onOpened?.();
-                    onState?.("opened");
-                } else {
-                    onClosed?.();
-                    onState?.("closed");
+            setTimeout(() => {
+                setCls(style(_))
+                if (endTimer.current) {
+                    clearTimeout(endTimer.current)
                 }
-            }, _duration + _delay)
+                animId.current++
+                const id = animId.current
+                endTimer.current = setTimeout(() => {
+                    if (id !== animId.current) return
+                    if (open) {
+                        onOpened?.();
+                        onState?.("opened");
+                    } else {
+                        onClosed?.();
+                        onState?.("closed");
+                    }
+                }, _duration + _delay)
+            }, 5);
         }
     }, [rect, open, variant])
 
