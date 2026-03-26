@@ -22,7 +22,7 @@ const TransBox = ({ open, trans }: any) => {
       duration={400}
       open={open}
       variant={trans}
-      disableInitialTransition
+      // disableInitialTransition
       onOpen={() => {
         console.log("Open");
       }}

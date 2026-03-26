@@ -68,24 +68,14 @@ function Transition({ children, ...options }: TransitionProps) {
         if (!isDisableInitial || (isDisableInitial && !open)) {
             props.opacity = 0
             props.pointerEvents = 'none'
+            props.transition = 'none'
         }
         return style(props)
     })
 
-    // useEffect(() => {
-    //     const node = ref.current
-    //     if (!node) return
-    //     const observer = new ResizeObserver(() => {
-    //         const rect = node.getBoundingClientRect()
-    //         setRect(rect)
-    //     })
-    //     observer.observe(node)
-    //     return () => observer.disconnect()
-    // }, [])
 
     useEffect(() => {
         let frame: any
-
         const measure = () => {
             const node = ref.current
             if (!node) {
@@ -95,13 +85,14 @@ function Transition({ children, ...options }: TransitionProps) {
 
             const rect = node.getBoundingClientRect()
             const v = getVariant(rect, variant)
+            const initial = isDisableInitial
+                ? (open ? v.to : v.from)
+                : (open ? v.from : v.to)
 
-            if (isDisableInitial) {
-                setCls(style(open ? v.to : v.from))
-            } else {
-                setCls(style(open ? v.from : v.to))
-            }
-
+            setCls(style({
+                ...initial,
+                transition: 'none'
+            }))
             setRect(rect)
         }
 

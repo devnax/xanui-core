@@ -3,6 +3,7 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { breakpoints } from "../css";
 import { BreakpointKeys } from "../css/types";
+import Cookie from "../cookie";
 
 export const BreakpointCtx = React.createContext<BreakpointKeys | null>(null);
 
@@ -31,13 +32,13 @@ export const BreakpointProvider = ({ children, defaultKey }: { children?: ReactN
     useEffect(() => {
         const current = getCurrent(defaultKey)
         setCurrent(current)
-        document.cookie = `xuibp=${current};path=/`
+        Cookie.set("xuibp", current)
         const mqls = Object.entries(queries).map(([key, query]) => {
             const mql = window.matchMedia(query);
             const handler = () => {
                 if (mql.matches) {
                     setCurrent(key as BreakpointKeys);
-                    document.cookie = `xuibp=${key};path=/`
+                    Cookie.set("xuibp", key)
                 }
             };
 

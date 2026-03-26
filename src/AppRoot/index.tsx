@@ -9,6 +9,7 @@ import { AppRootProvider } from './AppRootProvider';
 import useMergeRefs from '../hooks/useMergeRefs';
 import { CSSCacheProvider } from '../css/CSSCacheProvider';
 import { BreakpointKeys } from '../css/types';
+import Cookie from '../cookie';
 
 export type AppRootProps<T extends TagComponentType = "div"> = ThemeProviderProps<T> & {
    noScrollbarCss?: boolean;
@@ -41,7 +42,10 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
 
    useEffect(() => {
       if (typeof _document === 'undefined') return;
-      document.cookie = `xuitm=${theme.name};path=/`
+      if (!Cookie.exists("xuitm")) {
+         Cookie.set("xuitm", theme.name)
+      }
+
       const styles = Array.from(_document.querySelectorAll('body style[data-oncss]'));
       styles.forEach((style) => {
          _document.head.appendChild(style);
@@ -66,7 +70,7 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
                   theme={theme}
                   onThemeChange={(t) => {
                      onThemeChange && onThemeChange(t)
-                     document.cookie = `xuitm=${t.name};path=/`
+                     Cookie.set("xuitm", t.name)
                   }}
                   {...props}
                   ref={mergeRef}
