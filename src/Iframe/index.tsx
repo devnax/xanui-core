@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import AppRoot from "../AppRoot";
 import { TagPropsRoot } from "../Tag/types";
 import useMergeRefs from "../hooks/useMergeRefs";
+import { ThemeOptions } from "../theme/types";
 
 const IframeContext = createContext<{ document: Document | null; window: Window | null; }>({
    document: null,
@@ -14,7 +15,7 @@ const IframeContext = createContext<{ document: Document | null; window: Window 
 
 
 export type IframeProps = Omit<TagPropsRoot<"iframe">, "component"> & {
-   theme?: string;
+   theme?: ThemeOptions;
    CSSCacheId?: string;
 }
 
@@ -23,7 +24,7 @@ const Iframe = ({ children, sxr, theme, CSSCacheId, ...props }: IframeProps, ref
    const iframeRef = useRef<HTMLIFrameElement>(null);
    const _ref = useMergeRefs(iframeRef, ref)
    const parentTheme = useTheme()
-   theme ??= parentTheme.name
+
 
    useEffect(() => {
       if (!iframeRef.current) return;
@@ -57,7 +58,7 @@ const Iframe = ({ children, sxr, theme, CSSCacheId, ...props }: IframeProps, ref
                      window: doc.defaultView,
                   }}
                >
-                  <AppRoot disableRenderar theme={theme} document={doc as Document} CSSCacheId={CSSCacheId}>
+                  <AppRoot disableRenderar theme={parentTheme} document={doc as Document} CSSCacheId={CSSCacheId}>
                      {children}
                   </AppRoot>
                </IframeContext.Provider>,

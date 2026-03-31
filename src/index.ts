@@ -1,6 +1,5 @@
 import Tag from './Tag'
 import useTagProps from './Tag/useTagProps'
-import useAnimation from './hooks/useAnimation'
 import useColorTemplate from './hooks/useColorTemplate'
 import useBreakpoint from './breakpoint/useBreakpoint'
 import useBreakpointProps from './breakpoint/useBreakpointProps'
@@ -14,6 +13,10 @@ import { useDocument } from './Document'
 import { useAppRootElement } from './AppRoot/AppRootProvider'
 import { useCSSCache, useCSSCacheId, getCSSCache } from './css/CSSCacheProvider'
 import Iframe from './Iframe'
+import animate, { Easing, AnimateOptions } from './animate'
+import useTransition, { UseTransitionProps, UseTransitionStatus } from './hooks/useTransition'
+import useTransitionGroup, { UseTransitionGroupItem, UseTransitionGroupProps } from './hooks/useTransitionGroup'
+
 
 export type * from './Iframe'
 
@@ -24,12 +27,17 @@ export * from './css/types'
 export * from './Tag/types'
 export * from './theme/types'
 export * from './hooks/useColorTemplate'
-export * from './hooks/useAnimation'
 export * from './Transition'
 export * from './Tag/types'
 export * from './breakpoint/useBreakpointProps'
 export * from './Portal'
-
+export type {
+    AnimateOptions,
+    UseTransitionProps,
+    UseTransitionStatus,
+    UseTransitionGroupItem,
+    UseTransitionGroupProps
+}
 
 export {
     Renderar,
@@ -40,7 +48,6 @@ export {
     useAppRootElement,
     useDocument,
     useTagProps,
-    useAnimation,
     Transition,
     useColorTemplate,
     useBreakpoint,
@@ -49,5 +56,9 @@ export {
     useMergeRefs,
     useCSSCache,
     useCSSCacheId,
-    getCSSCache
+    getCSSCache,
+    animate,
+    Easing,
+    useTransition,
+    useTransitionGroup
 }

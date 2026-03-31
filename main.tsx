@@ -1,13 +1,110 @@
-import React, { createContext, use, useContext, useEffect, useRef, useState } from 'react';
+import React, { createContext, use, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createTheme, ThemeProvider, useTheme } from './src/theme'
-import { Tag, TagComponentType, TagProps, Transition, useAppRootElement, useBreakpoint, useBreakpointProps, useColorTemplate, useInterface } from './src';
+import { css, Tag, TagComponentType, TagProps, Transition, useAppRootElement, useBreakpoint, useBreakpointProps, useColorTemplate, useInterface } from './src';
 import AppRoot from './src/AppRoot';
-import { Renderar } from './src/AppRoot/Renderar';
-import Iframe from './src/Iframe'
+import useTransition from './src/hooks/useTransition'
+import useTransitionGroup from './src/hooks/useTransitionGroup'
 
 
 
+const AnimateGroup = () => {
+  const items = [
+    { key: 1, from: { opacity: 0, y: -20 }, to: { opacity: 1, y: 0 } },
+    { key: 2, from: { opacity: 0, y: -20 }, to: { opacity: 1, y: 0 } },
+    { key: 3, from: { opacity: 0, y: -20 }, to: { opacity: 1, y: 0 } },
+  ]
+
+  const { toggle, statuses } = useTransitionGroup({
+    items,
+    stagger: 100,
+    duration: 400,
+    onUpdate: (val, key) => {
+      const el = document.getElementById(`item-${key}`)
+      if (el) {
+        el.style.opacity = String(val.opacity)
+        el.style.transform = `translateY(${val.y}px)`
+      }
+    }
+  })
+
+  return (
+    <div>
+      {items.map(item => (
+        <div key={item.key} id={`item-${item.key}`} className={`item ${statuses[item.key]}`}>
+          Item {item.key}
+        </div>
+      ))}
+      <button
+        onClick={() => {
+          toggle()
+        }}
+      >
+        Toggle
+      </button>
+    </div>
+  )
+}
+const Animate = () => {
+  const ref = useRef<HTMLElement>(null)
+
+  const animate = useTransition({
+    duration: 10000,
+    initialStatus: "entered",
+    from: () => {
+      console.log(ref?.current?.offsetHeight, animate.isReady);
+
+      return { scale: 0.8, opacity: 0 }
+    },
+    to: { scale: 1, opacity: 1 },
+    // onEnter: () => console.log("enter"),
+    // onEntered: () => console.log("entered"),
+    // onExit: () => console.log("exit"),
+    // onExited: () => console.log("exited"),
+
+    onUpdate: ({ scale, opacity }) => {
+      if (!ref.current) return
+      ref.current.style.transform = `scale(${scale})`
+      ref.current.style.opacity = String(opacity)
+    },
+  })
+
+  useMemo(() => {
+    // animate.enter()
+
+  }, [])
+
+  useLayoutEffect(() => {
+    // animate.enter()
+  }, [])
+  console.log(animate.status);
+
+  useEffect(() => {
+    // animate.enter()
+  }, [])
+
+  return (
+    <Tag m={2} flexBox gap={2} flexColumn>
+      {
+        animate.status !== 'exited' && <Tag
+          ref={ref}
+          width={100}
+          height={100}
+          bgcolor="red"
+        />
+      }
+
+
+      <button
+        onClick={() => {
+          animate.toggle()
+        }}
+      >
+        Toggle
+      </button>
+    </Tag>
+  )
+}
 
 const TransBox = ({ open, trans }: any) => {
   const [closed, setClosed] = useState(false)
@@ -19,20 +116,20 @@ const TransBox = ({ open, trans }: any) => {
   // if (closed) return null
   return (
     <Transition
-      duration={400}
+      // duration={400}
       open={open}
       variant={trans}
       // disableInitialTransition
-      onOpen={() => {
+      onEnter={() => {
         console.log("Open");
       }}
-      onOpened={() => {
+      onEntered={() => {
         console.log("Opened");
       }}
-      onClose={() => {
+      onExit={() => {
         console.log("close");
       }}
-      onClosed={() => {
+      onExited={() => {
         console.log("closed");
       }}
     >
@@ -61,7 +158,7 @@ const TransBox = ({ open, trans }: any) => {
 const Trans = () => {
   const theme = useTheme()
   const [v, setV] = React.useState<any>('zoom')
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(true)
 
   useEffect(() => {
     setInterval(() => {
@@ -72,7 +169,7 @@ const Trans = () => {
     <Tag height={400}>
       <TransBox open={open} trans={v} />
       <button onClick={() => setOpen(!open)}>Click</button>
-      <button onClick={() => setV(v === 'fadeLeft' ? "zoom" : "fadeLeft")}>change</button>
+      <button onClick={() => setV(v === 'fadeDown' ? "zoom" : "fadeDown")}>change</button>
       {/* <Transition open={open} variant={"fade"} > */}
       {/* <Tag
         component="div"
@@ -206,6 +303,8 @@ const App = () => {
         defaultBreakpoint='xl'
         fontFamily="inter,sans-serif"
       >
+        <AnimateGroup />
+        <Animate />
         <Tag
           height={40}
           width={"sm"}
