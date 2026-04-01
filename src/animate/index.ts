@@ -10,7 +10,7 @@ export type AnimateOptions<T extends Record<string, number>> = {
    delay?: number;
    easing?: ((t: number) => number) | Partial<Record<keyof T, (t: number) => number>>;
    onUpdate: (value: T, progress: number) => void;
-   onDone?: () => void;
+   onDone?: (value: T) => void;
    breakpoints?: Partial<Record<keyof T, Array<{ value: number; callback: () => void }>>>;
    repeat?: number;
    repeatBack?: boolean;
@@ -117,7 +117,8 @@ const animate = <T extends Record<string, number>>({
                if (repeatBack) forward = !forward;
                startAnimation(); // 🔁 re-run with fresh from/to if functions
             } else {
-               onDone?.();
+               const finalState = forward ? toVal : fromVal;
+               onDone?.(finalState);
             }
          }
       };

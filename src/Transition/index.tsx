@@ -1,8 +1,8 @@
 "use client";
-import React, { cloneElement, Children, useRef, isValidElement, useLayoutEffect } from 'react';
+import React, { cloneElement, Children, useRef, isValidElement, useLayoutEffect, useEffect } from 'react';
 import * as variants from './variants'
-import useTransition from '../hooks/useTransition';
 import { Easing } from '../animate';
+import useTransition from '../hooks/useTransition';
 
 export type TransitionVariantTypes = keyof typeof variants
 export type TransitionProps = {
@@ -25,7 +25,7 @@ export type TransitionProps = {
 }
 
 
-function Transition({ children, ...options }: TransitionProps) {
+function TransitionBase({ children, ...options }: TransitionProps) {
     let {
         open,
         variant = "fade",
@@ -33,7 +33,7 @@ function Transition({ children, ...options }: TransitionProps) {
         delay,
         easing,
         exitOnUnmount = false,
-        initialTransition = false,
+        initialTransition = true,
         onEnter,
         onEntered,
         onExit,
@@ -48,6 +48,7 @@ function Transition({ children, ...options }: TransitionProps) {
     const variantCb = variants[variant]
     const ref = useRef<HTMLElement>(null)
     const init = useRef(false)
+    const rect = useRef<DOMRect>(null)
 
     const trans = useTransition({
         delay,
@@ -59,19 +60,25 @@ function Transition({ children, ...options }: TransitionProps) {
         onExited,
         onDone,
         from: () => {
-            const v = variantCb(ref.current as HTMLElement)
+            if (!rect.current) {
+                rect.current = ref.current?.getBoundingClientRect() as DOMRect
+            }
+            const v = variantCb(ref.current as HTMLElement, rect.current)
             return v.from
         },
         to: () => {
-            const v = variantCb(ref.current as HTMLElement)
+            if (!rect.current) {
+                rect.current = ref.current?.getBoundingClientRect() as DOMRect
+            }
+            const v = variantCb(ref.current as HTMLElement, rect.current)
             return v.to
         },
         onUpdate: (val, prograss) => {
-            if (!ref.current) throw new Error("Invalid Transition Element");
-            const vc = variantCb(ref.current)
+            if (!ref.current || !rect.current) return
+            const vc = variantCb(ref.current, rect.current)
             onUpdate?.(val, prograss)
             return vc.onUpdate(val)
-        }
+        },
     })
 
 
@@ -84,6 +91,7 @@ function Transition({ children, ...options }: TransitionProps) {
             trans.exit(isnot ? false : true)
         }
     }, [open])
+
 
     if (exitOnUnmount && trans.status === "exited") return
 
@@ -110,4 +118,13 @@ function Transition({ children, ...options }: TransitionProps) {
     } as any);
 }
 
+
+const Transition = (props: any) => {
+    return (
+        <TransitionBase
+            key={props.variant}
+            {...props}
+        />
+    )
+}
 export default Transition

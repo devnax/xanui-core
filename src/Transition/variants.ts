@@ -1,11 +1,11 @@
 "use client"
-const getY = (el?: HTMLElement) => (el ? Math.min(el.getBoundingClientRect().height / 2, 40) : 20)
-const getX = (el?: HTMLElement) => (el ? Math.min(el.getBoundingClientRect().width / 2, 40) : 20)
+const getY = (rect: DOMRect) => (rect.height / 2, 40)
+const getX = (rect: DOMRect) => (rect.width / 2, 40)
 
 // ------------------ Variants ------------------
 
-export const slideDown = (el: HTMLElement) => {
-    const y = getY(el)
+export const slideDown = (el: HTMLElement, rect: DOMRect) => {
+    const y = getY(rect)
     return {
         from: { y: -y },
         to: { y: 0 },
@@ -13,8 +13,8 @@ export const slideDown = (el: HTMLElement) => {
     }
 }
 
-export const slideUp = (el: HTMLElement) => {
-    const y = getY(el)
+export const slideUp = (el: HTMLElement, rect: DOMRect) => {
+    const y = getY(rect)
     return {
         from: { y },
         to: { y: 0 },
@@ -22,8 +22,8 @@ export const slideUp = (el: HTMLElement) => {
     }
 }
 
-export const slideRight = (el: HTMLElement) => {
-    const x = getX(el)
+export const slideRight = (el: HTMLElement, rect: DOMRect) => {
+    const x = getX(rect)
     return {
         from: { x: -x },
         to: { x: 0 },
@@ -31,8 +31,8 @@ export const slideRight = (el: HTMLElement) => {
     }
 }
 
-export const slideLeft = (el: HTMLElement) => {
-    const x = getX(el)
+export const slideLeft = (el: HTMLElement, rect: DOMRect) => {
+    const x = getX(rect)
     return {
         from: { x },
         to: { x: 0 },
@@ -40,14 +40,16 @@ export const slideLeft = (el: HTMLElement) => {
     }
 }
 
-export const fade = (el: HTMLElement) => ({
+export const fade = (el: HTMLElement, rect: DOMRect) => ({
     from: { opacity: 0 },
     to: { opacity: 1 },
     onUpdate: ({ opacity }: any) => (el.style.opacity = opacity),
 })
 
-export const fadeDown = (el: HTMLElement) => {
-    const y = getY(el)
+export const fadeDown = (el: HTMLElement, rect: DOMRect) => {
+    const y = getY(rect)
+    console.log(y);
+
     return {
         from: { y: -y, scale: 0.98, opacity: 0 },
         to: { y: 0, scale: 1, opacity: 1 },
@@ -58,8 +60,8 @@ export const fadeDown = (el: HTMLElement) => {
     }
 }
 
-export const fadeUp = (el: HTMLElement) => {
-    const y = getY(el)
+export const fadeUp = (el: HTMLElement, rect: DOMRect) => {
+    const y = getY(rect)
     return {
         from: { y, scale: 0.98, opacity: 0 },
         to: { y: 0, scale: 1, opacity: 1 },
@@ -70,8 +72,8 @@ export const fadeUp = (el: HTMLElement) => {
     }
 }
 
-export const fadeRight = (el: HTMLElement) => {
-    const x = getX(el)
+export const fadeRight = (el: HTMLElement, rect: DOMRect) => {
+    const x = getX(rect)
     return {
         from: { x: -x, scale: 0.98, opacity: 0 },
         to: { x: 0, scale: 1, opacity: 1 },
@@ -82,8 +84,8 @@ export const fadeRight = (el: HTMLElement) => {
     }
 }
 
-export const fadeLeft = (el: HTMLElement) => {
-    const x = getX(el)
+export const fadeLeft = (el: HTMLElement, rect: DOMRect) => {
+    const x = getX(rect)
     return {
         from: { x, scale: 0.98, opacity: 0 },
         to: { x: 0, scale: 1, opacity: 1 },
@@ -94,7 +96,7 @@ export const fadeLeft = (el: HTMLElement) => {
     }
 }
 
-export const zoom = (el: HTMLElement) => ({
+export const zoom = (el: HTMLElement, rect: DOMRect) => ({
     from: { scale: 0.8, opacity: 0 },
     to: { scale: 1, opacity: 1 },
     onUpdate: ({ scale, opacity }: any) => {
@@ -103,7 +105,7 @@ export const zoom = (el: HTMLElement) => ({
     },
 })
 
-export const zoomOver = (el: HTMLElement) => ({
+export const zoomOver = (el: HTMLElement, rect: DOMRect) => ({
     from: { scale: 1.2, opacity: 0 },
     to: { scale: 1, opacity: 1 },
     onUpdate: ({ scale, opacity }: any) => {
@@ -112,7 +114,7 @@ export const zoomOver = (el: HTMLElement) => ({
     },
 })
 
-export const grow = (el: HTMLElement) => ({
+export const grow = (el: HTMLElement, rect: DOMRect) => ({
     from: { scaleX: 0.8, scaleY: 0.6, opacity: 0 },
     to: { scaleX: 1, scaleY: 1, opacity: 1 },
     onUpdate: ({ scaleX, scaleY, opacity }: any) => {
@@ -121,8 +123,8 @@ export const grow = (el: HTMLElement) => ({
     }
 })
 
-export const collapseVertical = (el: HTMLElement) => {
-    const height = el.getBoundingClientRect().height
+export const collapseVertical = (el: HTMLElement, rect: DOMRect) => {
+    const height = rect.height
     return {
         from: { maxHeight: 0 },
         to: { maxHeight: height },
@@ -132,8 +134,8 @@ export const collapseVertical = (el: HTMLElement) => {
     }
 }
 
-export const collapseHorizontal = (el: HTMLElement) => {
-    const width = el.getBoundingClientRect().width
+export const collapseHorizontal = (el: HTMLElement, rect: DOMRect) => {
+    const width = rect.width
     return {
         from: { width: 0 },
         to: { width },

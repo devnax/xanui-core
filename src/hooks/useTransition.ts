@@ -75,7 +75,7 @@ const useTransition = <T extends Record<string, number>>(props: UseTransitionPro
                onExited?.()
             }
 
-            options.onDone?.()
+            options.onDone?.(stateRef.current)
             return
          }
 
@@ -88,7 +88,7 @@ const useTransition = <T extends Record<string, number>>(props: UseTransitionPro
                stateRef.current = value
                options.onUpdate?.(value, progress)
             },
-            onDone: () => {
+            onDone: (value) => {
                if (nextOpen) {
                   setStatus("entered")
                   onEntered?.()
@@ -96,7 +96,7 @@ const useTransition = <T extends Record<string, number>>(props: UseTransitionPro
                   setStatus("exited")
                   onExited?.()
                }
-               options.onDone?.()
+               options.onDone?.(value)
             },
          })
       },

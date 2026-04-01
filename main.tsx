@@ -52,8 +52,6 @@ const Animate = () => {
     duration: 10000,
     initialStatus: "entered",
     from: () => {
-      console.log(ref?.current?.offsetHeight, animate.isReady);
-
       return { scale: 0.8, opacity: 0 }
     },
     to: { scale: 1, opacity: 1 },
@@ -77,7 +75,6 @@ const Animate = () => {
   useLayoutEffect(() => {
     // animate.enter()
   }, [])
-  console.log(animate.status);
 
   useEffect(() => {
     // animate.enter()
@@ -119,19 +116,19 @@ const TransBox = ({ open, trans }: any) => {
       // duration={400}
       open={open}
       variant={trans}
-      // disableInitialTransition
-      onEnter={() => {
-        console.log("Open");
-      }}
-      onEntered={() => {
-        console.log("Opened");
-      }}
-      onExit={() => {
-        console.log("close");
-      }}
-      onExited={() => {
-        console.log("closed");
-      }}
+    // disableInitialTransition
+    // onEnter={() => {
+    //   console.log("Open");
+    // }}
+    // onEntered={() => {
+    //   console.log("Opened");
+    // }}
+    // onExit={() => {
+    //   console.log("close");
+    // }}
+    // onExited={() => {
+    //   console.log("closed");
+    // }}
     >
       <Tag
         component="div"
@@ -139,7 +136,10 @@ const TransBox = ({ open, trans }: any) => {
         bgcolor="green"
         radius={1}
         overflow={"hidden"}
-        height={300}
+        height={{
+          xs: 500,
+          md: 300,
+        }}
       >
         <Tag
           className='test'
@@ -157,8 +157,8 @@ const TransBox = ({ open, trans }: any) => {
 
 const Trans = () => {
   const theme = useTheme()
-  const [v, setV] = React.useState<any>('zoom')
-  const [open, setOpen] = React.useState(true)
+  const [v, setV] = React.useState<any>('collapseVertical')
+  const [open, setOpen] = React.useState(false)
 
   useEffect(() => {
     setInterval(() => {
