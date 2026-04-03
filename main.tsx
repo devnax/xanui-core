@@ -1,7 +1,7 @@
 import React, { createContext, use, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createTheme, ThemeProvider, useTheme } from './src/theme'
-import { css, Tag, TagComponentType, TagProps, Transition, useAppRootElement, useBreakpoint, useBreakpointProps, useColorTemplate, useInterface } from './src';
+import { css, Easing, Tag, TagComponentType, TagProps, Transition, useAppRootElement, useBreakpoint, useBreakpointProps, useColorTemplate, useInterface } from './src';
 import AppRoot from './src/AppRoot';
 import useTransition from './src/hooks/useTransition'
 import useTransitionGroup from './src/hooks/useTransitionGroup'
@@ -49,47 +49,53 @@ const Animate = () => {
   const ref = useRef<HTMLElement>(null)
 
   const animate = useTransition({
-    duration: 10000,
+    easing: Easing.easeOutBounce,
+    // duration: 10000,
     initialStatus: "entered",
     from: () => {
-      return { scale: 0.8, opacity: 0 }
+      return { x: 3, scale: 0, opacity: 0 }
     },
-    to: { scale: 1, opacity: 1 },
+    to: { x: 10, scale: 1, opacity: 1 },
     // onEnter: () => console.log("enter"),
     // onEntered: () => console.log("entered"),
     // onExit: () => console.log("exit"),
     // onExited: () => console.log("exited"),
 
-    onUpdate: ({ scale, opacity }) => {
+    breakpoints: {
+      x: [{
+        value: 5,
+        callback: () => {
+          console.log("5");
+
+        }
+      }]
+    },
+
+    onUpdate: ({ x, scale, opacity }) => {
       if (!ref.current) return
       ref.current.style.transform = `scale(${scale})`
       ref.current.style.opacity = String(opacity)
     },
   })
 
-  useMemo(() => {
-    // animate.enter()
 
-  }, [])
-
-  useLayoutEffect(() => {
-    // animate.enter()
-  }, [])
-
-  useEffect(() => {
-    // animate.enter()
-  }, [])
 
   return (
     <Tag m={2} flexBox gap={2} flexColumn>
-      {
+      <Tag
+        ref={ref}
+        width={100}
+        height={100}
+        bgcolor="red"
+      />
+      {/* {
         animate.status !== 'exited' && <Tag
           ref={ref}
           width={100}
           height={100}
           bgcolor="red"
         />
-      }
+      } */}
 
 
       <button

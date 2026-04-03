@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Easing from "./easing";
 
 export { Easing };
@@ -32,16 +32,18 @@ const animate = <T extends Record<string, number>>({
    let cycle = 0;
    let forward = true;
 
-   // Track triggered breakpoints
    const triggered: Partial<Record<keyof T, Set<number>>> = {};
+   const lastValues: Partial<Record<keyof T, number>> = {};
 
    const resolve = (val: T | (() => T)): T =>
       typeof val === "function" ? (val as () => T)() : val;
 
    const getEased = (key: keyof T, t: number) => {
-      if (typeof easing === "function") return easing(t);
-      if (easing[key]) return easing[key]!(t);
-      return t;
+      let e: number;
+      if (typeof easing === "function") e = easing(t);
+      else if (easing[key]) e = easing[key]!(t);
+      else e = t;
+      return Math.max(0, Math.min(1, e)); // clamp
    };
 
    const startAnimation = () => {
@@ -51,16 +53,22 @@ const animate = <T extends Record<string, number>>({
       const keys = Object.keys(fromVal) as (keyof T)[];
 
       if (breakpoints) {
-         for (const key of keys) triggered[key] = new Set();
+         for (const key of keys) {
+            triggered[key] = new Set();
+            lastValues[key] = forward ? fromVal[key] : toVal[key];
+         }
       }
+
+      // first frame exact start
+      onUpdate({ ...fromVal }, 0);
 
       const start = performance.now();
 
       const frame = (now: number) => {
-         const progress =
-            duration === 0 ? 1 : Math.min((now - start) / duration, 1);
+         const elapsed = now - start;
+         const progress = duration === 0 ? 1 : Math.min(elapsed / duration, 1);
 
-         const current: any = {} as T;
+         const current = {} as T;
 
          for (const key of keys) {
             const f = forward ? fromVal[key] : toVal[key];
@@ -68,56 +76,44 @@ const animate = <T extends Record<string, number>>({
 
             const eased = getEased(key, progress);
             const val = f + (t - f) * eased;
-            current[key] = val;
 
-            // breakpoints
+            (current as any)[key] = val;
+
+            // ✅ breakpoints: only trigger if inside from..to
             const bps = breakpoints?.[key];
             if (bps) {
+               const last = lastValues[key]!;
                for (let i = 0; i < bps.length; i++) {
-                  const triggeredSet = triggered[key]!;
-                  if (
-                     !triggeredSet.has(i) &&
-                     ((f < t && val >= bps[i].value) ||
-                        (f > t && val <= bps[i].value))
-                  ) {
-                     triggeredSet.add(i);
+                  if (triggered[key]!.has(i)) continue;
+
+                  const bp = bps[i].value;
+
+                  // skip if breakpoint outside from..to
+                  if (!((f < t && bp >= f && bp <= t) || (f > t && bp <= f && bp >= t))) continue;
+
+                  // trigger only if crossed this frame
+                  if ((f < t && last < bp && val >= bp) || (f > t && last > bp && val <= bp)) {
+                     triggered[key]!.add(i);
                      bps[i].callback();
                   }
                }
+
+               lastValues[key] = val;
             }
          }
 
-         onUpdate(current, progress);
-
          if (progress < 1) {
+            onUpdate(current, progress);
             rafId = requestAnimationFrame(frame);
          } else {
             const finalState = forward ? toVal : fromVal;
-            onUpdate(finalState, 1);
-
-            // fire remaining breakpoints
-            if (breakpoints) {
-               for (const key of keys) {
-                  const bps = breakpoints[key];
-                  if (!bps) continue;
-
-                  const triggeredSet = triggered[key]!;
-                  for (let i = 0; i < bps.length; i++) {
-                     if (!triggeredSet.has(i)) {
-                        triggeredSet.add(i);
-                        bps[i].callback();
-                     }
-                  }
-               }
-            }
+            onUpdate({ ...finalState }, 1);
 
             cycle++;
-
             if (cycle <= repeat) {
                if (repeatBack) forward = !forward;
-               startAnimation(); // 🔁 re-run with fresh from/to if functions
+               startAnimation();
             } else {
-               const finalState = forward ? toVal : fromVal;
                onDone?.(finalState);
             }
          }
