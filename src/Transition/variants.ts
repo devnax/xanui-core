@@ -48,8 +48,6 @@ export const fade = (el: HTMLElement, rect: DOMRect) => ({
 
 export const fadeDown = (el: HTMLElement, rect: DOMRect) => {
     const y = getY(rect)
-    console.log(y);
-
     return {
         from: { y: -y, scale: 0.98, opacity: 0 },
         to: { y: 0, scale: 1, opacity: 1 },
