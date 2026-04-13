@@ -1,74 +1,104 @@
-import { TagComponentType, TagProps, TagPropsRoot } from './types';
-import cssPropList from './cssPropList';
-import { css } from '../css';
-import { classNames } from 'pretty-class';
-import { CSSFactoryType } from 'oncss';
-import { useMemo } from 'react';
-import { useDocument } from '../Document';
-import { useCSSCacheId } from '../css/CSSCacheProvider';
+"use client"
+import { useMemo } from "react";
+import { TagComponentType, TagProps, TagPropsRoot } from "./types";
+import cssPropList from "./cssPropList";
+import { css } from "../css";
+import { classNames } from "pretty-class";
+import { CSSFactoryType } from "oncss";
+import { useDocument } from "../Document";
+import { useCSSCacheId } from "../css/CSSCacheProvider";
 
 export type useTagPropsReturn<T extends TagComponentType = "div"> = {
-   props: TagProps<T>,
-   style: CSSFactoryType
-}
+   props: TagProps<T>;
+   style: CSSFactoryType;
+};
 
 const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>): useTagPropsReturn<T> => {
-   const cachekey = JSON.stringify(props, (key, value) => {
-      return key === '_owner' || key === '_store' ? undefined : value;
-   }, 2);
-
    const doc = useDocument();
-   const cacheId = useCSSCacheId()
+   const cacheId = useCSSCacheId();
 
-   const parsed = useMemo(() => {
-      let _props: any = {}
-      let _css: any = {}
+   // Extract known styling-related props
+   const {
+      sx,
+      sxr,
+      style,
+      hover,
+      className,
+      classNames: clsNames,
+      baseClass,
+      ...rest
+   } = props;
 
-      if (props.hover && Object.keys(props.hover).length > 0) {
-         _css['&:hover'] = {
-            ...props.hover
-         }
-      }
+   /**
+    * Split DOM props vs CSS props
+    */
+   const { domProps, cssProps } = useMemo(() => {
+      const _dom: any = {};
+      const _css: any = {};
 
-      for (let key in props) {
-         const keys = ["sx", "sxr", "style", "hover", "className", "classNames", "baseClass"];
-         if (keys.includes(key)) {
-            continue;
-         }
-         let val = (props as any)[key];
-         if (!cssPropList[key]) {
-            _props[key] = val
+      for (const key in rest) {
+         const val = (rest as any)[key];
+         if (cssPropList[key]) {
+            _css[key] = val;
          } else {
-            _css[key] = val
+            _dom[key] = val;
          }
       }
 
-      const styles = css({ ...props.sxr, ..._css, ...props.sx, ...props.style }, {
-         injectStyle: typeof window !== 'undefined',
-         container: doc?.document,
-         cacheId
-      })
+      return { domProps: _dom, cssProps: _css };
+   }, [rest]);
 
+   /**
+    * Generate styles
+    */
+   const styles = useMemo(() => {
+      const hoverStyles =
+         hover && Object.keys(hover).length > 0
+            ? { "&:hover": hover }
+            : undefined;
+
+      return css(
+         {
+            ...sxr,
+            ...cssProps,
+            ...sx,
+            ...style,
+            ...hoverStyles,
+         },
+         {
+            injectStyle: typeof window !== "undefined",
+            container: doc?.document,
+            cacheId,
+         }
+      );
+   }, [sx, sxr, style, hover, cssProps, doc, cacheId]);
+
+   /**
+    * Compose className
+    */
+   const finalClassName = useMemo(() => {
+      return classNames(
+         baseClass ? "xui-" + baseClass : undefined,
+         clsNames,
+         className,
+         styles.classname
+      );
+   }, [baseClass, clsNames, className, styles.classname]);
+
+   /**
+    * Final props
+    */
+   const finalProps = useMemo(() => {
       return {
-         props: _props,
-         styles,
-         className: classNames(
-            props.baseClass ? "xui-" + props.baseClass : undefined,
-            props.classNames,
-            props.className,
-            styles.classname
-         )
-      }
-   }, [cachekey])
+         ...domProps,
+         className: finalClassName,
+      };
+   }, [domProps, finalClassName]);
 
-   const _props: any = {};
-   for (let prop in parsed.props) {
-      _props[prop] = (props as any)[prop]
-   }
-   _props.className = parsed.className;
+   return {
+      props: finalProps,
+      style: styles,
+   };
+};
 
-   return { props: _props, style: parsed.styles };
-}
-
-
-export default useTagProps
+export default useTagProps;
