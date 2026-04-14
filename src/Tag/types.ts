@@ -81,7 +81,7 @@ export interface TagCSSProperties {
     fontSize: CSSValueType<"fontSize"> | TypographyRefTypes;
     fontStyle: CSSValueType<"fontStyle">;
     fontWeight: CSSValueType<"fontWeight"> | TypographyRefTypes;
-    font: CSSValueType<"font"> | TypographyRefTypes;
+    font: CSSValueType<"font">
     gap: CSSValueType<"gap">;
     grid: CSSValueType<"grid">;
     gridArea: CSSValueType<"gridArea">;
