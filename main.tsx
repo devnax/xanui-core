@@ -5,7 +5,10 @@ import { css, Easing, Tag, TagComponentType, TagProps, ThemeOptionInput, Transit
 import AppRoot from './src/AppRoot';
 import useTransition from './src/hooks/useTransition'
 import useTransitionGroup from './src/hooks/useTransitionGroup'
+import { generateColorRole } from './src/theme/color'
 
+const color = generateColorRole("#ffffff")
+console.log(color);
 
 
 const AnimateGroup = () => {
@@ -309,6 +312,25 @@ const App = () => {
         defaultBreakpoint='xl'
         fontFamily="inter,sans-serif"
       >
+        <Tag
+          p={3}
+        >
+          <Tag
+            component={"button"}
+            bgcolor={color.alpha}
+            color={color.main}
+            hover={{
+              bgcolor: color.light
+            }}
+            transition={"all .3s"}
+            border={"1px solid"}
+            borderColor={color.divider}
+            px={4}
+            py={1}
+            radius={1}
+            cursor={"pointer"}
+          >Nice</Tag>
+        </Tag>
         <Tag
           theme={{
             colors: {

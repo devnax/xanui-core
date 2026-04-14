@@ -74,6 +74,26 @@ export const ThemeTypography: ThemeTypographyType = {
     small: { fontSize: 12, lineHeight: 1.6, fontWeight: 400 },
 }
 
+const c = {
+    brand: {
+        "main": "#2563EB",
+        "light": "#618dec",
+        "dark": "#0c47c6",
+        "muted": "#7b90be",
+        "divider": "#a4aab8",
+        "contrast": "#F9FAFB"
+    },
+    warning: {
+        "main": "#d97706",
+        "light": "#f39529",
+        "dark": "#a15700",
+        "muted": "#b38755",
+        "divider": "#a49787",
+        "contrast": "#F9FAFB",
+        "alpha": "rgba(217, 119, 6, 0.12)"
+    }
+}
+
 export const lightThemeOptions: ThemeOptionInput = {
     name: "light",
     rtl: false,
@@ -82,17 +102,17 @@ export const lightThemeOptions: ThemeOptionInput = {
     colors: {
         background: {
             primary: "#FFFFFF",
-            secondary: "#e8e8e8",
+            secondary: "#F6F7FB",
         },
 
         divider: {
-            primary: "#E5E7EB",
-            secondary: "#D1D5DB",
+            primary: "#E6EAF0",
+            secondary: "#D7DCE5",
         },
 
         text: {
-            primary: "#2E2E2E",
-            secondary: "#6B7280",
+            primary: "#111827",
+            secondary: "#4B5563",
         },
 
         brand: {
@@ -142,18 +162,18 @@ export const darkThemeOptions: ThemeOptionInput = {
     globalStyle: {},
     colors: {
         background: {
-            primary: "#212121",
-            secondary: "#303030",
+            primary: "#0F1115",
+            secondary: "#161A22",
         },
 
         divider: {
-            primary: "#262626",
-            secondary: "#2E2E2E",
+            primary: "#232836",
+            secondary: "#2C3344",
         },
 
         text: {
-            primary: "#E5E7EB",   // main readable text
-            secondary: "#9CA3AF", // muted / secondary text
+            primary: "#E6EAF2",
+            secondary: "#A7B0C0",
         },
 
         brand: {
