@@ -1,7 +1,7 @@
 import React, { createContext, use, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createTheme, ThemeProvider, useTheme } from './src/theme'
-import { css, Easing, Tag, TagComponentType, TagProps, Transition, useAppRootElement, useBreakpoint, useBreakpointProps, useColorTemplate, useInterface } from './src';
+import { css, Easing, Tag, TagComponentType, TagProps, ThemeOptionInput, Transition, useAppRootElement, useBreakpoint, useBreakpointProps, useColorTemplate, useInterface } from './src';
 import AppRoot from './src/AppRoot';
 import useTransition from './src/hooks/useTransition'
 import useTransitionGroup from './src/hooks/useTransitionGroup'
@@ -285,7 +285,7 @@ const RND = () => {
     <button
       onClick={() => {
         // const rr = Renderar.render(Auth)
-        theme.change(theme.name === "light" ? createTheme("dark", {}, 'dark') : createTheme("light", {}))
+        theme.change(theme.name === "default-dark" ? {} : { mode: "dark" })
       }}
     >render</button>
   )
@@ -296,7 +296,7 @@ const App = () => {
   const [toggled, setToggled] = React.useState(true)
   const ref = useRef<any>(null)
   const [text, setText] = React.useState("Click")
-  const [theme, setTheme] = React.useState(createTheme("light", {}))
+  const [theme, setTheme] = React.useState<ThemeOptionInput>({ mode: "dark" })
   const [count, setCount] = React.useState(0)
 
   return (
@@ -309,6 +309,20 @@ const App = () => {
         defaultBreakpoint='xl'
         fontFamily="inter,sans-serif"
       >
+        <Tag
+          theme={{
+            colors: {
+              background: {
+                primary: "#770808",
+                secondary: "#ac0b0b",
+              }
+            }
+          }}
+          width={100}
+          height={100}
+          bgcolor="background.secondary"
+        />
+
         <AnimateGroup />
         <Animate />
         <Tag
@@ -337,6 +351,7 @@ const App = () => {
         <Trans />
 
 
+
         {/* <Trans /> */}
         {/* 
       <Input
@@ -349,53 +364,7 @@ const App = () => {
           {text}
         </button>}
       />
-      <GridContainer mb={2} spacing={1}>
-        <GridItem xs={12} sm={6} md={4} lg={3} >
-          <Tag
-            ref={ref}
-            p={2}
-            bgcolor="background.primary"
-            border="1px solid"
-            borderColor="divider.primary"
-            radius={2}
-          >
-            <div>Grid Item 1</div>
-          </Tag>
-        </GridItem>
-        <GridItem xs={12} sm={6} md={4} lg={3} >
-          <Tag
-            p={2}
-            bgcolor="background.primary"
-            border="1px solid"
-            borderColor="divider.primary"
-            radius={2}
-          >
-            Grid Item 2
-          </Tag>
-        </GridItem>
-        <GridItem xs={12} sm={6} md={4} lg={3} >
-          <Tag
-            p={2}
-            bgcolor="background.primary"
-            border="1px solid"
-            borderColor="divider.primary"
-            radius={2}
-          >
-            Grid Item 3
-          </Tag>
-        </GridItem>
-        <GridItem xs={12} sm={6} md={4} lg={3} >
-          <Tag
-            p={2}
-            bgcolor="background.primary"
-            border="1px solid"
-            borderColor="divider.primary"
-            radius={2}
-          >
-            Grid Item 4
-          </Tag>
-        </GridItem>
-      </GridContainer>
+      
       <Tag
         mt={20}
         flexBox

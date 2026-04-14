@@ -19,11 +19,13 @@ export const mergeObject = (a: ObjectType, b: ObjectType) => {
 }
 
 
-export const createTheme = (name: string, options: ThemeOptionInput, mode: "light" | "dark" = "light"): ThemeOptions => {
-   const defaultOptions = mode === 'light' ? lightThemeOptions : darkThemeOptions
+export const createTheme = (options: ThemeOptionInput): ThemeOptions => {
+   let mode = options?.mode ?? "light"
+   const defaultOptions = mode === 'dark' ? darkThemeOptions : lightThemeOptions
+
    let theme: any = mergeObject(defaultOptions, {
+      name: mode === "dark" ? "default-dark" : "default-light",
       ...options,
-      name,
       breakpoints: breakpoints
    })
 
@@ -46,14 +48,16 @@ export type ThemeCntextProps = {
 }
 
 export const ThemeContex = React.createContext<ThemeCntextProps>({
-   theme: createTheme("light", {}),
+   theme: createTheme({
+      name: "default-light"
+   }),
    onChange(theme) { },
 })
 
 export const useTheme = () => {
    const ctx = useContext(ThemeContex)
    const theme = ctx.theme
-   theme.change = (theme: ThemeOptions) => ctx.onChange(theme)
+   theme.change = (theme: ThemeOptionInput) => ctx.onChange(createTheme(theme))
    return theme
 }
 

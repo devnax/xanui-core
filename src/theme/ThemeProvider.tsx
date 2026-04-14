@@ -1,9 +1,9 @@
 "use client";
 import * as React from "react"
-import { ThemeOptions } from "./types"
+import { ThemeOptionInput, ThemeOptions } from "./types"
 import Tag from "../Tag"
 import { TagComponentType, TagProps } from "../Tag/types"
-import { ThemeContex } from "./core"
+import { createTheme, ThemeContex } from "./core"
 import ThemeCssVars from "./ThemeCssVars"
 import { css } from "../css"
 import ServerStyleTag from "../Tag/ServerStyleTag"
@@ -12,15 +12,17 @@ import { themeRootClass } from ".";
 import { useCSSCacheId } from "../css/CSSCacheProvider";
 
 export type ThemeProviderProps<T extends TagComponentType = 'div'> = TagProps<T> & {
-   theme: ThemeOptions;
+   theme: ThemeOptionInput;
    onThemeChange?: (theme: ThemeOptions) => void
    isRoot?: boolean;
    noScrollbarCss?: boolean;
 }
 
-const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme, onThemeChange, isRoot, noScrollbarCss, ...props }: ThemeProviderProps<T>) => {
+const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme: THEME, onThemeChange, isRoot, noScrollbarCss, ...props }: ThemeProviderProps<T>) => {
    const doc = useDocument()
    const cacheId = useCSSCacheId()
+
+   const theme = React.useMemo(() => createTheme(THEME), [THEME])
 
    const themeGlobalStyle: any = React.useMemo(() => {
       const root_cls = `.xui-${theme.name}-theme-root`

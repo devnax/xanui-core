@@ -7,10 +7,13 @@ import { classNames } from "pretty-class";
 import { CSSFactoryType } from "oncss";
 import { useDocument } from "../Document";
 import { useCSSCacheId } from "../css/CSSCacheProvider";
+import ThemeCssVars from "../theme/ThemeCssVars";
+import { createTheme } from "../theme";
 
 export type useTagPropsReturn<T extends TagComponentType = "div"> = {
    props: TagProps<T>;
    style: CSSFactoryType;
+   themeStyle?: CSSFactoryType;
 };
 
 const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>): useTagPropsReturn<T> => {
@@ -26,6 +29,7 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
       className,
       classNames: clsNames,
       baseClass,
+      theme,
       ...rest
    } = props;
 
@@ -51,13 +55,13 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
    /**
     * Generate styles
     */
-   const styles = useMemo(() => {
+   const { styles, themeStyle } = useMemo(() => {
       const hoverStyles =
          hover && Object.keys(hover).length > 0
             ? { "&:hover": hover }
             : undefined;
 
-      return css(
+      const cls = css(
          {
             ...sxr,
             ...cssProps,
@@ -71,7 +75,25 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
             cacheId,
          }
       );
-   }, [sx, sxr, style, hover, cssProps, doc, cacheId]);
+
+      let themeStyle
+      if (theme) {
+         themeStyle = css({
+            "@global": {
+               [`.${cls.classname}`]: ThemeCssVars(theme as any)
+            }
+         },
+            {
+               injectStyle: typeof window !== "undefined",
+               container: doc?.document,
+               cacheId,
+            }
+         );
+      }
+
+      return { styles: cls, themeStyle }
+   }, [sx, sxr, style, hover, cssProps, doc, cacheId, theme]);
+
 
    /**
     * Compose className
@@ -98,6 +120,7 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
    return {
       props: finalProps,
       style: styles,
+      themeStyle
    };
 };
 

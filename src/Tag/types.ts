@@ -1,6 +1,6 @@
 import * as CSS from 'csstype'
 import { Aliases, BreakpointKeys, CSSProps, CSSValueType } from "../css/types"
-import { ColorsRefTypes, TypographyRefTypes } from '../theme/types';
+import { ColorsRefTypes, ThemeOptionInput, TypographyRefTypes } from '../theme/types';
 import { classNamesTypes } from 'pretty-class'
 
 export type TagComponentType = keyof React.JSX.IntrinsicElements | React.ComponentType<any>
@@ -180,4 +180,5 @@ export type CSSPropAsAttr = Partial<TagCSSProperties> & Aliases & {
     hover?: CSSProps;
     disabled?: boolean;
     classNames?: classNamesTypes;
+    theme?: ThemeOptionInput
 }

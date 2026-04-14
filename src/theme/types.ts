@@ -35,6 +35,7 @@ export type ThemeOptionsColor = ThemeColorOption & {
 }
 export interface ThemeOptions {
     name: string;
+    mode?: "dark" | "light";
     rtl: boolean;
     globalStyle: GlobalCSS,
     breakpoints: { [key in BreakpointKeys]: number };
@@ -52,7 +53,7 @@ export interface ThemeOptions {
         danger: ThemeOptionsColor
     };
     typography: ThemeTypographyType;
-    change: (theme: ThemeOptions) => void;
+    change: (theme: ThemeOptionInput) => void;
 }
 
 
@@ -65,11 +66,14 @@ export type ThemeTypographyInputType = {
     h4?: ThemeTypographyItemInput;
     h5?: ThemeTypographyItemInput;
     h6?: ThemeTypographyItemInput;
+    big?: ThemeTypographyItemInput;
     text?: ThemeTypographyItemInput;
     button?: ThemeTypographyItemInput;
     small?: ThemeTypographyItemInput;
 };
 export interface ThemeOptionInput {
+    name?: string;
+    mode?: "dark" | "light";
     rtl?: boolean;
     globalStyle?: GlobalCSS,
     shadow?: string[];

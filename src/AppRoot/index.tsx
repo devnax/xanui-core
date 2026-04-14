@@ -42,10 +42,9 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
 
    useEffect(() => {
       if (typeof _document === 'undefined') return;
-      if (!Cookie.exists("xuitm")) {
+      if (!Cookie.exists("xuitm") && theme.name) {
          Cookie.set("xuitm", theme.name)
       }
-
       const styles = Array.from(_document.querySelectorAll('body style[data-oncss]'));
       styles.forEach((style) => {
          _document.head.appendChild(style);

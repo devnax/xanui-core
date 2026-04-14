@@ -81,13 +81,13 @@ export const lightThemeOptions: ThemeOptionInput = {
     globalStyle: {},
     colors: {
         background: {
-            primary: "#FFFFFF",   // main app background
-            secondary: "#F3F4F6", // slightly darker surface for sections/cards
+            primary: "#FFFFFF",
+            secondary: "#e8e8e8",
         },
 
         divider: {
-            primary: "#E5E7EB",   // soft divider, visible on #FFFFFF
-            secondary: "#D1D5DB", // stronger divider for emphasis
+            primary: "#E5E7EB",
+            secondary: "#D1D5DB",
         },
 
         text: {
@@ -142,8 +142,8 @@ export const darkThemeOptions: ThemeOptionInput = {
     globalStyle: {},
     colors: {
         background: {
-            primary: "#121212",
-            secondary: "#1E1E1E",
+            primary: "#212121",
+            secondary: "#303030",
         },
 
         divider: {
