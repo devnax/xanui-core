@@ -6,9 +6,7 @@ import AppRoot from './src/AppRoot';
 import useTransition from './src/hooks/useTransition'
 import useTransitionGroup from './src/hooks/useTransitionGroup'
 import { generateColorRole } from './src/theme/color'
-
-const color = generateColorRole("#ffffff")
-console.log(color);
+import { createPalette } from './src/theme/oklch'
 
 
 const AnimateGroup = () => {
@@ -294,6 +292,34 @@ const RND = () => {
   )
 }
 
+// F6F7FB
+// 0F1115
+
+// 1D4ED8
+
+const color = generateColorRole("#e9e9e9")
+const oklch = createPalette("#15803D")
+// console.log(oklch);
+
+/* 
+{
+    "l": 0.1772746621957225,
+    "c": 0.008873007842359403,
+    "h": 264.3182845998558
+}
+
+{
+    "l": 0.48819831191672425,
+    "c": 0.21716546013691201,
+    "h": 264.3763040937021
+}
+
+{
+    "l": 0.52729863722093,
+    "c": 0.137102541646482,
+    "h": 150.0692792709957
+}
+*/
 
 const App = () => {
   const [toggled, setToggled] = React.useState(true)
@@ -312,24 +338,37 @@ const App = () => {
         defaultBreakpoint='xl'
         fontFamily="inter,sans-serif"
       >
+        <RND />
+
         <Tag
           p={3}
         >
           <Tag
             component={"button"}
-            bgcolor={color.alpha}
-            color={color.main}
+            bgcolor={oklch.ghost}
+            color={oklch.contrast}
             hover={{
-              bgcolor: color.light
+              // bgcolor: oklch.ghost,
+              // color: oklch.main
             }}
             transition={"all .3s"}
             border={"1px solid"}
-            borderColor={color.divider}
+            borderColor={oklch.divider}
             px={4}
             py={1}
             radius={1}
             cursor={"pointer"}
-          >Nice</Tag>
+
+            flexBox
+            gap={1}
+            flexColumn
+          >
+            <Tag component={"h2"}>Heading of the year</Tag>
+            <Tag height={1} bgcolor={oklch.divider} />
+            <Tag color={oklch.muted}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores distinctio corrupti voluptate commodi illum doloribus perferendis quos eum dicta voluptatem nostrum enim fugiat, voluptatibus veniam vel assumenda eaque consequatur quasi.
+            </Tag>
+          </Tag>
         </Tag>
         <Tag
           theme={{
@@ -368,7 +407,6 @@ const App = () => {
           bgcolor="blue"
         >XL</Tag>
 
-        <RND />
 
         <Trans />
 

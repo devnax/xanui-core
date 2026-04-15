@@ -1,38 +1,27 @@
 import { BreakpointKeys, GlobalCSS } from "../css/types";
 export type ObjectType = { [key: string]: any }
 
-
+export type BaseTypographyKeys = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "big" | "text" | "button" | "small"
 export type ThemeTypographyItem = {
     fontSize: number;
     lineHeight: number;
     fontWeight: number;
 }
 
-
-export type ThemeTypographyType = {
-    h1: ThemeTypographyItem;
-    h2: ThemeTypographyItem;
-    h3: ThemeTypographyItem;
-    h4: ThemeTypographyItem;
-    h5: ThemeTypographyItem;
-    h6: ThemeTypographyItem;
-    big: ThemeTypographyItem;
-    text: ThemeTypographyItem;
-    button: ThemeTypographyItem;
-    small: ThemeTypographyItem;
-}
-
+export type ThemeColorKeys = "surface" | "primary" | "info" | "success" | "warning" | "danger"
 export type ThemeColorOption = {
-    primary: string;
-    secondary: string;
-    text: string;
+    main: string;
+    light: string;
+    dark: string;
+    contrast: string;
+    muted: string;
+    divider: string;
+    ghost: string;
 }
-export type ThemeOptionsColor = ThemeColorOption & {
-    soft: {
-        primary: string;
-        secondary: string;
-    }
-}
+
+
+export type ThemeInterface<T = any> = (defaultProps: T, theme: ThemeOptions) => T;
+
 export interface ThemeOptions {
     name: string;
     mode?: "dark" | "light";
@@ -40,60 +29,16 @@ export interface ThemeOptions {
     globalStyle: GlobalCSS,
     breakpoints: { [key in BreakpointKeys]: number };
     shadow: string[];
-    interfaces: { [name: string]: <P extends object>(defaultProps: P, theme: ThemeOptions) => P };
-    colors: {
-        background: Omit<ThemeOptionsColor, 'text'>;
-        text: Omit<ThemeOptionsColor, 'text'>;
-        divider: Omit<ThemeOptionsColor, 'text'>;
-        brand: ThemeOptionsColor;
-        accent: ThemeOptionsColor;
-        success: ThemeOptionsColor
-        info: ThemeOptionsColor
-        warning: ThemeOptionsColor
-        danger: ThemeOptionsColor
-    };
-    typography: ThemeTypographyType;
+    interfaces: Record<string, ThemeInterface>;
+    colors: Record<ThemeColorKeys, ThemeColorOption>;
+    typography: Record<BaseTypographyKeys, ThemeTypographyItem>;
     change: (theme: ThemeOptionInput) => void;
 }
 
+export type ThemeOptionInput = Omit<Partial<ThemeOptions>, "breakpoints" | "change">
 
-export type ThemeTypographyItemInput = Partial<ThemeTypographyItem>
-
-export type ThemeTypographyInputType = {
-    h1?: ThemeTypographyItemInput;
-    h2?: ThemeTypographyItemInput;
-    h3?: ThemeTypographyItemInput;
-    h4?: ThemeTypographyItemInput;
-    h5?: ThemeTypographyItemInput;
-    h6?: ThemeTypographyItemInput;
-    big?: ThemeTypographyItemInput;
-    text?: ThemeTypographyItemInput;
-    button?: ThemeTypographyItemInput;
-    small?: ThemeTypographyItemInput;
-};
-export interface ThemeOptionInput {
-    name?: string;
-    mode?: "dark" | "light";
-    rtl?: boolean;
-    globalStyle?: GlobalCSS,
-    shadow?: string[];
-    interfaces?: { [name: string]: <P extends object>(defaultProps: P, theme: ThemeOptions) => P };
-    colors?: {
-        background?: Omit<ThemeColorOption, 'text'>;
-        text?: Omit<ThemeColorOption, 'text'>;
-        divider?: Omit<ThemeColorOption, 'text'>;
-        brand?: ThemeColorOption
-        accent?: ThemeColorOption
-        success?: ThemeColorOption
-        info?: ThemeColorOption
-        warning?: ThemeColorOption
-        danger?: ThemeColorOption
-    };
-    typography?: ThemeTypographyInputType;
-}
 
 // ============ Reference Types
-
 export type TypographyRefTypes =
     | "h1"
     | "h2"
@@ -101,6 +46,7 @@ export type TypographyRefTypes =
     | "h4"
     | "h5"
     | "h6"
+    | "big"
     | "text"
     | "button"
     | "small"

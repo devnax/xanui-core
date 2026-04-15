@@ -74,25 +74,6 @@ export const ThemeTypography: ThemeTypographyType = {
     small: { fontSize: 12, lineHeight: 1.6, fontWeight: 400 },
 }
 
-const c = {
-    brand: {
-        "main": "#2563EB",
-        "light": "#618dec",
-        "dark": "#0c47c6",
-        "muted": "#7b90be",
-        "divider": "#a4aab8",
-        "contrast": "#F9FAFB"
-    },
-    warning: {
-        "main": "#d97706",
-        "light": "#f39529",
-        "dark": "#a15700",
-        "muted": "#b38755",
-        "divider": "#a49787",
-        "contrast": "#F9FAFB",
-        "alpha": "rgba(217, 119, 6, 0.12)"
-    }
-}
 
 export const lightThemeOptions: ThemeOptionInput = {
     name: "light",
