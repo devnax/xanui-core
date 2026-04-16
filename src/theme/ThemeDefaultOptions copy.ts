@@ -1,4 +1,3 @@
-import { createPalette } from './oklch';
 import { ThemeOptionInput, ThemeOptions } from './types'
 
 export const lightShadows = [
@@ -77,41 +76,123 @@ export const ThemeTypography: ThemeOptions['typography'] = {
 
 
 export const lightThemeOptions: ThemeOptionInput = {
-    name: "default-light",
-    mode: "light",
+    name: "light",
     rtl: false,
     shadow: lightShadows,
     globalStyle: {},
     colors: {
-        surface: createPalette("#FFFFFF"),
-        primary: createPalette("#155dfc"),
-        accent: createPalette("#e17100"),
-        success: createPalette("#00a63e"),
-        info: createPalette("#0084d1"),
-        warning: createPalette("#f54a00"),
-        danger: createPalette("#e7000b"),
+        background: {
+            primary: "#FFFFFF",
+            secondary: "#F6F7FB",
+        },
+
+        divider: {
+            primary: "#E6EAF0",
+            secondary: "#D7DCE5",
+        },
+
+        text: {
+            primary: "#111827",
+            secondary: "#4B5563",
+        },
+
+        brand: {
+            primary: "#2563EB",
+            secondary: "#1D4ED8",
+            text: "#F9FAFB",
+        },
+
+        accent: {
+            primary: "#7C3AED",
+            secondary: "#6D28D9",
+            text: "#F9FAFB",
+        },
+
+        success: {
+            primary: "#16A34A",
+            secondary: "#15803D",
+            text: "#F9FAFB",
+        },
+
+        info: {
+            primary: "#2563EB",
+            secondary: "#1D4ED8",
+            text: "#F9FAFB",
+        },
+
+        warning: {
+            primary: "#D97706",
+            secondary: "#B45309",
+            text: "#FFFBEB",
+        },
+
+        danger: {
+            primary: "#DC2626",
+            secondary: "#B91C1C",
+            text: "#FEF2F2",
+        },
     },
     typography: ThemeTypography,
     interfaces: {}
-} as ThemeOptionInput;
+} as ThemeOptionInput
 
 export const darkThemeOptions: ThemeOptionInput = {
-    name: "default-dark",
-    mode: "dark",
+    name: "light",
     rtl: false,
     shadow: darkShadows,
     globalStyle: {},
     colors: {
-        surface: createPalette("#0F1115"),
-        primary: createPalette("#155dfc"),
-        accent: createPalette("#e17100"),
-        success: createPalette("#00a63e"),
-        info: createPalette("#0084d1"),
-        warning: createPalette("#f54a00"),
-        danger: createPalette("#e7000b"),
+        background: {
+            primary: "#0F1115",
+            secondary: "#161A22",
+        },
+
+        divider: {
+            primary: "#232836",
+            secondary: "#2C3344",
+        },
+
+        text: {
+            primary: "#E6EAF2",
+            secondary: "#A7B0C0",
+        },
+
+        brand: {
+            primary: "#1D4ED8",
+            secondary: "#2563EB",
+            text: "#F9FAFB",
+        },
+
+        accent: {
+            primary: "#6D28D9",
+            secondary: "#7C3AED",
+            text: "#F9FAFB",
+        },
+
+        success: {
+            primary: "#15803D",
+            secondary: "#16A34A",
+            text: "#F9FAFB",
+        },
+
+        info: {
+            primary: "#1D4ED8",
+            secondary: "#2563EB",
+            text: "#F9FAFB",
+        },
+
+        warning: {
+            primary: "#B45309",
+            secondary: "#D97706",
+            text: "#FFFBEB",
+        },
+
+        danger: {
+            primary: "#B91C1C",
+            secondary: "#DC2626",
+            text: "#FEF2F2",
+        },
     },
     typography: ThemeTypography,
     interfaces: {}
-} as ThemeOptionInput;
-
-
+} as ThemeOptionInput

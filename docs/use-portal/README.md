@@ -34,7 +34,7 @@ import { usePortal } from 'xanui-core'
 const ModalHost = ({ isOpen, onClose }) => {
   const portal = usePortal(
     <div role="dialog" sx={{ position: 'fixed', inset: 0, backdropFilter: 'blur(4px)' }}>
-      <section sx={{ margin: '10% auto', p: 24, radius: 12, bgcolor: 'background.primary' }}>
+      <section sx={{ margin: '10% auto', p: 24, radius: 12, bgcolor: 'surface.main' }}>
         <header>Title</header>
         <button onClick={onClose}>Close</button>
       </section>

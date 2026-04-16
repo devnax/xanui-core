@@ -5,7 +5,6 @@ import { css, Easing, Tag, TagComponentType, TagProps, ThemeOptionInput, Transit
 import AppRoot from './src/AppRoot';
 import useTransition from './src/hooks/useTransition'
 import useTransitionGroup from './src/hooks/useTransitionGroup'
-import { generateColorRole } from './src/theme/color'
 import { createPalette } from './src/theme/oklch'
 
 
@@ -122,7 +121,15 @@ const TransBox = ({ open, trans }: any) => {
     <Transition
       // duration={400}
       open={open}
-      variant={trans}
+      variant={(el: HTMLElement, rect: DOMRect) => {
+        return {
+          from: { x: 0 },
+          to: { x: 100 },
+          onUpdate: ({ x }) => {
+            el.style.transform = `translateX(${x}%)`
+          }
+        }
+      }}
     // disableInitialTransition
     // onEnter={() => {
     //   console.log("Open");
@@ -153,7 +160,7 @@ const TransBox = ({ open, trans }: any) => {
           component="div"
           radius={1}
           px={2}
-          bgcolor={"background.primary"}
+          bgcolor={"surface.main"}
         >
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </Tag>
@@ -196,7 +203,7 @@ const Trans = () => {
             component="div"
             radius={1}
             px={2}
-            bgcolor={"background.primary"}
+            bgcolor={"surface.main"}
           >
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </Tag>
@@ -208,7 +215,7 @@ const Trans = () => {
 }
 
 const Button = ({ children, color, variant, ...rest }: any) => {
-  const t = useColorTemplate(color || 'brand', variant || 'fill')
+  const t = useColorTemplate(color || 'surface', variant || 'fill')
   return (
     <Tag>
       <Tag
@@ -219,8 +226,8 @@ const Button = ({ children, color, variant, ...rest }: any) => {
         radius={1}
         minWidth={100}
 
-        {...t.primary}
-        hover={{ ...t.secondary }}
+        {...t.main}
+        hover={{ ...t.hover }}
         {...rest}
       >
         {children}
@@ -242,9 +249,9 @@ const Input = (props: any) => {
         px={2}
         radius={1}
         border="1px solid"
-        borderColor="divider.primary"
-        bgcolor="background.primary"
-        color="text.primary"
+        borderColor="surface.divider"
+        bgcolor="surface.main"
+        color="surface.contrast"
         {...rest}
       />
       {icon && <Tag
@@ -297,36 +304,46 @@ const RND = () => {
 
 // 1D4ED8
 
-const color = generateColorRole("#e9e9e9")
-const oklch = createPalette("#15803D")
-// console.log(oklch);
-
-/* 
-{
-    "l": 0.1772746621957225,
-    "c": 0.008873007842359403,
-    "h": 264.3182845998558
+const c = {
+  "main": "oklch(56.80% 0.1003 215.60)",
+  "light": "oklch(65.80% 0.0883 215.60)",
+  "dark": "oklch(46.80% 0.1083 215.60)",
+  "muted": "oklch(31.80% 0.0221 215.60)",
+  "disabled": "oklch(55.80% 0.0150 215.60)",
+  "contrast": "oklch(11.00% 0.0100 215.60)",
+  "divider": "oklch(36.80% 0.1083 215.60 / 0.3)",
+  "ghost": "oklch(56.80% 0.1003 215.60 / 0.22)"
 }
 
-{
-    "l": 0.48819831191672425,
-    "c": 0.21716546013691201,
-    "h": 264.3763040937021
+const ColorBox = (props: any) => {
+  return (
+    <Tag
+      width={150}
+      height={100}
+      flexBox
+      justifyContent={"center"}
+      alignItems={"center"}
+      transition={"all .3s"}
+      {...props}
+    >
+      Button Text
+    </Tag>
+  )
 }
-
-{
-    "l": 0.52729863722093,
-    "c": 0.137102541646482,
-    "h": 150.0692792709957
-}
-*/
 
 const App = () => {
   const [toggled, setToggled] = React.useState(true)
   const ref = useRef<any>(null)
   const [text, setText] = React.useState("Click")
-  const [theme, setTheme] = React.useState<ThemeOptionInput>({ mode: "dark" })
+  const [theme, setTheme] = React.useState<ThemeOptionInput>({
+    mode: "light",
+    colors: {
+      surface: {
+      }
+    }
+  })
   const [count, setCount] = React.useState(0)
+  let color = theme.mode === "dark" ? "#0F1115" : "#FFFFFF"
 
   return (
     <AuthProvider value={{ auth: "naxrul" }}>
@@ -341,19 +358,130 @@ const App = () => {
         <RND />
 
         <Tag
+          flexBox
+          flexRow
+          flexWraped
+          p={1}
+          gap={1}
+        >
+          <Button variant="text" color="surface">Button</Button>
+          <Button variant="text" color="primary">Button</Button>
+          <Button variant="text" color="accent">Button</Button>
+          <Button variant="text" color="success">Button</Button>
+          <Button variant="text" color="info">Button</Button>
+          <Button variant="text" color="warning">Button</Button>
+          <Button variant="text" color="danger">Button</Button>
+
+        </Tag>
+        <Tag
+          flexBox
+          flexRow
+          flexWraped
+          p={1}
+          gap={1}
+        >
+          <Button variant="outline" color="surface">Button</Button>
+          <Button variant="outline" color="primary">Button</Button>
+          <Button variant="outline" color="accent">Button</Button>
+          <Button variant="outline" color="success">Button</Button>
+          <Button variant="outline" color="info">Button</Button>
+          <Button variant="outline" color="warning">Button</Button>
+          <Button variant="outline" color="danger">Button</Button>
+
+        </Tag>
+        <Tag
+          flexBox
+          flexRow
+          flexWraped
+          p={1}
+          gap={1}
+        >
+          <Button variant="fill" color="surface">Button</Button>
+          <Button variant="fill" color="primary" disabled>Button</Button>
+          <Button variant="fill" color="accent">Button</Button>
+          <Button variant="fill" color="success">Button</Button>
+          <Button variant="fill" color="info">Button</Button>
+          <Button variant="fill" color="warning">Button</Button>
+          <Button variant="fill" color="danger">Button</Button>
+
+        </Tag>
+        <Tag
+          flexBox
+          flexRow
+          flexWraped
+          p={1}
+          gap={1}
+        >
+          <Button variant="ghost" color="surface">Button</Button>
+          <Button variant="ghost" color="primary">Button</Button>
+          <Button variant="ghost" color="accent">Button</Button>
+          <Button variant="ghost" color="success">Button</Button>
+          <Button variant="ghost" color="info">Button</Button>
+          <Button variant="ghost" color="warning">Button</Button>
+          <Button variant="ghost" color="danger">Button</Button>
+
+        </Tag>
+        <Tag
+          flexBox
+          flexRow
+          flexWraped
+          p={1}
+          gap={1}
+        >
+          <ColorBox
+            bgcolor={'surface.main'}
+            border="1px solid"
+            borderColor={"surface.divider"}
+            color={"surface.muted"}
+            hover={{
+              bgcolor: "surface.light"
+            }}
+            radius={1}
+          />
+          <ColorBox
+            bgcolor={"surface.dark"}
+            border="1px solid"
+            borderColor={"surface.divider"}
+            color={"surface.contrast"}
+            radius={1}
+          />
+          <ColorBox
+            bgcolor={"surface.light"}
+            border="1px solid"
+            borderColor={"surface.divider"}
+            color={"surface.contrast"}
+            radius={1}
+          />
+          <ColorBox
+            bgcolor={"surface.ghost"}
+            border="1px solid"
+            borderColor={"surface.divider"}
+            color={"surface.contrast"}
+            radius={1}
+          />
+          <ColorBox
+            bgcolor={"surface.disabled"}
+            border="0px solid"
+            borderColor={"surface.divider"}
+            color={"surface.muted"}
+            radius={1}
+          />
+        </Tag>
+
+        <Tag
           p={3}
         >
           <Tag
             component={"button"}
-            bgcolor={oklch.ghost}
-            color={oklch.contrast}
+            bgcolor={"surface.ghost"}
+            color={"surface.contrast"}
             hover={{
-              // bgcolor: oklch.ghost,
+              // bgcolor: "surface.ghost",
               // color: oklch.main
             }}
             transition={"all .3s"}
-            border={"1px solid"}
-            borderColor={oklch.divider}
+            border={"0px solid"}
+            borderColor={"surface.divider"}
             px={4}
             py={1}
             radius={1}
@@ -363,9 +491,9 @@ const App = () => {
             gap={1}
             flexColumn
           >
-            <Tag component={"h2"}>Heading of the year</Tag>
-            <Tag height={1} bgcolor={oklch.divider} />
-            <Tag color={oklch.muted}>
+            <Tag component={"h2"} color={'surface.contrast'}>Heading of the year</Tag>
+            <Tag height={1} bgcolor={"surface.divider"} />
+            <Tag color={"surface.muted"}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores distinctio corrupti voluptate commodi illum doloribus perferendis quos eum dicta voluptatem nostrum enim fugiat, voluptatibus veniam vel assumenda eaque consequatur quasi.
             </Tag>
           </Tag>
@@ -373,15 +501,14 @@ const App = () => {
         <Tag
           theme={{
             colors: {
-              background: {
-                primary: "#770808",
-                secondary: "#ac0b0b",
+              surface: {
+                main: "#770808",
               }
             }
           }}
-          width={100}
+          width={150}
           height={100}
-          bgcolor="background.secondary"
+          bgcolor="surface"
         />
 
         <AnimateGroup />

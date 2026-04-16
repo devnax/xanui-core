@@ -40,7 +40,7 @@ export const App = () => {
 				px={24}
 				py={32}
 				bgcolor="background"
-				color="text.primary"
+				color="surface.contrast"
 				gap={24}
 			>
 				<Tag component="h1" fontSize="h2">
@@ -58,7 +58,7 @@ export const App = () => {
 
 ## Core Concepts
 
-- **Design Tokens** – `createTheme` merges your overrides with defaults and exposes typed references like `brand.primary` or typography presets.
+- **Design Tokens** – `createTheme` merges your overrides with defaults and exposes typed references like `primary.main` or typography presets.
 - **Adaptive Layout** – Wrap your app with `BreakpointProvider` (automatically included by `ThemeProvider` when `isRootProvider` is `true`) to consume breakpoint helpers throughout the tree.
 - **Composable Styles** – `css`, `getValue`, and `getProps` transform alias props, breakpoints, and pseudo selectors into atomic class names. Use them directly for utilities such as scrollbars or keyframes.
 - **Animation Primitives** – `useAnimation` builds scoped keyframes on the fly; `Transition` controls mount/unmount sequences with variants such as `fade`, `slideDown`, or `collapseVertical`.

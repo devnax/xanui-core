@@ -23,19 +23,19 @@ Common quality-of-life aliases are supported out of the box:
 
 - Spacing: `p`, `px`, `py`, `m`, `mx`, `gap`, etc.
 - Layout: `flexBox`, `flexRow`, `size`, `minWidth`, `maxWidth`.
-- Colors/typography: `bgcolor`, `color`, `fontSize`, `fontWeight` (accepting theme references like `brand.primary` or `h3`).
+- Colors/typography: `bgcolor`, `color`, `fontSize`, `fontWeight` (accepting theme references like `primary.main` or `h3`).
 
 Refer to `src/css/types.ts` for the exhaustive list.
 
 ## Helper Functions
 
-| Function                     | Description                                                                                                                                |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `getValue(prop, value, ctx)` | Internal helper that resolves theme references (`brand.primary`, typography aliases, breakpoint tokens) before `oncss` consumes the value. |
-| `getProps(prop, value, ctx)` | Maps high-level props (e.g., `flexRow`, `size`) to multiple CSS declarations.                                                              |
-| `adjustColor(hex, factor)`   | Lightens/darkens a hex color by multiplying each RGB channel with `factor`. Useful for hover states.                                       |
-| `adjustTextContrast(color)`  | Returns either `#111111` or `#FFFFFF` based on perceived luminance to guarantee readable text.                                             |
-| `alpha(color, opacity)`      | Converts a hex color to an 8-digit hex (RGBA) with the given opacity (0–1). Throws if the input is not a hex string.                       |
+| Function                     | Description                                                                                                                               |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `getValue(prop, value, ctx)` | Internal helper that resolves theme references (`primary.main`, typography aliases, breakpoint tokens) before `oncss` consumes the value. |
+| `getProps(prop, value, ctx)` | Maps high-level props (e.g., `flexRow`, `size`) to multiple CSS declarations.                                                             |
+| `adjustColor(hex, factor)`   | Lightens/darkens a hex color by multiplying each RGB channel with `factor`. Useful for hover states.                                      |
+| `adjustTextContrast(color)`  | Returns either `#111111` or `#FFFFFF` based on perceived luminance to guarantee readable text.                                            |
+| `alpha(color, opacity)`      | Converts a hex color to an 8-digit hex (RGBA) with the given opacity (0–1). Throws if the input is not a hex string.                      |
 
 ## Usage Examples
 

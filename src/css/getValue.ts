@@ -1,15 +1,16 @@
 import { CSSProps } from "./types"
 
-const getColor = (color: string, hasText = true) => {
+const getColor = (color: string) => {
     const i = {
-        [`${color}`]: `var(--color-${color}-primary)`,
-        [`${color}.primary`]: `var(--color-${color}-primary)`,
-        [`${color}.secondary`]: `var(--color-${color}-secondary)`,
-        [`${color}.soft.primary`]: `var(--color-${color}-soft-primary)`,
-        [`${color}.soft.secondary`]: `var(--color-${color}-soft-secondary)`,
-    }
-    if (hasText) {
-        i[`${color}.text`] = `var(--color-${color}-text)`
+        [`${color}`]: `var(--color-${color}-main)`,
+        [`${color}.main`]: `var(--color-${color}-main)`,
+        [`${color}.light`]: `var(--color-${color}-light)`,
+        [`${color}.dark`]: `var(--color-${color}-dark)`,
+        [`${color}.contrast`]: `var(--color-${color}-contrast)`,
+        [`${color}.muted`]: `var(--color-${color}-muted)`,
+        [`${color}.disabled`]: `var(--color-${color}-disabled)`,
+        [`${color}.divider`]: `var(--color-${color}-divider)`,
+        [`${color}.ghost`]: `var(--color-${color}-ghost)`,
     }
 
     return i
@@ -17,10 +18,8 @@ const getColor = (color: string, hasText = true) => {
 
 const withImportant = (important: any, value: any) => important ? value + important : value
 const colors: any = {
-    ...getColor("background", false),
-    ...getColor("text", false),
-    ...getColor("divider", false),
-    ...getColor("brand"),
+    ...getColor("surface"),
+    ...getColor("primary"),
     ...getColor("accent"),
     ...getColor("info"),
     ...getColor("success"),
@@ -96,7 +95,6 @@ const getValue = (prop: any, value: string | number, _css: CSSProps): any => {
         important = split[1] ? "!important" : ""
         value = split[0]
     }
-
 
     if (['width', 'maxWidth', 'minWidth', 'max-width', 'min-width'].includes(prop)) {
         return withImportant(important, breakpoints[value] || value)

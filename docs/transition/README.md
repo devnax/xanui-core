@@ -42,7 +42,7 @@ export const Toast = ({ open, children }) => (
       py={12}
       radius={8}
       shadow={3}
-      bgcolor="brand.primary"
+      bgcolor="primary.main"
       color="brand.text"
     >
       {children}

@@ -1,69 +1,69 @@
 "use client";
-export type UseColorTemplateType = "fill" | "outline" | "text" | "soft"
-export type UseColorTemplateColor = "default" | "brand" | "accent" | "success" | "info" | "warning" | "danger"
+
+import { ThemeColorKeys } from "../theme/types";
+
+export type UseColorTemplateType = "fill" | "outline" | "text" | "ghost"
+export type UseColorTemplateColor = ThemeColorKeys
 
 const useColorTemplate = (color: UseColorTemplateColor, type: UseColorTemplateType) => {
-    const is_def = color === "default";
-    if (is_def) {
-        color = "divider" as any
-    }
+    const is_def = color === "surface";
 
     if (type === "outline") {
         return {
-            primary: {
+            main: {
                 bgcolor: `transparent`,
-                color: is_def ? `text.primary` : `${color}.primary`,
+                color: is_def ? `surface.contrast` : `${color}.main`,
                 border: "1px solid",
-                borderColor: is_def ? `divider` : `${color}.primary`,
+                borderColor: is_def ? `surface.muted` : `${color}.main`,
             },
-            secondary: {
+            hover: {
                 bgcolor: `transparent`,
-                color: is_def ? `text.primary` : `${color}.secondary`,
+                color: is_def ? `surface.contrast` : `${color}.light`,
                 border: "1px solid",
-                borderColor: is_def ? `divider.secondary` : `${color}.secondary`,
+                borderColor: is_def ? `surface.muted` : `${color}.light`,
             }
         }
     } else if (type === "fill") {
         return {
-            primary: {
-                bgcolor: color,
-                color: is_def ? `text.primary` : `${color}.text`,
+            main: {
+                bgcolor: is_def ? `surface.light` : `${color}`,
+                color: is_def ? `surface.contrast` : `${color}.contrast`,
                 border: "1px solid",
-                borderColor: is_def ? `divider.secondary` : `${color}.secondary`,
+                borderColor: is_def ? `surface.divider` : `${color}.light`,
             },
-            secondary: {
-                bgcolor: `${color}.secondary`,
-                color: is_def ? `text.primary` : `${color}.text`,
+            hover: {
+                bgcolor: is_def ? `surface.dark` : `${color}.light`,
+                color: is_def ? `surface.contrast` : `${color}.contrast`,
                 border: "1px solid",
-                borderColor: is_def ? `divider.secondary` : `${color}.secondary`,
+                borderColor: is_def ? `surface.divider` : `${color}.light`,
             }
         }
     } else if (type === "text") {
         return {
-            primary: {
+            main: {
                 bgcolor: "transparent",
-                color: is_def ? `text.primary` : `${color}.primary`,
+                color: is_def ? `surface.contrast` : `${color}.main`,
                 border: 0,
                 borderColor: `transparent`,
             },
-            secondary: {
+            hover: {
                 bgcolor: "transparent",
-                color: is_def ? `text.primary` : `${color}.secondary`,
+                color: is_def ? `surface.contrast` : `${color}.light`,
                 border: 0,
                 borderColor: `transparent`,
             }
         }
-    } else if (type === "soft") {
+    } else if (type === "ghost") {
         return {
-            primary: {
-                bgcolor: `${color}.soft.primary`,
-                color: is_def ? `text.primary` : color,
+            main: {
+                bgcolor: `${color}.ghost`,
+                color: is_def ? `surface.contrast` : color,
                 border: 0,
                 borderColor: `transparent`,
             },
-            secondary: {
-                bgcolor: `${color}.soft.secondary`,
-                color: is_def ? `text.primary` : `${color}.secondary`,
+            hover: {
+                bgcolor: `${color}.ghost`,
+                color: is_def ? `surface.contrast` : `${color}.light`,
                 border: 0,
                 borderColor: `transparent`,
             }

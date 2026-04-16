@@ -12,15 +12,18 @@ const getProps = (prop: string, value: string, _css: CSSProps) => {
         if ((value as any) === true) {
             let c: any = {
                 pointerEvents: "none!important",
-                cursor: "default!important",
+                cursor: "not-allowed!important",
                 userSelect: "none!important",
-                opacity: "0.5!important",
-                color: `text.primary!important`,
-                borderColor: `divider.secondary!important`,
+                opacity: "0.6!important",
+                transition: "none",
+                boxShadow: "none",
+                color: `surface.muted!important`,
+                borderColor: `transparent!important`,
             }
 
             if ((_css as any).bgcolor && (_css as any).bgcolor !== 'transparent') {
-                c.bgcolor = `divider.primary!important`
+                c.bgcolor = `surface.dark!important`
+                c.borderColor = `surface.dark!important`
             }
             return c
         }
@@ -52,7 +55,7 @@ const getProps = (prop: string, value: string, _css: CSSProps) => {
     //         [`${prop}Width`]: value + 'px' + (important || ""),
     //     }
     //     // if (!keys.includes(`${prop}Color`)) {
-    //     //     p[`${prop}Color`] = "divider.primary"
+    //     //     p[`${prop}Color`] = "surface.divider"
     //     // }
     //     if (!keys.includes(`${prop}Style`)) {
     //         p[`${prop}Style`] = "solid"

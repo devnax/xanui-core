@@ -49,7 +49,7 @@ export const PrimitiveButton = (rawProps) => {
       radius: 8,
       gap: 8,
       cursor: 'pointer',
-      bgcolor: 'brand.primary',
+      bgcolor: 'primary.main',
       color: 'text.inverse',
     },
     hover: { opacity: 0.92 },

@@ -10,6 +10,7 @@ import useMergeRefs from '../hooks/useMergeRefs';
 import { CSSCacheProvider } from '../css/CSSCacheProvider';
 import { BreakpointKeys } from '../css/types';
 import Cookie from '../cookie';
+import { ThemeColorKeys } from '../theme/types';
 
 export type AppRootProps<T extends TagComponentType = "div"> = ThemeProviderProps<T> & {
    noScrollbarCss?: boolean;
@@ -17,13 +18,13 @@ export type AppRootProps<T extends TagComponentType = "div"> = ThemeProviderProp
    CSSCacheId?: string;
    disableRenderar?: boolean;
    defaultBreakpoint?: BreakpointKeys
-   selectionColor?: "default" | "brand" | "accent" | "success" | "info" | "warning" | "danger";
+   selectionColor?: ThemeColorKeys
 }
 
 const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children, defaultBreakpoint, noScrollbarCss, CSSCacheId, theme, onThemeChange, disableRenderar, selectionColor, document: _document, ...props }: AppRootProps<T>, ref: React.Ref<any>) => {
 
    noScrollbarCss ??= false
-   selectionColor ??= "brand"
+   selectionColor ??= "primary"
    if (typeof window !== "undefined") {
       _document ??= document
    }
@@ -52,11 +53,11 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
    }, [])
 
    let selection: any = {}
-   if (selectionColor && selectionColor !== 'default') {
+   if (selectionColor && selectionColor !== 'surface') {
       selection = {
          "&::selection": {
-            bgcolor: `${selectionColor}.primary`,
-            color: `${selectionColor}.text`
+            bgcolor: `${selectionColor}.main`,
+            color: `${selectionColor}.contrast`
          }
       }
    }

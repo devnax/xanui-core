@@ -37,7 +37,7 @@ export const Card = ({ title, children }) => (
     radius={12}
     shadow={2}
     bgcolor="background.secondary"
-    color="text.primary"
+    color="surface.contrast"
     hover={{ shadow: 4, translateY: -2 }}
   >
     <Tag component="h3" fontSize="h5" fontWeight="h5">{title}</Tag>

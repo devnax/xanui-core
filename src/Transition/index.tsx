@@ -4,7 +4,13 @@ import * as variants from './variants'
 import { Easing } from '../animate';
 import useTransition from '../hooks/useTransition';
 
-export type TransitionVariantTypes = keyof typeof variants
+export type TransitionVariantCallback = <T extends Record<string, number>>(el: HTMLElement, rect: DOMRect) => ({
+    from: T,
+    to: T,
+    onUpdate: (props: T) => void
+})
+
+export type TransitionVariantTypes = keyof typeof variants | TransitionVariantCallback
 export type TransitionProps = {
     children: React.ReactElement;
     open: boolean;
@@ -45,7 +51,7 @@ function TransitionBase({ children, ...options }: TransitionProps) {
 
     easing ??= "default"
 
-    const variantCb = variants[variant]
+    const variantCb = typeof variant === 'function' ? variant : variants[variant]
     const ref = useRef<HTMLElement>(null)
     const init = useRef(false)
     const rect = useRef<DOMRect>(null)

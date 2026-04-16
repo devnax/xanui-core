@@ -12,7 +12,7 @@
 ### Automatic styling
 
 - Enforces `minHeight="100%"`, and pulls body typography defaults (`fontFamily`, `fontSize`, `fontWeight`, `lineHeight`) from the selected theme.
-- Sets `bgcolor` to `theme.colors.background.primary` and `direction` to `rtl` when the theme is flagged RTL.
+- Sets `bgcolor` to `theme.colors.surface.main` and `direction` to `rtl` when the theme is flagged RTL.
 - Generates a deterministic class name (`xui-${theme}-theme-root`) used by CSS variables and helpers like `themeRootClass`.
 - Pushes each selector from `theme.globalStyle` into the global stylesheet under that class and injects the computed CSS variables via `ThemeCssVars`.
 

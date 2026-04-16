@@ -150,8 +150,8 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme: TH
          <ServerStyleTag factory={themeGlobalStyle} />
          <Tag
             minHeight="100%"
-            bgcolor="background.primary"
-            color="text.primary"
+            bgcolor="surface.main"
+            color="surface.contrast"
             fontSize="text"
             fontWeight="text"
             lineHeight="text"
@@ -159,7 +159,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme: TH
             {...props}
             sxr={{
                "& a": {
-                  color: "brand.primary",
+                  color: "primary.main",
                },
             }}
             baseClass={`${theme.name}-theme-root`}

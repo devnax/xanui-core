@@ -8,23 +8,24 @@ export type ThemeTypographyItem = {
     fontWeight: number;
 }
 
-export type ThemeColorKeys = "surface" | "primary" | "info" | "success" | "warning" | "danger"
+export type ThemeColorKeys = "surface" | "primary" | "accent" | "info" | "success" | "warning" | "danger"
 export type ThemeColorOption = {
     main: string;
     light: string;
     dark: string;
     contrast: string;
     muted: string;
+    disabled: string;
     divider: string;
     ghost: string;
 }
 
 
 export type ThemeInterface<T = any> = (defaultProps: T, theme: ThemeOptions) => T;
-
-export interface ThemeOptions {
+export type ThemeMode = "dark" | "light"
+export type ThemeOptions = {
     name: string;
-    mode?: "dark" | "light";
+    mode?: ThemeMode;
     rtl: boolean;
     globalStyle: GlobalCSS,
     breakpoints: { [key in BreakpointKeys]: number };
@@ -35,10 +36,18 @@ export interface ThemeOptions {
     change: (theme: ThemeOptionInput) => void;
 }
 
-export type ThemeOptionInput = Omit<Partial<ThemeOptions>, "breakpoints" | "change">
+export type ThemeOptionInput = {
+    name?: string;
+    mode?: ThemeMode;
+    rtl?: boolean;
+    globalStyle?: GlobalCSS,
+    shadow?: string[];
+    interfaces?: Record<string, ThemeInterface>;
+    colors?: Partial<Record<ThemeColorKeys, string | Partial<ThemeColorOption>>>;
+    typography?: Record<BaseTypographyKeys, ThemeTypographyItem>;
+}
 
 
-// ============ Reference Types
 export type TypographyRefTypes =
     | "h1"
     | "h2"
@@ -53,58 +62,72 @@ export type TypographyRefTypes =
 
 export type ColorsRefTypes =
 
-    | "background"
-    | "background.primary"
-    | "background.secondary"
+    | "surface"
+    | "surface.main"
+    | "surface.light"
+    | "surface.dark"
+    | "surface.contrast"
+    | "surface.muted"
+    | "surface.disabled"
+    | "surface.divider"
+    | "surface.ghost"
 
-    | "text"
-    | "text.primary"
-    | "text.secondary"
-
-    | "divider"
-    | "divider.primary"
-    | "divider.secondary"
-    | "divider.soft.primary"
-    | "divider.soft.secondary"
-
-    | "brand"
-    | "brand.primary"
-    | "brand.secondary"
-    | "brand.text"
-    | "brand.soft.primary"
-    | "brand.soft.secondary"
+    | "primary"
+    | "primary.main"
+    | "primary.light"
+    | "primary.dark"
+    | "primary.contrast"
+    | "primary.muted"
+    | "primary.disabled"
+    | "primary.divider"
+    | "primary.ghost"
 
     | "accent"
-    | "accent.primary"
-    | "accent.secondary"
-    | "accent.text"
-    | "accent.soft.primary"
-    | "accent.soft.secondary"
-
-    | "info"
-    | "info.primary"
-    | "info.secondary"
-    | "info.text"
-    | "info.soft.primary"
-    | "info.soft.secondary"
+    | "accent.main"
+    | "accent.light"
+    | "accent.dark"
+    | "accent.contrast"
+    | "accent.muted"
+    | "accent.disabled"
+    | "accent.divider"
+    | "accent.ghost"
 
     | "success"
-    | "success.primary"
-    | "success.secondary"
-    | "success.text"
-    | "success.soft.primary"
-    | "success.soft.secondary"
+    | "success.main"
+    | "success.light"
+    | "success.dark"
+    | "success.contrast"
+    | "success.muted"
+    | "success.disabled"
+    | "success.divider"
+    | "success.ghost"
+
+    | "info"
+    | "info.main"
+    | "info.light"
+    | "info.dark"
+    | "info.contrast"
+    | "info.muted"
+    | "info.disabled"
+    | "info.divider"
+    | "info.ghost"
 
     | "warning"
-    | "warning.primary"
-    | "warning.secondary"
-    | "warning.text"
-    | "warning.soft.primary"
-    | "warning.soft.secondary"
+    | "warning.main"
+    | "warning.light"
+    | "warning.dark"
+    | "warning.contrast"
+    | "warning.muted"
+    | "warning.disabled"
+    | "warning.divider"
+    | "warning.ghost"
 
     | "danger"
-    | "danger.primary"
-    | "danger.secondary"
-    | "danger.text"
-    | "danger.soft.primary"
-    | "danger.soft.secondary"
+    | "danger.main"
+    | "danger.light"
+    | "danger.dark"
+    | "danger.contrast"
+    | "danger.muted"
+    | "danger.disabled"
+    | "danger.divider"
+    | "danger.ghost"

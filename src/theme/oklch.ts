@@ -11,12 +11,13 @@ type ColorRole = {
    contrast: string;
    muted: string;
    divider: string;
+   disabled: string;
    ghost: string;
 };
 
 /* ---------------- PARSERS ---------------- */
 
-function toOKLCH(input: string): OKLCH {
+export function toOKLCH(input: string): OKLCH {
    if (input.startsWith("oklch")) {
       const values = input.match(/[\d.]+/g);
       if (!values || values.length < 3) {
@@ -100,64 +101,151 @@ function clamp(v: number, min = 0, max = 1) {
    return Math.min(max, Math.max(min, v));
 }
 
-/**
- * Proper contrast color (OKLCH only)
- */
-function getContrast(base: OKLCH): OKLCH {
-   return base.l > 0.6
-      ? { l: 0.15, c: 0.02, h: base.h } // dark text
-      : { l: 0.98, c: 0.01, h: base.h }; // light text
-}
-
-
-/**
- * Ghost is subtle chroma-based (NOT alpha-based)
- */
-function getGhost(base: OKLCH): OKLCH {
-   return {
-      l: base.l,
-      c: Math.min(base.c * 0.08, 0.04),
-      h: base.h,
-   };
-}
-
 
 export function createPalette(input: string): ColorRole {
    const base = toOKLCH(input);
-   const isDark = base.l < 0.6;
-   console.log(base);
+   const isTrueBlack = base.l < 0.2 && base.c < 0.02;
+   const isTrueWhite = base.l > 0.92 && base.c < 0.015;
+   const isDark = base.l < 0.75;
 
+   if (isTrueBlack) {
+      return {
+         main: formatOklch(base),
 
-   const light: OKLCH = {
-      l: clamp(base.l * 1.15),
-      c: base.c * 0.9,
-      h: base.h,
-   };
+         light: formatOklch({
+            l: clamp(base.l + (1 - base.l) * 0.10),
+            c: base.c * 0.85,
+            h: base.h,
+         }),
 
-   const dark: OKLCH = {
-      l: clamp(base.l * 0.85),
-      c: base.c * 1.05,
-      h: base.h,
-   };
+         dark: formatOklch({
+            l: 0.04,
+            c: 0.005,
+            h: base.h,
+         }),
 
-   const muted: OKLCH = {
-      l: isDark ? 0.70 : 0.50,
-      c: base.c * 0.18,
-      h: base.h
-   };
+         muted: formatOklch({
+            l: 0.72,
+            c: 0.01,
+            h: base.h,
+         }),
 
+         disabled: formatOklch({
+            l: 0.30,
+            c: 0,
+            h: base.h,
+         }),
 
-   const contrast = getContrast(base);
-   const divider: OKLCH = isDark ? { l: 0.30, c: 0.005, h: 0 } : { l: 0.90, c: 0.005, h: 0 };
+         contrast: formatOklch({
+            l: 0.98,
+            c: 0.01,
+            h: base.h,
+         }),
+
+         divider: formatOklch({
+            l: 0.30,
+            c: 0.002,
+            h: 0,
+         }),
+
+         ghost: formatOklch({
+            l: clamp(base.l + (1 - base.l) * 0.10),
+            c: base.c * 0.85,
+            h: base.h,
+         }, 0.6),
+
+      };
+   }
+
+   if (isTrueWhite) {
+      return {
+         main: formatOklch(base),
+
+         light: formatOklch({
+            l: 0.95,
+            c: 0,
+            h: base.h
+         }),
+
+         dark: formatOklch({
+            l: 0.86,
+            c: 0,
+            h: base.h,
+         }),
+
+         muted: formatOklch({
+            l: 0.55,
+            c: 0,
+            h: base.h,
+         }),
+
+         disabled: formatOklch({
+            l: 0.75,
+            c: 0,
+            h: base.h,
+         }),
+
+         contrast: formatOklch({
+            l: 0.15,
+            c: 0,
+            h: base.h,
+         }),
+
+         divider: formatOklch({
+            l: 0.85,
+            c: 0,
+            h: 0,
+         }),
+
+         ghost: formatOklch({
+            l: 0.85,
+            c: 0,
+            h: base.h
+         }, 0.2),
+      };
+   }
+
 
    return {
       main: formatOklch(base),
-      light: formatOklch(light),
-      dark: formatOklch(dark),
-      muted: formatOklch(muted),
-      contrast: formatOklch(contrast),
-      divider: formatOklch(divider),
-      ghost: formatOklch(base, 0.08),
+
+      light: formatOklch({
+         l: clamp(base.l + 0.10),
+         c: clamp(base.c * 1.2),
+         h: base.h
+      }),
+
+      dark: formatOklch({
+         l: clamp(base.l - 0.06),
+         c: clamp(base.c * 1),
+         h: base.h
+      }),
+
+      muted: formatOklch({
+         l: clamp(base.l + (isDark ? 0.25 : -0.25)),
+         c: clamp(base.c * 0.22),
+         h: base.h
+      }),
+
+      disabled: formatOklch({
+         l: clamp(base.l + (isDark ? 0.01 : -0.01)),
+         c: clamp(base.c * 0.15),
+         h: base.h
+      }),
+
+      contrast: formatOklch({
+         l: isDark ? 0.97 : 0.11,
+         c: 0.01,
+         h: base.h
+      }),
+
+      divider: formatOklch({
+         l: clamp(base.l - 0.20),
+         c: clamp(base.c * 1.08),
+         h: base.h
+      }, .3),
+
+      ghost: formatOklch(base, isDark ? 0.1 : .22),
    };
 }
 

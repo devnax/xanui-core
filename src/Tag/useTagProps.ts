@@ -80,7 +80,7 @@ const useTagProps = <T extends TagComponentType = "div">(props: TagPropsRoot<T>)
       if (theme) {
          themeStyle = css({
             "@global": {
-               [`.${cls.classname}`]: ThemeCssVars(theme as any)
+               [`.${cls.classname}`]: ThemeCssVars(createTheme(theme) as any)
             }
          },
             {
