@@ -125,7 +125,7 @@ const TransBox = ({ open, trans }: any) => {
         return {
           from: { x: 0 },
           to: { x: 100 },
-          onUpdate: ({ x }) => {
+          onUpdate: ({ x }: any) => {
             el.style.transform = `translateX(${x}%)`
           }
         }
@@ -299,21 +299,6 @@ const RND = () => {
   )
 }
 
-// F6F7FB
-// 0F1115
-
-// 1D4ED8
-
-const c = {
-  "main": "oklch(56.80% 0.1003 215.60)",
-  "light": "oklch(65.80% 0.0883 215.60)",
-  "dark": "oklch(46.80% 0.1083 215.60)",
-  "muted": "oklch(31.80% 0.0221 215.60)",
-  "disabled": "oklch(55.80% 0.0150 215.60)",
-  "contrast": "oklch(11.00% 0.0100 215.60)",
-  "divider": "oklch(36.80% 0.1083 215.60 / 0.3)",
-  "ghost": "oklch(56.80% 0.1003 215.60 / 0.22)"
-}
 
 const ColorBox = (props: any) => {
   return (

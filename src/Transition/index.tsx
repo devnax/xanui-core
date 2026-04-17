@@ -11,6 +11,7 @@ export type TransitionVariantCallback = <T extends Record<string, number>>(el: H
 })
 
 export type TransitionVariantTypes = keyof typeof variants | TransitionVariantCallback
+
 export type TransitionProps = {
     children: React.ReactElement;
     open: boolean;
