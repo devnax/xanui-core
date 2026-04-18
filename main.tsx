@@ -300,7 +300,7 @@ const RND = () => {
 }
 
 
-const ColorBox = (props: any) => {
+const ColorBox = ({ children, ...props }: any) => {
   return (
     <Tag
       width={150}
@@ -311,7 +311,65 @@ const ColorBox = (props: any) => {
       transition={"all .3s"}
       {...props}
     >
-      Button Text
+      {children}
+    </Tag>
+  )
+}
+
+const ColorPallate = ({ color }: any) => {
+  return (
+    <Tag
+      flexBox
+      flexRow
+      flexWraped
+      p={1}
+      gap={1}
+    >
+      <ColorBox
+        bgcolor={`${color}.main`}
+        border="1px solid"
+        borderColor={`${color}.divider`}
+        color={`${color}.contrast`}
+        hover={{
+          bgcolor: `${color}.light`
+        }}
+        radius={1}
+      >Main</ColorBox>
+      <ColorBox
+        bgcolor={`${color}.dark`}
+        color={`${color}.contrast`}
+        radius={1}
+      >Dark</ColorBox>
+      <ColorBox
+        bgcolor={`${color}.light`}
+        color={`${color}.contrast`}
+        radius={1}
+      >Light</ColorBox>
+      <ColorBox
+        bgcolor={`${color}.contrast`}
+        color={`${color}.main`}
+        radius={1}
+      >Contrast</ColorBox>
+      <ColorBox
+        bgcolor={`${color}.muted`}
+        color={`${color}.contrast`}
+        radius={1}
+      >muted</ColorBox>
+      <ColorBox
+        bgcolor={`${color}.ghost`}
+        color={`${color}.contrast`}
+        radius={1}
+      ></ColorBox>
+      <ColorBox
+        bgcolor={`${color}.disabled`}
+        color={`${color}.contrast`}
+        radius={1}
+      >Disabled</ColorBox>
+      <ColorBox
+        bgcolor={`${color}.divider`}
+        color={`${color}.contrast`}
+        radius={1}
+      >Divider</ColorBox>
     </Tag>
   )
 }
@@ -321,11 +379,7 @@ const App = () => {
   const ref = useRef<any>(null)
   const [text, setText] = React.useState("Click")
   const [theme, setTheme] = React.useState<ThemeOptionInput>({
-    mode: "light",
-    colors: {
-      surface: {
-      }
-    }
+    mode: "dark"
   })
   const [count, setCount] = React.useState(0)
   let color = theme.mode === "dark" ? "#0F1115" : "#FFFFFF"
@@ -340,6 +394,13 @@ const App = () => {
         defaultBreakpoint='xl'
         fontFamily="inter,sans-serif"
       >
+        <Tag
+          width={100}
+          height={100}
+          overflow={"auto"}
+        >
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab velit dolorum atque ipsum, deleniti, architecto dolorem voluptatem, provident laboriosam est necessitatibus consequatur explicabo harum distinctio tempora aliquam quaerat placeat. Deleniti!
+        </Tag>
         <RND />
 
         <Tag
@@ -406,83 +467,13 @@ const App = () => {
           <Button variant="ghost" color="danger">Button</Button>
 
         </Tag>
-        <Tag
-          flexBox
-          flexRow
-          flexWraped
-          p={1}
-          gap={1}
-        >
-          <ColorBox
-            bgcolor={'surface.main'}
-            border="1px solid"
-            borderColor={"surface.divider"}
-            color={"surface.muted"}
-            hover={{
-              bgcolor: "surface.light"
-            }}
-            radius={1}
-          />
-          <ColorBox
-            bgcolor={"surface.dark"}
-            border="1px solid"
-            borderColor={"surface.divider"}
-            color={"surface.contrast"}
-            radius={1}
-          />
-          <ColorBox
-            bgcolor={"surface.light"}
-            border="1px solid"
-            borderColor={"surface.divider"}
-            color={"surface.contrast"}
-            radius={1}
-          />
-          <ColorBox
-            bgcolor={"surface.ghost"}
-            border="1px solid"
-            borderColor={"surface.divider"}
-            color={"surface.contrast"}
-            radius={1}
-          />
-          <ColorBox
-            bgcolor={"surface.disabled"}
-            border="0px solid"
-            borderColor={"surface.divider"}
-            color={"surface.muted"}
-            radius={1}
-          />
-        </Tag>
+        <ColorPallate color="surface" />
+        <ColorPallate color="primary" />
+        <ColorPallate color="info" />
+        <ColorPallate color="success" />
+        <ColorPallate color="warning" />
+        <ColorPallate color="danger" />
 
-        <Tag
-          p={3}
-        >
-          <Tag
-            component={"button"}
-            bgcolor={"surface.ghost"}
-            color={"surface.contrast"}
-            hover={{
-              // bgcolor: "surface.ghost",
-              // color: oklch.main
-            }}
-            transition={"all .3s"}
-            border={"0px solid"}
-            borderColor={"surface.divider"}
-            px={4}
-            py={1}
-            radius={1}
-            cursor={"pointer"}
-
-            flexBox
-            gap={1}
-            flexColumn
-          >
-            <Tag component={"h2"} color={'surface.contrast'}>Heading of the year</Tag>
-            <Tag height={1} bgcolor={"surface.divider"} />
-            <Tag color={"surface.muted"}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores distinctio corrupti voluptate commodi illum doloribus perferendis quos eum dicta voluptatem nostrum enim fugiat, voluptatibus veniam vel assumenda eaque consequatur quasi.
-            </Tag>
-          </Tag>
-        </Tag>
         <Tag
           theme={{
             colors: {

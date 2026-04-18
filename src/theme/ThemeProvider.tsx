@@ -16,9 +16,14 @@ export type ThemeProviderProps<T extends TagComponentType = 'div'> = TagProps<T>
    onThemeChange?: (theme: ThemeOptions) => void
    isRoot?: boolean;
    noScrollbarCss?: boolean;
+   scrollbar?: {
+      size?: number;
+      thumbColor?: string;
+      trackColor?: string;
+   }
 }
 
-const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme: THEME, onThemeChange, isRoot, noScrollbarCss, ...props }: ThemeProviderProps<T>) => {
+const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme: THEME, scrollbar, onThemeChange, isRoot, noScrollbarCss, ...props }: ThemeProviderProps<T>) => {
    const doc = useDocument()
    const cacheId = useCSSCacheId()
 
@@ -99,9 +104,9 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme: TH
    const scrollbarCss: any = React.useMemo(() => {
       if (noScrollbarCss) return;
       const cls = (cls: string) => `${themeRootClass(theme.name)} ${cls}`
-      let thumbSize = 6
-      let thumbColor = "var(--color-text-secondary)"
-      let trackColor = "transparent"
+      let thumbSize = scrollbar?.size ?? 7
+      let thumbColor = scrollbar?.thumbColor ?? "var(--color-surface-divider)"
+      let trackColor = scrollbar?.trackColor ?? "var(--color-surface-light)"
 
       return css({
          "@global": {

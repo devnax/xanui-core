@@ -26,16 +26,16 @@ const useColorTemplate = (color: UseColorTemplateColor, type: UseColorTemplateTy
     } else if (type === "fill") {
         return {
             main: {
-                bgcolor: is_def ? `surface.light` : `${color}`,
+                bgcolor: is_def ? `surface.dark` : `${color}`,
                 color: is_def ? `surface.contrast` : `${color}.contrast`,
-                border: "1px solid",
-                borderColor: is_def ? `surface.divider` : `${color}.light`,
+                border: 0,
+                borderColor: 'transparent',
             },
             hover: {
-                bgcolor: is_def ? `surface.dark` : `${color}.light`,
+                bgcolor: is_def ? `surface.main` : `${color}.light`,
                 color: is_def ? `surface.contrast` : `${color}.contrast`,
-                border: "1px solid",
-                borderColor: is_def ? `surface.divider` : `${color}.light`,
+                border: 0,
+                borderColor: 'transparent',
             }
         }
     } else if (type === "text") {

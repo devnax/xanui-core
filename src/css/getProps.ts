@@ -17,13 +17,13 @@ const getProps = (prop: string, value: string, _css: CSSProps) => {
                 opacity: "0.6!important",
                 transition: "none",
                 boxShadow: "none",
-                color: `surface.muted!important`,
-                borderColor: `transparent!important`,
+                // color: `surface.muted!important`,
+                // borderColor: `transparent!important`,
             }
 
             if ((_css as any).bgcolor && (_css as any).bgcolor !== 'transparent') {
-                c.bgcolor = `surface.dark!important`
-                c.borderColor = `surface.dark!important`
+                // c.bgcolor = `surface.dark!important`
+                // c.borderColor = `surface.dark!important`
             }
             return c
         }
