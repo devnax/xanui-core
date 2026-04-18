@@ -14,6 +14,7 @@ export type ThemeColorOption = {
     light: string;
     dark: string;
     contrast: string;
+    secondary: string;
     muted: string;
     disabled: string;
     divider: string;
@@ -67,6 +68,7 @@ export type ColorsRefTypes =
     | "surface.light"
     | "surface.dark"
     | "surface.contrast"
+    | "surface.secondary"
     | "surface.muted"
     | "surface.disabled"
     | "surface.divider"
@@ -77,6 +79,7 @@ export type ColorsRefTypes =
     | "primary.light"
     | "primary.dark"
     | "primary.contrast"
+    | "primary.secondary"
     | "primary.muted"
     | "primary.disabled"
     | "primary.divider"
@@ -87,6 +90,7 @@ export type ColorsRefTypes =
     | "accent.light"
     | "accent.dark"
     | "accent.contrast"
+    | "accent.secondary"
     | "accent.muted"
     | "accent.disabled"
     | "accent.divider"
@@ -97,6 +101,7 @@ export type ColorsRefTypes =
     | "success.light"
     | "success.dark"
     | "success.contrast"
+    | "success.secondary"
     | "success.muted"
     | "success.disabled"
     | "success.divider"
@@ -107,6 +112,7 @@ export type ColorsRefTypes =
     | "info.light"
     | "info.dark"
     | "info.contrast"
+    | "info.secondary"
     | "info.muted"
     | "info.disabled"
     | "info.divider"
@@ -117,6 +123,7 @@ export type ColorsRefTypes =
     | "warning.light"
     | "warning.dark"
     | "warning.contrast"
+    | "warning.secondary"
     | "warning.muted"
     | "warning.disabled"
     | "warning.divider"
@@ -127,6 +134,7 @@ export type ColorsRefTypes =
     | "danger.light"
     | "danger.dark"
     | "danger.contrast"
+    | "danger.secondary"
     | "danger.muted"
     | "danger.disabled"
     | "danger.divider"

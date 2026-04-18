@@ -5,7 +5,7 @@ import { css, Easing, Tag, TagComponentType, TagProps, ThemeOptionInput, Transit
 import AppRoot from './src/AppRoot';
 import useTransition from './src/hooks/useTransition'
 import useTransitionGroup from './src/hooks/useTransitionGroup'
-import { createPalette } from './src/theme/oklch'
+import { createPalette, createColorSystem, createColorRole } from './src/theme/oklch'
 
 
 const AnimateGroup = () => {
@@ -349,20 +349,26 @@ const ColorPallate = ({ color }: any) => {
           radius={1}
         >Light</ColorBox>
         <ColorBox
+          bgcolor={`${color}.ghost`}
+          color={`${color}.contrast`}
+          radius={1}
+        >Ghost</ColorBox>
+        <ColorBox
           bgcolor={`${color}.contrast`}
           color={`${color}.main`}
           radius={1}
         >Contrast</ColorBox>
         <ColorBox
+          bgcolor={`${color}.secondary`}
+          color={`${color}.main`}
+          radius={1}
+        >Secondary</ColorBox>
+        <ColorBox
           bgcolor={`${color}.muted`}
           color={`${color}.contrast`}
           radius={1}
         >muted</ColorBox>
-        <ColorBox
-          bgcolor={`${color}.ghost`}
-          color={`${color}.contrast`}
-          radius={1}
-        >Ghost</ColorBox>
+
         <ColorBox
           bgcolor={`${color}.disabled`}
           color={`${color}.contrast`}
@@ -378,6 +384,41 @@ const ColorPallate = ({ color }: any) => {
   )
 }
 
+
+const ColorSystem = () => {
+  const colors: any = createColorRole("#155dfc")
+  console.log(colors);
+
+  return (
+    <Tag
+      flexBox
+      flexRow
+      gap={1}
+      my={3}
+      mx={3}
+    >
+      {Object.keys(colors).map((name: any) => {
+        const v = colors[name]
+
+        return (
+          <Tag
+            key={name}
+            width={100}
+            height={100}
+            bgcolor={v}
+            radius={1}
+            color={colors.contrast.onBase}
+            alignItems={"center"}
+            justifyContent={"center"}
+            textAlign={"center"}
+          >
+            {name}
+          </Tag>
+        )
+      })}
+    </Tag>
+  )
+}
 const App = () => {
   const [toggled, setToggled] = React.useState(true)
   const ref = useRef<any>(null)
@@ -387,6 +428,7 @@ const App = () => {
   })
   const [count, setCount] = React.useState(0)
   let color = theme.mode === "dark" ? "#0F1115" : "#FFFFFF"
+
 
   return (
     <AuthProvider value={{ auth: "naxrul" }}>
@@ -406,6 +448,7 @@ const App = () => {
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab velit dolorum atque ipsum, deleniti, architecto dolorem voluptatem, provident laboriosam est necessitatibus consequatur explicabo harum distinctio tempora aliquam quaerat placeat. Deleniti!
         </Tag>
         <RND />
+        <ColorSystem />
 
         <Tag
           flexBox

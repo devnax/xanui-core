@@ -9,6 +9,7 @@ type ColorRole = {
    light: string;
    dark: string;
    contrast: string;
+   secondary: string;
    muted: string;
    divider: string;
    disabled: string;
@@ -121,9 +122,14 @@ export function createDarkThemePalette(input: string): ColorRole {
          main: formatOklch(main),
          light: formatOklch({ l: 0.16, c: 0, h: neutralHue }),
          dark: formatOklch({ l: 0.08, c: 0, h: neutralHue }),
+         contrast: formatOklch({ l: 0.96, c: 0, h: neutralHue }),
+         secondary: formatOklch({
+            l: 0.82,
+            c: 0,
+            h: neutralHue
+         }),
          muted: formatOklch({ l: 0.28, c: 0, h: neutralHue }),
          disabled: formatOklch({ l: 0.22, c: 0, h: neutralHue }),
-         contrast: formatOklch({ l: 0.96, c: 0, h: neutralHue }),
          divider: formatOklch({
             l: 0.33,
             c: 0,
@@ -156,6 +162,16 @@ export function createLightThemePalette(input: string): ColorRole {
             c: 0,
             h: neutralHue
          }),
+         contrast: formatOklch({
+            l: 0.12,
+            c: 0,
+            h: neutralHue
+         }),
+         secondary: formatOklch({
+            l: 0.28,
+            c: 0,
+            h: neutralHue
+         }),
          muted: formatOklch({
             l: 0.84,
             c: 0,
@@ -166,11 +182,7 @@ export function createLightThemePalette(input: string): ColorRole {
             c: 0,
             h: neutralHue
          }),
-         contrast: formatOklch({
-            l: 0.12,
-            c: 0,
-            h: neutralHue
-         }),
+
          divider: formatOklch({
             l: 0.9,
             c: 0,
@@ -199,6 +211,12 @@ export function createPalette(input: string, mode: "light" | "dark" = "light"): 
       h: base.h
    };
 
+   const contrast = {
+      l: !isLightColor ? 0.96 : 0.12,
+      c: 0.02,
+      h: base.h
+   }
+
    return {
       main: formatOklch(main),
       light: formatOklch({
@@ -215,35 +233,31 @@ export function createPalette(input: string, mode: "light" | "dark" = "light"): 
          c: clamp(safeC * 0.9),
          h: base.h
       }),
+      ghost: formatOklch(main, isDark ? 0.12 : 0.18),
+
+      contrast: formatOklch(contrast),
+      secondary: formatOklch({
+         l: clamp(contrast.l - 0.20),
+         c: clamp(contrast.c - 0.01),
+         h: contrast.h
+      }),
+
       muted: formatOklch({
-         l: clamp(
-            isDark
-               ? base.l + (isLightColor ? 0.12 : 0.18)
-               : base.l - (isLightColor ? 0.12 : 0.18)
-         ),
-         c: clamp(Math.min(safeC * 0.15, 0.04)),
-         h: base.h
+         l: clamp(contrast.l - 0.40),
+         c: clamp(contrast.c - 0.01),
+         h: contrast.h
       }),
       disabled: formatOklch({
-         l: clamp(
-            isDark
-               ? base.l + (isLightColor ? 0.06 : 0.1)
-               : base.l - (isLightColor ? 0.06 : 0.1)
-         ),
-         c: clamp(Math.min(safeC * 0.08, 0.02)),
-         h: base.h
+         l: clamp(contrast.l - 0.50),
+         c: clamp(contrast.c - 0.1),
+         h: contrast.h
       }),
-      contrast: formatOklch({
-         l: !isLightColor ? 0.96 : 0.12,
-         c: 0.02,
-         h: base.h
-      }),
+
       divider: formatOklch({
-         l: isDark ? 0.28 : 0.88,
-         c: 0.01,
-         h: base.h
+         l: clamp(contrast.l - 0.75),
+         c: clamp(contrast.c - 0.01),
+         h: contrast.h
       }),
-      ghost: formatOklch(main, isDark ? 0.12 : 0.18)
    };
 }
 /* ---------------- PARSERS ---------------- */
@@ -307,5 +321,153 @@ function parseHsl(input: string) {
       r: hue2rgb(p, q, h + 1 / 3),
       g: hue2rgb(p, q, h),
       b: hue2rgb(p, q, h - 1 / 3),
+   };
+}
+
+
+
+
+
+
+
+export type ColorSystem = {
+   scale: {
+      deepest: string;
+      deeper: string;
+      darker: string;
+      dark: string;
+      base: string;
+      light: string;
+      lighter: string;
+      lightest: string;
+      soft: string;
+   };
+
+   contrast: {
+      onBase: string;     // text/icon on main color
+      onLight: string;    // text/icon on light backgrounds
+      onDark: string;     // text/icon on dark backgrounds
+   };
+};
+
+export function createColorSystem(baseColor: string): ColorSystem {
+   const base = toOKLCH(baseColor);
+   const safeC = Math.min(base.c, 0.22);
+
+   const step = (i: number) => ({
+      l: clamp(base.l - 0.32 + i * 0.08),
+      c: safeC,
+      h: base.h
+   });
+
+   const scale = {
+      deepest: step(0),
+      deeper: step(1),
+      darker: step(2),
+      dark: step(3),
+      base: step(4),
+      light: step(5),
+      lighter: step(6),
+      lightest: step(7),
+      soft: step(8)
+   };
+
+   return {
+      scale: {
+         deepest: formatOklch(scale.deepest),
+         deeper: formatOklch(scale.deeper),
+         darker: formatOklch(scale.darker),
+         dark: formatOklch(scale.dark),
+         base: formatOklch(scale.base),
+         light: formatOklch(scale.light),
+         lighter: formatOklch(scale.lighter),
+         lightest: formatOklch(scale.lightest),
+         soft: formatOklch(scale.soft)
+      },
+
+      contrast: {
+         onBase: "#ffffff",
+         onLight: "#000000",
+         onDark: "#ffffff"
+      }
+   };
+}
+
+
+
+
+
+type ColorRoles = {
+   darkest: string;
+   darker: string;
+   dark: string;
+   main: string;
+   light: string;
+   lighter: string;
+   lightest: string;
+
+   contrast: string;
+   secondary: string;
+   muted: string;
+   disabled: string;
+
+   divider: string;
+   ghost: string;
+};
+
+
+
+export function createColorRole(input: string, mode: "light" | "dark" = "light"): ColorRoles {
+   const base = toOKLCH(input);
+   const safeC = Math.min(base.c, 0.22);
+   const isDark = mode === "dark";
+
+   // 7-step tone scale (symmetrical around base)
+   const step = (i: number): OKLCH => {
+      const offset = (i - 3) * 0.09;
+      // index 3 = base (center)
+
+      const l = isDark
+         ? clamp(base.l + offset)
+         : clamp(base.l - offset);
+
+      return {
+         l,
+         c: safeC,
+         h: base.h
+      };
+   };
+
+   const scale = {
+      darkest: step(0),
+      darker: step(1),
+      dark: step(2),
+      main: step(3),
+      light: step(4),
+      lighter: step(5),
+      lightest: step(6)
+   };
+
+   const isDarkBg = base.l < 0.5;
+
+   return {
+      // scale
+      darkest: formatOklch(scale.darkest),
+      darker: formatOklch(scale.darker),
+      dark: formatOklch(scale.dark),
+      main: formatOklch(scale.main),
+      light: formatOklch(scale.light),
+      lighter: formatOklch(scale.lighter),
+      lightest: formatOklch(scale.lightest),
+
+      // text system
+      contrast: isDarkBg ? "#ffffff" : "#000000",
+      secondary: formatOklch(scale.darker),
+      muted: formatOklch(scale.darkest, 0.75),
+      disabled: formatOklch(scale.darkest, 0.45),
+
+      // UI utilities
+      divider: formatOklch(scale.darkest, 0.25),
+      ghost: formatOklch(scale.light, 0.15)
    };
 }
