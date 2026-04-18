@@ -1,4 +1,4 @@
-import { createPalette } from './oklch';
+import { createDarkThemePalette, createLightThemePalette, createPalette } from './oklch';
 import { ThemeOptionInput, ThemeOptions } from './types'
 
 export const lightShadows = [
@@ -83,13 +83,13 @@ export const lightThemeOptions: ThemeOptionInput = {
     shadow: lightShadows,
     globalStyle: {},
     colors: {
-        surface: createPalette("#FFFFFF", "light"),
+        surface: createLightThemePalette("#FFFFFF"),
         primary: createPalette("#155dfc", "light"),
-        accent: createPalette("#e17100", "light"),
-        success: createPalette("#00a63e", "light"),
-        info: createPalette("#0084d1", "light"),
-        warning: createPalette("#f54a00", "light"),
-        danger: createPalette("#e7000b", "light"),
+        accent: createPalette("#ad46ff", "light"),
+        success: createPalette("#00c951", "light"),
+        info: createPalette("#00a6f4", "light"),
+        warning: createPalette("#ff8904", "light"),
+        danger: createPalette("#fb2c36", "light"),
     },
     typography: ThemeTypography,
     interfaces: {}
@@ -102,13 +102,13 @@ export const darkThemeOptions: ThemeOptionInput = {
     shadow: darkShadows,
     globalStyle: {},
     colors: {
-        surface: createPalette("#0F1115", "dark"),
+        surface: createDarkThemePalette("#0F1115"),
         primary: createPalette("#155dfc", "dark"),
-        accent: createPalette("#e17100", "dark"),
-        success: createPalette("#00a63e", "dark"),
-        info: createPalette("#0084d1", "dark"),
-        warning: createPalette("#f54a00", "dark"),
-        danger: createPalette("#e7000b", "dark"),
+        accent: createPalette("#ad46ff", "dark"),
+        success: createPalette("#00c951", "dark"),
+        info: createPalette("#00a6f4", "dark"),
+        warning: createPalette("#ff8904", "dark"),
+        danger: createPalette("#fb2c36", "dark"),
     },
     typography: ThemeTypography,
     interfaces: {}

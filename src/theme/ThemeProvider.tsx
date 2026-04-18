@@ -106,7 +106,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme: TH
       const cls = (cls: string) => `${themeRootClass(theme.name)} ${cls}`
       let thumbSize = scrollbar?.size ?? 7
       let thumbColor = scrollbar?.thumbColor ?? "var(--color-surface-divider)"
-      let trackColor = scrollbar?.trackColor ?? "var(--color-surface-light)"
+      let trackColor = scrollbar?.trackColor ?? "var(--color-surface-ghost)"
 
       return css({
          "@global": {

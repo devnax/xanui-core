@@ -303,8 +303,9 @@ const RND = () => {
 const ColorBox = ({ children, ...props }: any) => {
   return (
     <Tag
-      width={150}
-      height={100}
+      width={100}
+      height={80}
+      radius={1}
       flexBox
       justifyContent={"center"}
       alignItems={"center"}
@@ -318,58 +319,61 @@ const ColorBox = ({ children, ...props }: any) => {
 
 const ColorPallate = ({ color }: any) => {
   return (
-    <Tag
-      flexBox
-      flexRow
-      flexWraped
-      p={1}
-      gap={1}
-    >
-      <ColorBox
-        bgcolor={`${color}.main`}
-        border="1px solid"
-        borderColor={`${color}.divider`}
-        color={`${color}.contrast`}
-        hover={{
-          bgcolor: `${color}.light`
-        }}
-        radius={1}
-      >Main</ColorBox>
-      <ColorBox
-        bgcolor={`${color}.dark`}
-        color={`${color}.contrast`}
-        radius={1}
-      >Dark</ColorBox>
-      <ColorBox
-        bgcolor={`${color}.light`}
-        color={`${color}.contrast`}
-        radius={1}
-      >Light</ColorBox>
-      <ColorBox
-        bgcolor={`${color}.contrast`}
-        color={`${color}.main`}
-        radius={1}
-      >Contrast</ColorBox>
-      <ColorBox
-        bgcolor={`${color}.muted`}
-        color={`${color}.contrast`}
-        radius={1}
-      >muted</ColorBox>
-      <ColorBox
-        bgcolor={`${color}.ghost`}
-        color={`${color}.contrast`}
-        radius={1}
-      ></ColorBox>
-      <ColorBox
-        bgcolor={`${color}.disabled`}
-        color={`${color}.contrast`}
-        radius={1}
-      >Disabled</ColorBox>
-      <ColorBox
-        bgcolor={`${color}.divider`}
-        color={`${color}.contrast`}
-        radius={1}
-      >Divider</ColorBox>
+    <Tag flexBox gap={0} flexColumn>
+      <Tag textTransform={"capitalize"} fontWeight={"bold"}>{color}</Tag>
+      <Tag
+        flexBox
+        flexRow
+        flexWraped
+        p={1}
+        gap={1}
+      >
+        <ColorBox
+          bgcolor={`${color}.main`}
+          border="1px solid"
+          borderColor={`${color}.divider`}
+          color={`${color}.contrast`}
+          hover={{
+            bgcolor: `${color}.light`
+          }}
+          radius={1}
+        >Main</ColorBox>
+        <ColorBox
+          bgcolor={`${color}.dark`}
+          color={`${color}.contrast`}
+          radius={1}
+        >Dark</ColorBox>
+        <ColorBox
+          bgcolor={`${color}.light`}
+          color={`${color}.contrast`}
+          radius={1}
+        >Light</ColorBox>
+        <ColorBox
+          bgcolor={`${color}.contrast`}
+          color={`${color}.main`}
+          radius={1}
+        >Contrast</ColorBox>
+        <ColorBox
+          bgcolor={`${color}.muted`}
+          color={`${color}.contrast`}
+          radius={1}
+        >muted</ColorBox>
+        <ColorBox
+          bgcolor={`${color}.ghost`}
+          color={`${color}.contrast`}
+          radius={1}
+        >Ghost</ColorBox>
+        <ColorBox
+          bgcolor={`${color}.disabled`}
+          color={`${color}.contrast`}
+          radius={1}
+        >Disabled</ColorBox>
+        <ColorBox
+          bgcolor={`${color}.divider`}
+          color={`${color}.contrast`}
+          radius={1}
+        >Divider</ColorBox>
+      </Tag>
     </Tag>
   )
 }
@@ -467,12 +471,19 @@ const App = () => {
           <Button variant="ghost" color="danger">Button</Button>
 
         </Tag>
-        <ColorPallate color="surface" />
-        <ColorPallate color="primary" />
-        <ColorPallate color="info" />
-        <ColorPallate color="success" />
-        <ColorPallate color="warning" />
-        <ColorPallate color="danger" />
+        <Tag
+          flexBox
+          gap={2}
+          flexColumn
+        >
+          <ColorPallate color="surface" />
+          <ColorPallate color="primary" />
+          <ColorPallate color="accent" />
+          <ColorPallate color="info" />
+          <ColorPallate color="success" />
+          <ColorPallate color="warning" />
+          <ColorPallate color="danger" />
+        </Tag>
 
         <Tag
           theme={{
