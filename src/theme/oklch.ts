@@ -228,7 +228,7 @@ export function createPalette(input: string, mode: "light" | "dark" = "light"): 
       contrast: formatOklch(contrast),
 
       muted: formatOklch({
-         l: clamp(contrast.l - (isDark ? 0.1 : 0.02)),
+         l: clamp(contrast.l - (isDark ? 0.05 : 0.025)),
          c: clamp(contrast.c - 0.01),
          h: contrast.h
       }),
