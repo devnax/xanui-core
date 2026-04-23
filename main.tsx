@@ -5,7 +5,6 @@ import { css, Easing, Tag, TagComponentType, TagProps, ThemeOptionInput, Transit
 import AppRoot from './src/AppRoot';
 import useTransition from './src/hooks/useTransition'
 import useTransitionGroup from './src/hooks/useTransitionGroup'
-import { createPalette, createColorSystem, createColorRole } from './src/theme/oklch'
 
 
 const AnimateGroup = () => {
@@ -344,10 +343,20 @@ const ColorPallate = ({ color }: any) => {
           radius={1}
         >Dark</ColorBox>
         <ColorBox
+          bgcolor={`${color}.darker`}
+          color={`${color}.contrast`}
+          radius={1}
+        >Darker</ColorBox>
+        <ColorBox
           bgcolor={`${color}.light`}
           color={`${color}.contrast`}
           radius={1}
         >Light</ColorBox>
+        <ColorBox
+          bgcolor={`${color}.lighter`}
+          color={`${color}.contrast`}
+          radius={1}
+        >Lighter</ColorBox>
         <ColorBox
           bgcolor={`${color}.ghost`}
           color={`${color}.contrast`}
@@ -359,21 +368,10 @@ const ColorPallate = ({ color }: any) => {
           radius={1}
         >Contrast</ColorBox>
         <ColorBox
-          bgcolor={`${color}.secondary`}
-          color={`${color}.main`}
-          radius={1}
-        >Secondary</ColorBox>
-        <ColorBox
           bgcolor={`${color}.muted`}
           color={`${color}.contrast`}
           radius={1}
         >muted</ColorBox>
-
-        <ColorBox
-          bgcolor={`${color}.disabled`}
-          color={`${color}.contrast`}
-          radius={1}
-        >Disabled</ColorBox>
         <ColorBox
           bgcolor={`${color}.divider`}
           color={`${color}.contrast`}
@@ -385,40 +383,6 @@ const ColorPallate = ({ color }: any) => {
 }
 
 
-const ColorSystem = () => {
-  const colors: any = createColorRole("#155dfc")
-  console.log(colors);
-
-  return (
-    <Tag
-      flexBox
-      flexRow
-      gap={1}
-      my={3}
-      mx={3}
-    >
-      {Object.keys(colors).map((name: any) => {
-        const v = colors[name]
-
-        return (
-          <Tag
-            key={name}
-            width={100}
-            height={100}
-            bgcolor={v}
-            radius={1}
-            color={colors.contrast.onBase}
-            alignItems={"center"}
-            justifyContent={"center"}
-            textAlign={"center"}
-          >
-            {name}
-          </Tag>
-        )
-      })}
-    </Tag>
-  )
-}
 const App = () => {
   const [toggled, setToggled] = React.useState(true)
   const ref = useRef<any>(null)
@@ -444,12 +408,33 @@ const App = () => {
           width={100}
           height={100}
           overflow={"auto"}
+          color="surface.muted"
         >
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab velit dolorum atque ipsum, deleniti, architecto dolorem voluptatem, provident laboriosam est necessitatibus consequatur explicabo harum distinctio tempora aliquam quaerat placeat. Deleniti!
         </Tag>
+
+        <Tag
+          p={3}
+          width={300}
+          bgcolor={"info"}
+        >
+          <Tag
+            overflow="auto"
+            color={"info.contrast"}
+            fontSize="h2"
+          >
+
+            This is main title text
+          </Tag>
+          <Tag
+            overflow="auto"
+            color={"info.muted"}
+          >
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos sequi numquam illo expedita accusamus dolores. Recusandae ab dignissimos quod. Minus suscipit quis natus neque voluptate assumenda provident dicta officiis animi!
+          </Tag>
+
+        </Tag>
         <RND />
-        <ColorSystem />
-
         <Tag
           flexBox
           flexRow
@@ -457,29 +442,14 @@ const App = () => {
           p={1}
           gap={1}
         >
-          <Button variant="text" color="surface">Button</Button>
-          <Button variant="text" color="primary">Button</Button>
-          <Button variant="text" color="accent">Button</Button>
-          <Button variant="text" color="success">Button</Button>
-          <Button variant="text" color="info">Button</Button>
-          <Button variant="text" color="warning">Button</Button>
-          <Button variant="text" color="danger">Button</Button>
-
-        </Tag>
-        <Tag
-          flexBox
-          flexRow
-          flexWraped
-          p={1}
-          gap={1}
-        >
-          <Button variant="outline" color="surface">Button</Button>
-          <Button variant="outline" color="primary">Button</Button>
-          <Button variant="outline" color="accent">Button</Button>
-          <Button variant="outline" color="success">Button</Button>
-          <Button variant="outline" color="info">Button</Button>
-          <Button variant="outline" color="warning">Button</Button>
-          <Button variant="outline" color="danger">Button</Button>
+          <Button variant="text" color="surface" disabled>surface</Button>
+          <Button variant="text" color="surface">surface</Button>
+          <Button variant="text" color="primary">primary</Button>
+          <Button variant="text" color="accent">accent</Button>
+          <Button variant="text" color="success">success</Button>
+          <Button variant="text" color="info">info</Button>
+          <Button variant="text" color="warning">warning</Button>
+          <Button variant="text" color="danger">danger</Button>
 
         </Tag>
         <Tag
@@ -489,13 +459,14 @@ const App = () => {
           p={1}
           gap={1}
         >
-          <Button variant="fill" color="surface">Button</Button>
-          <Button variant="fill" color="primary" disabled>Button</Button>
-          <Button variant="fill" color="accent">Button</Button>
-          <Button variant="fill" color="success">Button</Button>
-          <Button variant="fill" color="info">Button</Button>
-          <Button variant="fill" color="warning">Button</Button>
-          <Button variant="fill" color="danger">Button</Button>
+          <Button variant="outline" color="surface" disabled>surface</Button>
+          <Button variant="outline" color="surface">surface</Button>
+          <Button variant="outline" color="primary">primary</Button>
+          <Button variant="outline" color="accent">accent</Button>
+          <Button variant="outline" color="success">success</Button>
+          <Button variant="outline" color="info">info</Button>
+          <Button variant="outline" color="warning">warning</Button>
+          <Button variant="outline" color="danger">danger</Button>
 
         </Tag>
         <Tag
@@ -505,13 +476,31 @@ const App = () => {
           p={1}
           gap={1}
         >
-          <Button variant="ghost" color="surface">Button</Button>
-          <Button variant="ghost" color="primary">Button</Button>
-          <Button variant="ghost" color="accent">Button</Button>
-          <Button variant="ghost" color="success">Button</Button>
-          <Button variant="ghost" color="info">Button</Button>
-          <Button variant="ghost" color="warning">Button</Button>
-          <Button variant="ghost" color="danger">Button</Button>
+          <Button variant="fill" color="surface" disabled>surface</Button>
+          <Button variant="fill" color="surface">surface</Button>
+          <Button variant="fill" color="primary">primary</Button>
+          <Button variant="fill" color="accent">accent</Button>
+          <Button variant="fill" color="success">success</Button>
+          <Button variant="fill" color="info">info</Button>
+          <Button variant="fill" color="warning">warning</Button>
+          <Button variant="fill" color="danger">danger</Button>
+
+        </Tag>
+        <Tag
+          flexBox
+          flexRow
+          flexWraped
+          p={1}
+          gap={1}
+        >
+          <Button variant="ghost" color="surface" disabled>surface</Button>
+          <Button variant="ghost" color="surface">surface</Button>
+          <Button variant="ghost" color="primary">primary</Button>
+          <Button variant="ghost" color="accent">accent</Button>
+          <Button variant="ghost" color="success">success</Button>
+          <Button variant="ghost" color="info">info</Button>
+          <Button variant="ghost" color="warning">warning</Button>
+          <Button variant="ghost" color="danger">danger</Button>
 
         </Tag>
         <Tag
@@ -567,8 +556,6 @@ const App = () => {
 
         <Trans />
 
-
-
         {/* <Trans /> */}
         {/* 
       <Input
@@ -622,14 +609,7 @@ const App = () => {
         >
           University of Anything
         </Tag>
-        <Tag
-          overflow="auto"
-          p={1}
-          width={200}
-          height={200}
-        >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos sequi numquam illo expedita accusamus dolores. Recusandae ab dignissimos quod. Minus suscipit quis natus neque voluptate assumenda provident dicta officiis animi!
-        </Tag>
+        
       </Tag>
       <button onClick={() => setToggled(!toggled)}>Toggle ThemeBox</button>
       {toggled && <ThemeBox />}

@@ -5,11 +5,11 @@ const getColor = (color: string) => {
         [`${color}`]: `var(--color-${color}-main)`,
         [`${color}.main`]: `var(--color-${color}-main)`,
         [`${color}.light`]: `var(--color-${color}-light)`,
+        [`${color}.lighter`]: `var(--color-${color}-lighter)`,
         [`${color}.dark`]: `var(--color-${color}-dark)`,
-        [`${color}.secondary`]: `var(--color-${color}-secondary)`,
+        [`${color}.darker`]: `var(--color-${color}-darker)`,
         [`${color}.contrast`]: `var(--color-${color}-contrast)`,
         [`${color}.muted`]: `var(--color-${color}-muted)`,
-        [`${color}.disabled`]: `var(--color-${color}-disabled)`,
         [`${color}.divider`]: `var(--color-${color}-divider)`,
         [`${color}.ghost`]: `var(--color-${color}-ghost)`,
     }

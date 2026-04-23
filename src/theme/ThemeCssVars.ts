@@ -26,7 +26,7 @@ const ThemeCssVars = (theme: ThemeOptions) => {
     }
 
     const colorNames = ["surface", "primary", "accent", "success", "info", "warning", "danger"]
-    const colorKeys = ["main", "light", "dark", "secondary", "contrast", "muted", "disabled", "divider", "ghost"]
+    const colorKeys = ["main", "light", "lighter", "dark", "darker", "contrast", "muted", "divider", "ghost"]
     for (let cname of colorNames) {
         if (cname in theme.colors) {
             if ("main" in (theme as any).colors[cname]) {
