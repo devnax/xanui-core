@@ -104,7 +104,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme: TH
    const scrollbarCss: any = React.useMemo(() => {
       if (noScrollbarCss) return;
       const cls = (cls: string) => `${themeRootClass(theme.name)} ${cls}`
-      let thumbSize = scrollbar?.size ?? 8
+      let thumbSize = scrollbar?.size ?? 7
       let thumbColor = scrollbar?.thumbColor ?? "var(--color-surface-muted)"
       let trackColor = scrollbar?.trackColor ?? "var(--color-surface-divider)"
 

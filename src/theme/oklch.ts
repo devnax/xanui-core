@@ -135,7 +135,7 @@ export function createDarkThemePalette(input: string): ColorRole {
          contrast: formatOklch({ l: 0.96, c: 0, h: neutralHue }),
          muted: formatOklch({ l: 0.85, c: 0, h: neutralHue }),
          divider: formatOklch({
-            l: 0.43,
+            l: 0.3,
             c: 0,
             h: 0
          }),
@@ -178,7 +178,7 @@ export function createLightThemePalette(input: string): ColorRole {
             h: neutralHue
          }),
          divider: formatOklch({
-            l: 0.75,
+            l: 0.80,
             c: 0,
             h: neutralHue
          }),
@@ -233,8 +233,8 @@ export function createPalette(input: string, mode: "light" | "dark" = "light"): 
       }),
 
       divider: formatOklch({
-         l: clamp(contrast.l - (isDark ? 0.4 : 0.35)),
-         c: clamp(contrast.c + (isDark ? .03 : .08)),
+         l: clamp(contrast.l - (isDark ? 0.65 : 0.2)),
+         c: clamp(contrast.c + (isDark ? 0 : .02)),
          h: contrast.h
       }),
    };
