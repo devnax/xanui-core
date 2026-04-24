@@ -13,7 +13,6 @@ type ColorRole = {
    contrast: string;
    muted: string;
    divider: string;
-   // disabled: string;
    ghost: string;
 };
 
