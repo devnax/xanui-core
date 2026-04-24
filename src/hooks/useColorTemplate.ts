@@ -14,26 +14,26 @@ const useColorTemplate = (color: UseColorTemplateColor, type: UseColorTemplateTy
                 bgcolor: `transparent`,
                 color: is_def ? `surface.contrast` : `${color}.main`,
                 border: "1px solid",
-                borderColor: is_def ? `surface.muted` : `${color}.main`,
+                borderColor: `${color}.divider`,
             },
             hover: {
                 bgcolor: `transparent`,
-                color: is_def ? `surface.contrast` : `${color}.light`,
+                color: is_def ? `surface.contrast` : `${color}.main`,
                 border: "1px solid",
-                borderColor: is_def ? `surface.muted` : `${color}.light`,
+                borderColor: is_def ? "surface.divider" : `${color}.main`,
             }
         }
     } else if (type === "fill") {
         return {
             main: {
-                bgcolor: is_def ? `surface.dark` : `${color}`,
-                color: is_def ? `surface.contrast` : `${color}.contrast`,
+                bgcolor: is_def ? `surface.light` : `${color}`,
+                color: `${color}.contrast`,
                 border: 0,
                 borderColor: 'transparent',
             },
             hover: {
-                bgcolor: is_def ? `surface.main` : `${color}.light`,
-                color: is_def ? `surface.contrast` : `${color}.contrast`,
+                bgcolor: is_def ? `surface.lighter` : `${color}.light`,
+                color: `${color}.contrast`,
                 border: 0,
                 borderColor: 'transparent',
             }
