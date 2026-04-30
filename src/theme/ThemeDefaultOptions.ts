@@ -83,7 +83,7 @@ export const lightThemeOptions: ThemeOptionInput = {
     shadow: lightShadows,
     globalStyle: {},
     colors: {
-        surface: createLightThemePalette("#FFFFFF"),
+        default: createLightThemePalette("#FFFFFF"),
         primary: createPalette("#2563EB", "light"),
         accent: createPalette("#7C3AED", "light"),
         success: createPalette("#16A34A", "light"),
@@ -102,7 +102,7 @@ export const darkThemeOptions: ThemeOptionInput = {
     shadow: darkShadows,
     globalStyle: {},
     colors: {
-        surface: createDarkThemePalette("#0F1115"),
+        default: createDarkThemePalette("#19191b"),
         primary: createPalette("#2563EB", "dark"),
         accent: createPalette("#7C3AED", "dark"),
         success: createPalette("#16A34A", "dark"),

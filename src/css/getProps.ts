@@ -48,7 +48,7 @@ const getProps = (prop: string, value: string, _css: CSSProps) => {
     //         [`${prop}Width`]: value + 'px' + (important || ""),
     //     }
     //     // if (!keys.includes(`${prop}Color`)) {
-    //     //     p[`${prop}Color`] = "surface.divider"
+    //     //     p[`${prop}Color`] = "default.divider"
     //     // }
     //     if (!keys.includes(`${prop}Style`)) {
     //         p[`${prop}Style`] = "solid"

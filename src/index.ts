@@ -16,7 +16,7 @@ import Iframe from './Iframe'
 import animate, { Easing, AnimateOptions } from './animate'
 import useTransition, { UseTransitionProps, UseTransitionStatus } from './hooks/useTransition'
 import useTransitionGroup, { UseTransitionGroupItem, UseTransitionGroupProps } from './hooks/useTransitionGroup'
-
+import useInView, { UseInViewOptions } from './hooks/useInView'
 
 export type * from './Iframe'
 
@@ -36,7 +36,8 @@ export type {
     UseTransitionProps,
     UseTransitionStatus,
     UseTransitionGroupItem,
-    UseTransitionGroupProps
+    UseTransitionGroupProps,
+    UseInViewOptions
 }
 
 export {
@@ -60,5 +61,6 @@ export {
     animate,
     Easing,
     useTransition,
-    useTransitionGroup
+    useTransitionGroup,
+    useInView
 }

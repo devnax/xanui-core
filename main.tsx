@@ -1,7 +1,7 @@
 import React, { createContext, use, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createTheme, ThemeProvider, useTheme } from './src/theme'
-import { css, Easing, Tag, TagComponentType, TagProps, ThemeOptionInput, Transition, useAppRootElement, useBreakpoint, useBreakpointProps, useColorTemplate, useInterface } from './src';
+import { css, Easing, Tag, TagComponentType, TagProps, ThemeOptionInput, Transition, useAppRootElement, useBreakpoint, useBreakpointProps, useColorTemplate, useInterface, useInView } from './src';
 import AppRoot from './src/AppRoot';
 import useTransition from './src/hooks/useTransition'
 import useTransitionGroup from './src/hooks/useTransitionGroup'
@@ -159,7 +159,7 @@ const TransBox = ({ open, trans }: any) => {
           component="div"
           radius={1}
           px={2}
-          bgcolor={"surface.main"}
+          bgcolor={"default.base"}
         >
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </Tag>
@@ -202,7 +202,7 @@ const Trans = () => {
             component="div"
             radius={1}
             px={2}
-            bgcolor={"surface.main"}
+            bgcolor={"default.base"}
           >
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </Tag>
@@ -214,7 +214,7 @@ const Trans = () => {
 }
 
 const Button = ({ children, color, variant, ...rest }: any) => {
-  const t = useColorTemplate(color || 'surface', variant || 'fill')
+  const t = useColorTemplate(color || 'default', variant || 'fill')
   return (
     <Tag>
       <Tag
@@ -248,9 +248,9 @@ const Input = (props: any) => {
         px={2}
         radius={1}
         border="1px solid"
-        borderColor="surface.divider"
-        bgcolor="surface.main"
-        color="surface.contrast"
+        borderColor="default.divider"
+        bgcolor="default.base"
+        color="default.contrast"
         {...rest}
       />
       {icon && <Tag
@@ -292,7 +292,7 @@ const RND = () => {
     <button
       onClick={() => {
         // const rr = Renderar.render(Auth)
-        theme.change(theme.name === "default-dark" ? {} : { mode: "dark" })
+        theme.change(theme.name === "default-elevated" ? {} : { mode: "dark" })
       }}
     >render</button>
   )
@@ -328,35 +328,35 @@ const ColorPallate = ({ color }: any) => {
         gap={1}
       >
         <ColorBox
-          bgcolor={`${color}.main`}
+          bgcolor={`${color}.base`}
           border="1px solid"
           borderColor={`${color}.divider`}
           color={`${color}.contrast`}
           hover={{
-            bgcolor: `${color}.light`
+            bgcolor: `${color}.surface`
           }}
           radius={1}
-        >Main</ColorBox>
+        >base</ColorBox>
         <ColorBox
-          bgcolor={`${color}.dark`}
+          bgcolor={`${color}.elevated`}
           color={`${color}.contrast`}
           radius={1}
-        >Dark</ColorBox>
+        >elevated</ColorBox>
         <ColorBox
-          bgcolor={`${color}.darker`}
+          bgcolor={`${color}.emphasis`}
           color={`${color}.contrast`}
           radius={1}
-        >Darker</ColorBox>
+        >emphasis</ColorBox>
         <ColorBox
-          bgcolor={`${color}.light`}
+          bgcolor={`${color}.surface`}
           color={`${color}.contrast`}
           radius={1}
-        >Light</ColorBox>
+        >surface</ColorBox>
         <ColorBox
-          bgcolor={`${color}.lighter`}
+          bgcolor={`${color}.subtle`}
           color={`${color}.contrast`}
           radius={1}
-        >Lighter</ColorBox>
+        >subtle</ColorBox>
         <ColorBox
           bgcolor={`${color}.ghost`}
           color={`${color}.contrast`}
@@ -364,7 +364,7 @@ const ColorPallate = ({ color }: any) => {
         >Ghost</ColorBox>
         <ColorBox
           bgcolor={`${color}.contrast`}
-          color={`${color}.main`}
+          color={`${color}.base`}
           radius={1}
         >Contrast</ColorBox>
         <ColorBox
@@ -383,9 +383,13 @@ const ColorPallate = ({ color }: any) => {
 }
 
 
+
 const App = () => {
+  const { ref, inView } = useInView({
+    threshold: 1,
+    // margin: -15
+  })
   const [toggled, setToggled] = React.useState(true)
-  const ref = useRef<any>(null)
   const [text, setText] = React.useState("Click")
   const [theme, setTheme] = React.useState<ThemeOptionInput>({
     mode: "dark"
@@ -408,7 +412,7 @@ const App = () => {
           width={100}
           height={100}
           overflow={"auto"}
-          color="surface.muted"
+          color="default.muted"
         >
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab velit dolorum atque ipsum, deleniti, architecto dolorem voluptatem, provident laboriosam est necessitatibus consequatur explicabo harum distinctio tempora aliquam quaerat placeat. Deleniti!
         </Tag>
@@ -416,11 +420,10 @@ const App = () => {
         <Tag
           p={3}
           width={300}
-          bgcolor={"info"}
         >
           <Tag
             overflow="auto"
-            color={"info.contrast"}
+            color={"default.contrast"}
             fontSize="h2"
           >
 
@@ -428,7 +431,7 @@ const App = () => {
           </Tag>
           <Tag
             overflow="auto"
-            color={"info.muted"}
+            color={"default.muted"}
           >
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos sequi numquam illo expedita accusamus dolores. Recusandae ab dignissimos quod. Minus suscipit quis natus neque voluptate assumenda provident dicta officiis animi!
           </Tag>
@@ -442,8 +445,8 @@ const App = () => {
           p={1}
           gap={1}
         >
-          <Button variant="text" color="surface" disabled>surface</Button>
-          <Button variant="text" color="surface">surface</Button>
+          <Button variant="text" color="default" disabled>disabled</Button>
+          <Button variant="text" color="default">default</Button>
           <Button variant="text" color="primary">primary</Button>
           <Button variant="text" color="accent">accent</Button>
           <Button variant="text" color="success">success</Button>
@@ -459,8 +462,8 @@ const App = () => {
           p={1}
           gap={1}
         >
-          <Button variant="outline" color="surface" disabled>surface</Button>
-          <Button variant="outline" color="surface">surface</Button>
+          <Button variant="outline" color="default" disabled>disabled</Button>
+          <Button variant="outline" color="default">default</Button>
           <Button variant="outline" color="primary">primary</Button>
           <Button variant="outline" color="accent">accent</Button>
           <Button variant="outline" color="success">success</Button>
@@ -476,8 +479,8 @@ const App = () => {
           p={1}
           gap={1}
         >
-          <Button variant="fill" color="surface" disabled>surface</Button>
-          <Button variant="fill" color="surface">surface</Button>
+          <Button variant="fill" color="default" disabled>disabled</Button>
+          <Button variant="fill" color="default">default</Button>
           <Button variant="fill" color="primary">primary</Button>
           <Button variant="fill" color="accent">accent</Button>
           <Button variant="fill" color="success">success</Button>
@@ -493,8 +496,8 @@ const App = () => {
           p={1}
           gap={1}
         >
-          <Button variant="ghost" color="surface" disabled>surface</Button>
-          <Button variant="ghost" color="surface">surface</Button>
+          <Button variant="ghost" color="default" disabled>disabled</Button>
+          <Button variant="ghost" color="default">default</Button>
           <Button variant="ghost" color="primary">primary</Button>
           <Button variant="ghost" color="accent">accent</Button>
           <Button variant="ghost" color="success">success</Button>
@@ -508,7 +511,7 @@ const App = () => {
           gap={2}
           flexColumn
         >
-          <ColorPallate color="surface" />
+          <ColorPallate color="default" />
           <ColorPallate color="primary" />
           <ColorPallate color="accent" />
           <ColorPallate color="info" />
@@ -520,14 +523,14 @@ const App = () => {
         <Tag
           theme={{
             colors: {
-              surface: {
+              default: {
                 main: "#770808",
               }
             }
           }}
           width={150}
           height={100}
-          bgcolor="surface"
+          bgcolor="default"
         />
 
         <AnimateGroup />
@@ -553,8 +556,22 @@ const App = () => {
           bgcolor="blue"
         >XL</Tag>
 
+        <Tag
+          ref={ref}
+          height={100}
+          bgcolor="red"
+        >
+          <Transition open={inView} variant={"zoom"}>
+            <Tag
+              width={100}
+              height={100}
+              bgcolor="orange"
+            />
+          </Transition>
+        </Tag>
 
         <Trans />
+
 
         {/* <Trans /> */}
         {/* 

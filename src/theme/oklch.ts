@@ -5,15 +5,15 @@ type OKLCH = {
 };
 
 type ColorRole = {
-   main: string;
-   light: string;
-   lighter: string;
-   dark: string;
-   darker: string;
+   base: string;
+   surface: string;
+   subtle: string;
+   elevated: string;
+   emphasis: string;
    contrast: string;
    muted: string;
-   divider: string;
    ghost: string;
+   divider: string;
 };
 
 /* ---------------- PARSERS ---------------- */
@@ -102,94 +102,103 @@ function clamp(v: number, min = 0, max = 1) {
    return Math.min(max, Math.max(min, v));
 }
 
-export function createDarkThemePalette(input: string): ColorRole {
-   const base = toOKLCH(input);
 
-   const isNeutral = base.c < 0.03;
-   const isDarkEnough = base.l < 0.2;
-   const isNearBlack = isNeutral && isDarkEnough;
-   const safeC = Math.min(base.c, 0.22);
+const SCALE = {
+   subtle: 0.18,
+   surface: 0.09,
+   elevated: -0.10,
+   emphasis: -0.18
+}
 
-   const main: OKLCH = {
-      l: base.l,
-      c: safeC,
+function shift(base: OKLCH, amount: number): OKLCH {
+   return {
+      l: clamp(base.l + amount),
+      c: base.c,
       h: base.h
    };
+}
 
-   if (isNearBlack) {
-      const neutralHue = 0;
-      const safeC = Math.min(base.c, 0.25);
 
-      const step = (i: number): OKLCH => {
-         const offset = (i - 3) * 0.09;
-         const l = clamp(base.l + offset)
-         return { l, c: safeC, h: base.h };
-      };
+export function createDarkThemePalette(input: string): ColorRole {
+   const raw = toOKLCH(input);
 
-      return {
-         main: formatOklch(main),
-         light: formatOklch(step(3.5)),
-         lighter: formatOklch(step(4.5)),
-         dark: formatOklch(step(2.5)),
-         darker: formatOklch(step(1.5)),
-         contrast: formatOklch({ l: 0.96, c: 0, h: neutralHue }),
-         muted: formatOklch({ l: 0.85, c: 0, h: neutralHue }),
-         divider: formatOklch({
-            l: 0.3,
-            c: 0,
-            h: 0
-         }),
-         ghost: formatOklch({ l: 0.96, c: 0, h: neutralHue }, 0.16)
-      };
-   }
+   const base: OKLCH = {
+      l: clamp(raw.l, 0.05, 0.95),
+      c: Math.min(raw.c, 0.22),
+      h: raw.h,
+   };
 
-   return createPalette(input, "dark")
+   const safeC = base.c;
+
+   return {
+      base: formatOklch(base),
+
+      surface: formatOklch(shift(base, SCALE.surface)),
+      subtle: formatOklch(shift(base, SCALE.subtle)),
+
+      elevated: formatOklch(shift(base, SCALE.elevated)),
+      emphasis: formatOklch(shift(base, SCALE.emphasis)),
+
+      contrast: formatOklch({
+         l: 0.94,
+         c: 0.01,
+         h: base.h
+      }),
+
+      muted: formatOklch({
+         l: 0.72,
+         c: 0.015,
+         h: base.h
+      }),
+
+      divider: formatOklch({
+         l: 0.40,
+         c: 0,
+         h: 0
+      }),
+
+      ghost: formatOklch(shift(base, SCALE.emphasis), 0.14)
+   };
 }
 
 export function createLightThemePalette(input: string): ColorRole {
-   const base = toOKLCH(input);
+   const raw = toOKLCH(input);
 
-   const isNearWhite = base.l > 0.98 && base.c < 0.01;
-   const main = formatOklch(base);
-   if (isNearWhite) {
-      const neutralHue = 0;
-      const safeC = Math.min(base.c, 0.25);
+   const base: OKLCH = {
+      l: clamp(raw.l, 0.05, 0.95),
+      c: Math.min(raw.c, 0.22),
+      h: raw.h,
+   };
 
-      const step = (i: number): OKLCH => {
-         const offset = (i - 3) * 0.09;
-         const l = clamp(base.l - offset);
-         return { l, c: safeC, h: base.h };
-      };
+   return {
+      base: formatOklch(base),
 
-      return {
-         main,
-         light: formatOklch(step(4)),
-         lighter: formatOklch(step(3.5)),
-         dark: formatOklch(step(5.5)),
-         darker: formatOklch(step(6.5)),
-         contrast: formatOklch({
-            l: 0.12,
-            c: 0,
-            h: neutralHue
-         }),
-         muted: formatOklch({
-            l: 0.50,
-            c: 0,
-            h: neutralHue
-         }),
-         divider: formatOklch({
-            l: 0.80,
-            c: 0,
-            h: neutralHue
-         }),
-         ghost: formatOklch(
-            { l: 0.12, c: 0, h: neutralHue },
-            0.12
-         )
-      };
-   }
+      surface: formatOklch(shift(base, SCALE.surface)),
+      subtle: formatOklch(shift(base, SCALE.subtle)),
 
-   return createPalette(input, "light");
+      elevated: formatOklch(shift(base, SCALE.elevated)),
+      emphasis: formatOklch(shift(base, SCALE.emphasis)),
+
+      contrast: formatOklch({
+         l: 0.20,
+         c: 0,
+         h: 0
+      }),
+
+      muted: formatOklch({
+         l: 0.50,
+         c: 0.015,
+         h: base.h
+      }),
+
+      divider: formatOklch({
+         l: 0.88,
+         c: 0,
+         h: 0
+      }),
+
+      ghost: formatOklch(shift(base, SCALE.emphasis), 0.2)
+   };
 }
 
 export function createPalette(input: string, mode: "light" | "dark" = "light"): ColorRole {
@@ -198,12 +207,6 @@ export function createPalette(input: string, mode: "light" | "dark" = "light"): 
    const isLightColor = base.l > 0.75;
    const safeC = Math.min(base.c, 0.25);
 
-   const step = (i: number): OKLCH => {
-      const offset = (i - 3) * 0.09;
-      const l = isDark ? clamp(base.l + offset) : clamp(base.l - offset);
-      return { l, c: safeC, h: base.h };
-   };
-
    const main: OKLCH = {
       l: base.l,
       c: safeC,
@@ -211,32 +214,40 @@ export function createPalette(input: string, mode: "light" | "dark" = "light"): 
    };
 
    const contrast = {
-      l: !isLightColor ? 0.96 : 0.12,
+      l: isLightColor ? 0.1 : 0.95,
       c: 0.02,
       h: base.h
    }
 
    return {
-      main: formatOklch(main),
-      light: formatOklch(step(isDark ? 4 : 2)),
-      lighter: formatOklch(step(isDark ? 5 : 1)),
-      dark: formatOklch(step(isDark ? 2 : 4)),
-      darker: formatOklch(step(isDark ? 1 : 5)),
-      ghost: formatOklch(main, isDark ? 0.12 : 0.18),
+
+      base: formatOklch(main),
+
+      surface: formatOklch(shift(base, SCALE.surface)),
+      subtle: formatOklch(shift(base, SCALE.subtle)),
+
+      elevated: formatOklch(shift(base, SCALE.elevated)),
+      emphasis: formatOklch(shift(base, SCALE.emphasis)),
+
+      ghost: formatOklch({
+         l: base.l,
+         c: safeC * 0.45,
+         h: base.h
+      }, isDark ? 0.14 : 0.18),
 
       contrast: formatOklch(contrast),
 
       muted: formatOklch({
-         l: clamp(contrast.l - (isDark ? 0.05 : 0.025)),
-         c: clamp(contrast.c - 0.01),
-         h: contrast.h
+         l: isDark ? 0.72 : 0.50,
+         c: 0.015,
+         h: base.h
       }),
 
       divider: formatOklch({
-         l: clamp(contrast.l - (isDark ? 0.65 : 0.2)),
-         c: clamp(contrast.c + (isDark ? 0 : .02)),
-         h: contrast.h
-      }),
+         l: clamp(main.l + (isDark ? -0.15 : 0.15)),
+         c: Math.min(main.c * 0.15, 0.02),
+         h: main.h
+      })
    };
 }
 /* ---------------- PARSERS ---------------- */

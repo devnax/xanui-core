@@ -36,7 +36,7 @@ export const Pulse = () => {
       px={20}
       py={12}
       radius={8}
-      bgcolor="primary.main"
+      bgcolor="primary.base"
       color="brand.text"
     >
       Notify me

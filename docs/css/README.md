@@ -23,7 +23,7 @@ Common quality-of-life aliases are supported out of the box:
 
 - Spacing: `p`, `px`, `py`, `m`, `mx`, `gap`, etc.
 - Layout: `flexBox`, `flexRow`, `size`, `minWidth`, `maxWidth`.
-- Colors/typography: `bgcolor`, `color`, `fontSize`, `fontWeight` (accepting theme references like `primary.main` or `h3`).
+- Colors/typography: `bgcolor`, `color`, `fontSize`, `fontWeight` (accepting theme references like `primary.base` or `h3`).
 
 Refer to `src/css/types.ts` for the exhaustive list.
 
@@ -31,7 +31,7 @@ Refer to `src/css/types.ts` for the exhaustive list.
 
 | Function                     | Description                                                                                                                               |
 | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `getValue(prop, value, ctx)` | Internal helper that resolves theme references (`primary.main`, typography aliases, breakpoint tokens) before `oncss` consumes the value. |
+| `getValue(prop, value, ctx)` | Internal helper that resolves theme references (`primary.base`, typography aliases, breakpoint tokens) before `oncss` consumes the value. |
 | `getProps(prop, value, ctx)` | Maps high-level props (e.g., `flexRow`, `size`) to multiple CSS declarations.                                                             |
 | `adjustColor(hex, factor)`   | Lightens/darkens a hex color by multiplying each RGB channel with `factor`. Useful for hover states.                                      |
 | `adjustTextContrast(color)`  | Returns either `#111111` or `#FFFFFF` based on perceived luminance to guarantee readable text.                                            |

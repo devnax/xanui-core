@@ -2,12 +2,12 @@ import { CSSProps } from "./types"
 
 const getColor = (color: string) => {
     const i = {
-        [`${color}`]: `var(--color-${color}-main)`,
-        [`${color}.main`]: `var(--color-${color}-main)`,
-        [`${color}.light`]: `var(--color-${color}-light)`,
-        [`${color}.lighter`]: `var(--color-${color}-lighter)`,
-        [`${color}.dark`]: `var(--color-${color}-dark)`,
-        [`${color}.darker`]: `var(--color-${color}-darker)`,
+        [`${color}`]: `var(--color-${color}-base)`,
+        [`${color}.base`]: `var(--color-${color}-base)`,
+        [`${color}.surface`]: `var(--color-${color}-surface)`,
+        [`${color}.subtle`]: `var(--color-${color}-subtle)`,
+        [`${color}.elevated`]: `var(--color-${color}-elevated)`,
+        [`${color}.emphasis`]: `var(--color-${color}-emphasis)`,
         [`${color}.contrast`]: `var(--color-${color}-contrast)`,
         [`${color}.muted`]: `var(--color-${color}-muted)`,
         [`${color}.divider`]: `var(--color-${color}-divider)`,
@@ -19,7 +19,7 @@ const getColor = (color: string) => {
 
 const withImportant = (important: any, value: any) => important ? value + important : value
 const colors: any = {
-    ...getColor("surface"),
+    ...getColor("default"),
     ...getColor("primary"),
     ...getColor("accent"),
     ...getColor("info"),

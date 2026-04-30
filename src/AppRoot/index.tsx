@@ -53,10 +53,10 @@ const AppRoot = React.forwardRef(<T extends TagComponentType = "div">({ children
    }, [])
 
    let selection: any = {}
-   if (selectionColor && selectionColor !== 'surface') {
+   if (selectionColor && selectionColor !== 'default') {
       selection = {
          "&::selection": {
-            bgcolor: `${selectionColor}.light`,
+            bgcolor: `${selectionColor}.surface`,
             color: `${selectionColor}.contrast`
          }
       }

@@ -29,20 +29,20 @@ export const createTheme = (options: ThemeOptionInput): ThemeOptions => {
       if (typeof color === "string") {
          (options as any).colors[key] = createPalette(color)
       } else {
-         const main = color.main
+         const main = color.base
          if (main) {
             const pallate = createPalette(main);
             (options as any).colors[key] = {
                ...pallate,
                ...(options as any).colors[key],
-               main: pallate.main
+               main: pallate.base
             }
          }
       }
    }
 
    let theme: any = mergeObject(defaultOptions, {
-      name: mode === "dark" ? "default-dark" : "default-light",
+      name: mode === "dark" ? "default-elevated" : "default-surface",
       ...options,
       breakpoints: breakpoints
    })
@@ -57,7 +57,7 @@ export type ThemeCntextProps = {
 
 export const ThemeContex = React.createContext<ThemeCntextProps>({
    theme: createTheme({
-      name: "default-light"
+      name: "default-surface"
    }),
    onChange(theme) { },
 })

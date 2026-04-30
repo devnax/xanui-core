@@ -25,12 +25,12 @@ const ThemeCssVars = (theme: ThemeOptions) => {
         }
     }
 
-    const colorNames = ["surface", "primary", "accent", "success", "info", "warning", "danger"]
-    const colorKeys = ["main", "light", "lighter", "dark", "darker", "contrast", "muted", "divider", "ghost"]
+    const colorNames = ["default", "primary", "accent", "success", "info", "warning", "danger"]
+    const colorKeys = ["base", "surface", "subtle", "elevated", "emphasis", "contrast", "muted", "divider", "ghost"]
     for (let cname of colorNames) {
         if (cname in theme.colors) {
-            if ("main" in (theme as any).colors[cname]) {
-                vars[`--color-${cname}`] = (theme as any).colors[cname]["main"]
+            if ("base" in (theme as any).colors[cname]) {
+                vars[`--color-${cname}`] = (theme as any).colors[cname]["base"]
             }
 
             for (let key of colorKeys) {
