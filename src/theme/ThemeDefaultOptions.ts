@@ -1,3 +1,4 @@
+import { DEFAULT_THEME_NAME, THEME_MODE } from './core';
 import { createDarkThemePalette, createLightThemePalette, createPalette } from './oklch';
 import { ThemeOptionInput, ThemeOptions } from './types'
 
@@ -77,38 +78,38 @@ export const ThemeTypography: ThemeOptions['typography'] = {
 
 
 export const lightThemeOptions: ThemeOptionInput = {
-    name: "default-light",
-    mode: "light",
+    name: DEFAULT_THEME_NAME.DARK,
+    mode: THEME_MODE.LIGTH,
     rtl: false,
     shadow: lightShadows,
     globalStyle: {},
     colors: {
         default: createLightThemePalette("#FFFFFF"),
-        primary: createPalette("#2563EB", "light"),
-        accent: createPalette("#7C3AED", "light"),
-        success: createPalette("#16A34A", "light"),
-        info: createPalette("#06B6D4", "light"),
-        warning: createPalette("#ff8904", "light"),
-        danger: createPalette("#EF4444", "light"),
+        primary: createPalette("#2563EB", THEME_MODE.LIGTH),
+        accent: createPalette("#7C3AED", THEME_MODE.LIGTH),
+        success: createPalette("#16A34A", THEME_MODE.LIGTH),
+        info: createPalette("#06B6D4", THEME_MODE.LIGTH),
+        warning: createPalette("#ff8904", THEME_MODE.LIGTH),
+        danger: createPalette("#EF4444", THEME_MODE.LIGTH),
     },
     typography: ThemeTypography,
     interfaces: {}
 } as ThemeOptionInput;
 
 export const darkThemeOptions: ThemeOptionInput = {
-    name: "default-dark",
-    mode: "dark",
+    name: DEFAULT_THEME_NAME.LIGHT,
+    mode: THEME_MODE.DARK,
     rtl: false,
     shadow: darkShadows,
     globalStyle: {},
     colors: {
         default: createDarkThemePalette("#19191b"),
-        primary: createPalette("#2563EB", "dark"),
-        accent: createPalette("#7C3AED", "dark"),
-        success: createPalette("#16A34A", "dark"),
-        info: createPalette("#06B6D4", "dark"),
-        warning: createPalette("#ff8904", "dark"),
-        danger: createPalette("#EF4444", "dark"),
+        primary: createPalette("#2563EB", THEME_MODE.DARK),
+        accent: createPalette("#7C3AED", THEME_MODE.DARK),
+        success: createPalette("#16A34A", THEME_MODE.DARK),
+        info: createPalette("#06B6D4", THEME_MODE.DARK),
+        warning: createPalette("#ff8904", THEME_MODE.DARK),
+        danger: createPalette("#EF4444", THEME_MODE.DARK),
     },
     typography: ThemeTypography,
     interfaces: {}

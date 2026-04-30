@@ -1,6 +1,6 @@
 "use client"
 import ThemeProvider from './ThemeProvider'
-import { useTheme, createTheme } from './core'
+import { useTheme, createTheme, THEME_MODE, DEFAULT_THEME_NAME } from './core'
 import { lightThemeOptions, darkThemeOptions } from './ThemeDefaultOptions'
 export type { ThemeProviderProps } from './ThemeProvider'
 
@@ -11,6 +11,8 @@ export {
     createTheme,
     useTheme,
     lightThemeOptions,
-    darkThemeOptions
+    darkThemeOptions,
+    THEME_MODE,
+    DEFAULT_THEME_NAME
 }
 

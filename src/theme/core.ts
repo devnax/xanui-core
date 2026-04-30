@@ -5,6 +5,16 @@ import { breakpoints } from "../css"
 import { darkThemeOptions, lightThemeOptions } from "./ThemeDefaultOptions"
 import { createPalette } from "./oklch"
 
+export enum DEFAULT_THEME_NAME {
+   DARK = "default-dark",
+   LIGHT = "default-light"
+}
+
+export enum THEME_MODE {
+   DARK = "dark",
+   LIGTH = "light"
+}
+
 export const mergeObject = (a: ObjectType, b: ObjectType) => {
    a = { ...a }
    b = { ...b }
@@ -22,7 +32,7 @@ export const mergeObject = (a: ObjectType, b: ObjectType) => {
 
 export const createTheme = (options: ThemeOptionInput): ThemeOptions => {
    let mode = options?.mode ?? "light"
-   const defaultOptions = mode === 'dark' ? darkThemeOptions : lightThemeOptions
+   const defaultOptions = mode === "dark" ? darkThemeOptions : lightThemeOptions
 
    for (let key in options?.colors) {
       const color = (options as any)?.colors[key] as any
@@ -42,7 +52,7 @@ export const createTheme = (options: ThemeOptionInput): ThemeOptions => {
    }
 
    let theme: any = mergeObject(defaultOptions, {
-      name: mode === "dark" ? "default-elevated" : "default-surface",
+      name: mode === "dark" ? DEFAULT_THEME_NAME.DARK : DEFAULT_THEME_NAME.LIGHT,
       ...options,
       breakpoints: breakpoints
    })
@@ -57,7 +67,7 @@ export type ThemeCntextProps = {
 
 export const ThemeContex = React.createContext<ThemeCntextProps>({
    theme: createTheme({
-      name: "default-surface"
+      name: "default-light"
    }),
    onChange(theme) { },
 })
