@@ -5,14 +5,14 @@ import { breakpoints } from "../css"
 import { darkThemeOptions, lightThemeOptions } from "./ThemeDefaultOptions"
 import { createPalette } from "./oklch"
 
-export enum DEFAULT_THEME_NAME {
-   DARK = "default-dark",
-   LIGHT = "default-light"
+export const DEFAULT_THEME_NAME = {
+   DARK: "default-dark",
+   LIGHT: "default-light"
 }
 
-export enum THEME_MODE {
-   DARK = "dark",
-   LIGTH = "light"
+export const THEME_MODE = {
+   DARK: "dark",
+   LIGTH: "light"
 }
 
 export const mergeObject = (a: ObjectType, b: ObjectType) => {
