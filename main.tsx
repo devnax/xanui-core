@@ -283,16 +283,13 @@ const Auth = () => {
 
 const RND = () => {
   const bp = useBreakpoint()
-  const isup = bp.isUp("md")
-  // const theme = useThemeSwitcher()
   const theme = useTheme()
-  // console.log(bp.value, "is up md:", isup);
 
   return (
     <button
       onClick={() => {
         // const rr = Renderar.render(Auth)
-        theme.change(theme.name === "default-elevated" ? {} : { mode: "dark" })
+        theme.change(theme.name === "dark" ? { mode: "light" } : { mode: "dark" })
       }}
     >render</button>
   )
@@ -524,7 +521,7 @@ const App = () => {
           theme={{
             colors: {
               default: {
-                main: "#770808",
+                base: "#770808",
               }
             }
           }}
