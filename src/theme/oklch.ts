@@ -128,8 +128,6 @@ export function createDarkThemePalette(input: string): ColorRole {
       h: raw.h,
    };
 
-   const safeC = base.c;
-
    return {
       base: formatOklch(base),
 

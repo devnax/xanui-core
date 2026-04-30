@@ -1,5 +1,4 @@
 import { BreakpointKeys, GlobalCSS } from "../css/types";
-import { THEME_MODE } from "./core";
 export type ObjectType = { [key: string]: any }
 
 export type BaseTypographyKeys = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "big" | "text" | "button" | "small"
@@ -11,21 +10,23 @@ export type ThemeTypographyItem = {
 
 export type ThemeColorKeys = "default" | "primary" | "accent" | "info" | "success" | "warning" | "danger"
 export type ThemeColorOption = {
-    main: string;
-    light: string;
-    dark: string;
+    base: string;
+    surface: string;
+    subtle: string;
+    elevated: string;
+    emphasis: string;
     contrast: string;
     muted: string;
-    disabled: string;
-    divider: string;
     ghost: string;
+    divider: string;
 }
 
+export type ThemeMode = "dark" | "light"
 
 export type ThemeInterface<T = any> = (defaultProps: T, theme: ThemeOptions) => T;
 export type ThemeOptions = {
     name: string;
-    mode?: THEME_MODE;
+    mode?: ThemeMode;
     rtl: boolean;
     globalStyle: GlobalCSS,
     breakpoints: { [key in BreakpointKeys]: number };
@@ -38,7 +39,7 @@ export type ThemeOptions = {
 
 export type ThemeOptionInput = {
     name?: string;
-    mode?: THEME_MODE;
+    mode?: ThemeMode;
     rtl?: boolean;
     globalStyle?: GlobalCSS,
     shadow?: string[];

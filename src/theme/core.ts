@@ -5,15 +5,6 @@ import { breakpoints } from "../css"
 import { darkThemeOptions, lightThemeOptions } from "./ThemeDefaultOptions"
 import { createPalette } from "./oklch"
 
-export const DEFAULT_THEME_NAME = {
-   DARK: "default-dark",
-   LIGHT: "default-light"
-}
-
-export const THEME_MODE = {
-   DARK: "dark",
-   LIGTH: "light"
-}
 
 export const mergeObject = (a: ObjectType, b: ObjectType) => {
    a = { ...a }
@@ -52,7 +43,8 @@ export const createTheme = (options: ThemeOptionInput): ThemeOptions => {
    }
 
    let theme: any = mergeObject(defaultOptions, {
-      name: mode === "dark" ? DEFAULT_THEME_NAME.DARK : DEFAULT_THEME_NAME.LIGHT,
+      name: mode === "dark" ? "dark" : "light",
+      mode: mode === "dark" ? "dark" : "light",
       ...options,
       breakpoints: breakpoints
    })
@@ -65,15 +57,15 @@ export type ThemeCntextProps = {
    onChange: (theme: ThemeOptions) => void
 }
 
-export const ThemeContex = React.createContext<ThemeCntextProps>({
+export const ThemeContext = React.createContext<ThemeCntextProps>({
    theme: createTheme({
-      name: "default-light"
+      mode: "light"
    }),
    onChange(theme) { },
 })
 
 export const useTheme = () => {
-   const ctx = useContext(ThemeContex)
+   const ctx = useContext(ThemeContext)
    const theme = ctx.theme
    theme.change = (theme: ThemeOptionInput) => ctx.onChange(createTheme(theme))
    return theme

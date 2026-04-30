@@ -3,7 +3,7 @@ import * as React from "react"
 import { ThemeOptionInput, ThemeOptions } from "./types"
 import Tag from "../Tag"
 import { TagComponentType, TagProps } from "../Tag/types"
-import { createTheme, ThemeContex } from "./core"
+import { createTheme, ThemeContext } from "./core"
 import ThemeCssVars from "./ThemeCssVars"
 import { css } from "../css"
 import ServerStyleTag from "../Tag/ServerStyleTag"
@@ -134,7 +134,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme: TH
    }, [noScrollbarCss, theme])
 
    return (
-      <ThemeContex.Provider
+      <ThemeContext.Provider
          value={{
             theme,
             onChange: (t) => {
@@ -170,7 +170,7 @@ const ThemeProvider = <T extends TagComponentType = 'div'>({ children, theme: TH
          >
             {children}
          </Tag>
-      </ThemeContex.Provider>
+      </ThemeContext.Provider>
    )
 }
 
