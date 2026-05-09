@@ -110,10 +110,25 @@ const SCALE = {
    emphasis: -0.18
 }
 
+// function shift(base: OKLCH, amount: number): OKLCH {
+//    return {
+//       l: clamp(base.l + amount),
+//       c: base.c,
+//       h: base.h
+//    };
+// }
+
 function shift(base: OKLCH, amount: number): OKLCH {
+   const nextL = clamp(base.l + amount);
+
+   // reduce chroma when moving away from middle lightness
+   const distanceFromMid = Math.abs(nextL - 0.6);
+
+   const chromaScale = 1 - distanceFromMid * 0.7;
+
    return {
-      l: clamp(base.l + amount),
-      c: base.c,
+      l: nextL,
+      c: clamp(base.c * chromaScale, 0, 0.18),
       h: base.h
    };
 }
@@ -124,7 +139,7 @@ export function createDarkThemePalette(input: string): ColorRole {
 
    const base: OKLCH = {
       l: clamp(raw.l, 0.05, 0.95),
-      c: Math.min(raw.c, 0.22),
+      c: Math.min(raw.c, 0.16),
       h: raw.h,
    };
 
@@ -164,7 +179,7 @@ export function createLightThemePalette(input: string): ColorRole {
 
    const base: OKLCH = {
       l: clamp(raw.l, 0.05, 0.95),
-      c: Math.min(raw.c, 0.22),
+      c: Math.min(raw.c, 0.16),
       h: raw.h,
    };
 
@@ -203,7 +218,7 @@ export function createPalette(input: string, mode: "light" | "dark" = "light"): 
    const base = toOKLCH(input);
    const isDark = mode === "dark";
    const isLightColor = base.l > 0.75;
-   const safeC = Math.min(base.c, 0.25);
+   const safeC = Math.min(base.c, 0.16);
 
    const main: OKLCH = {
       l: base.l,
