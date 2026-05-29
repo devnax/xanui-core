@@ -22,7 +22,7 @@ import {
   useBreakpoint,
   useBreakpointProps,
   useColorTemplate,
-  useInterface,
+  useThemeComponent,
   useInView,
 } from "./src";
 import AppRoot from "./src/AppRoot";
@@ -256,7 +256,7 @@ const Button = ({ children, color, variant, ...rest }: any) => {
 };
 
 const Input = (props: any) => {
-  const [_p]: any = useInterface("Input", props, {});
+  const [_p]: any = useThemeComponent("Input", props, {});
   const { icon, ...rest } = useBreakpointProps(_p);
 
   return (
@@ -297,7 +297,7 @@ const RND = () => {
     <button
       onClick={() => {
         // const rr = Renderar.render(Auth)
-        theme.change(
+        theme.update(
           theme.name === "dark" ? { mode: "light" } : { mode: "dark" },
         );
       }}
@@ -421,7 +421,7 @@ const App = () => {
     <AuthProvider value={{ auth: "naxrul" }}>
       <AppRoot
         theme={theme}
-        onThemeChange={(t) => {
+        onThemeUpdate={(t) => {
           setTheme(t);
         }}
         defaultBreakpoint="xl"

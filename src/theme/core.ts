@@ -1,73 +1,75 @@
-"use client"
-import React, { useContext } from "react"
-import { ObjectType, ThemeOptions, ThemeOptionInput } from "./types"
-import { breakpoints } from "../css"
-import { darkThemeOptions, lightThemeOptions } from "./ThemeDefaultOptions"
-import { createPalette } from "./oklch"
-
+"use client";
+import React, { useContext } from "react";
+import { ObjectType, ThemeOptions, ThemeOptionInput } from "./types";
+import { breakpoints } from "../css";
+import { darkThemeOptions, lightThemeOptions } from "./ThemeDefaultOptions";
+import { createPalette } from "./oklch";
 
 export const mergeObject = (a: ObjectType, b: ObjectType) => {
-   a = { ...a }
-   b = { ...b }
-   for (const key in b) {
-      const v = (b as any)[key]
-      if (typeof v === 'object' && !Array.isArray(v) && !React.isValidElement(v)) {
-         a[key] = mergeObject(a[key], b[key])
-      } else {
-         a[key] = v
-      }
-   }
-   return a
-}
-
+  a = { ...a };
+  b = { ...b };
+  for (const key in b) {
+    const v = (b as any)[key];
+    if (
+      typeof v === "object" &&
+      !Array.isArray(v) &&
+      !React.isValidElement(v)
+    ) {
+      a[key] = mergeObject(a[key], b[key]);
+    } else {
+      a[key] = v;
+    }
+  }
+  return a;
+};
 
 export const createTheme = (options: ThemeOptionInput): ThemeOptions => {
-   let mode = options?.mode ?? "light"
-   const defaultOptions = mode === "dark" ? darkThemeOptions : lightThemeOptions
+  let mode = options?.mode ?? "light";
+  const defaultOptions = mode === "dark" ? darkThemeOptions : lightThemeOptions;
 
-   for (let key in options?.colors) {
-      const color = (options as any)?.colors[key] as any
-      if (typeof color === "string") {
-         (options as any).colors[key] = createPalette(color)
-      } else {
-         const main = color.base
-         if (main) {
-            const pallate = createPalette(main);
-            (options as any).colors[key] = {
-               ...pallate,
-               ...(options as any).colors[key],
-               main: pallate.base
-            }
-         }
+  for (let key in options?.colors) {
+    const color = (options as any)?.colors[key] as any;
+    if (typeof color === "string") {
+      (options as any).colors[key] = createPalette(color);
+    } else {
+      const main = color.base;
+      if (main) {
+        const pallate = createPalette(main);
+        (options as any).colors[key] = {
+          ...pallate,
+          ...(options as any).colors[key],
+          main: pallate.base,
+        };
       }
-   }
+    }
+  }
 
-   let theme: any = mergeObject(defaultOptions, {
-      name: mode === "dark" ? "dark" : "light",
-      mode: mode === "dark" ? "dark" : "light",
-      ...options,
-      breakpoints: breakpoints
-   })
+  let theme: any = mergeObject(defaultOptions, {
+    name: mode === "dark" ? "dark" : "light",
+    mode: mode === "dark" ? "dark" : "light",
+    ...options,
+    breakpoints: breakpoints,
+  });
 
-   return theme as ThemeOptions
-}
+  return theme as ThemeOptions;
+};
 
 export type ThemeCntextProps = {
-   theme: ThemeOptions,
-   onChange: (theme: ThemeOptions) => void
-}
+  theme: ThemeOptions;
+  onThemeUpdate: (theme: ThemeOptions) => void;
+};
 
 export const ThemeContext = React.createContext<ThemeCntextProps>({
-   theme: createTheme({
-      mode: "light"
-   }),
-   onChange(theme) { },
-})
+  theme: createTheme({
+    mode: "light",
+  }),
+  onThemeUpdate(theme) {},
+});
 
 export const useTheme = () => {
-   const ctx = useContext(ThemeContext)
-   const theme = ctx.theme
-   theme.change = (theme: ThemeOptionInput) => ctx.onChange(createTheme(theme))
-   return theme
-}
-
+  const ctx = useContext(ThemeContext);
+  const theme = ctx.theme;
+  theme.update = (theme: ThemeOptionInput) =>
+    ctx.onThemeUpdate(createTheme(theme));
+  return theme;
+};

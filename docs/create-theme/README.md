@@ -18,7 +18,7 @@ Registers a theme inside the global `ThemeFactory`. Throws if the name is alread
 | ------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | `colors`      | `ThemeColorInput`                         | Override semantic color slots (`background`, `text`, `brand`, etc.). Partial objects are merged deeply. |
 | `typography`  | `ThemeTypographyInputType`                | Configure `fontFamily` and the `h1`–`small` scale (size, weight, line height).                          |
-| `interfaces`  | `Record<string, (props, theme) => props>` | Register interface factories consumed by `useInterface`.                                                |
+| `interfaces`  | `Record<string, (props, theme) => props>` | Register interface factories consumed by `useThemeComponent`.                                                |
 | `rtl`         | `boolean`                                 | Enables right-to-left layout defaults.                                                                  |
 | `globalStyle` | `GlobalCSS`                               | Map of selectors to CSS objects that will be scoped under the theme's root class.                       |
 

@@ -1,141 +1,77 @@
 import { BreakpointKeys, GlobalCSS } from "../css/types";
-export type ObjectType = { [key: string]: any }
-
-export type BaseTypographyKeys = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "big" | "text" | "button" | "small"
-export type ThemeTypographyItem = {
-    fontSize: number;
-    lineHeight: number;
-    fontWeight: number;
-}
-
-export type ThemeColorKeys = "default" | "primary" | "accent" | "info" | "success" | "warning" | "danger"
-export type ThemeColorOption = {
-    base: string;
-    surface: string;
-    subtle: string;
-    elevated: string;
-    emphasis: string;
-    contrast: string;
-    muted: string;
-    ghost: string;
-    divider: string;
-}
-
-export type ThemeMode = "dark" | "light"
-
-export type ThemeInterface<T = any> = (defaultProps: T, theme: ThemeOptions) => T;
-export type ThemeOptions = {
-    name: string;
-    mode?: ThemeMode;
-    rtl: boolean;
-    globalStyle: GlobalCSS,
-    breakpoints: { [key in BreakpointKeys]: number };
-    shadow: string[];
-    interfaces: Record<string, ThemeInterface>;
-    colors: Record<ThemeColorKeys, ThemeColorOption>;
-    typography: Record<BaseTypographyKeys, ThemeTypographyItem>;
-    change: (theme: ThemeOptionInput) => void;
-}
-
-export type ThemeOptionInput = {
-    name?: string;
-    mode?: ThemeMode;
-    rtl?: boolean;
-    globalStyle?: GlobalCSS,
-    shadow?: string[];
-    interfaces?: Record<string, ThemeInterface>;
-    colors?: Partial<Record<ThemeColorKeys, string | Partial<ThemeColorOption>>>;
-    typography?: Record<BaseTypographyKeys, ThemeTypographyItem>;
-}
-
+export type ObjectType = { [key: string]: any };
 
 export type TypographyRefTypes =
-    | "h1"
-    | "h2"
-    | "h3"
-    | "h4"
-    | "h5"
-    | "h6"
-    | "big"
-    | "text"
-    | "button"
-    | "small"
+  | "xs"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "h5"
+  | "h6";
 
-export type ColorsRefTypes =
+export type ThemeTypographyItem = {
+  fontSize: number;
+  lineHeight: number;
+  fontWeight: number;
+};
 
-    | "default"
-    | "default.base"
-    | "default.surface"
-    | "default.subtle"
-    | "default.elevated"
-    | "default.emphasis"
-    | "default.contrast"
-    | "default.muted"
-    | "default.divider"
-    | "default.ghost"
+export type ThemeColorKeys =
+  | "default"
+  | "primary"
+  | "accent"
+  | "info"
+  | "success"
+  | "warning"
+  | "danger";
+export type ThemeColorOption = {
+  base: string;
+  surface: string;
+  subtle: string;
+  elevated: string;
+  emphasis: string;
+  contrast: string;
+  muted: string;
+  ghost: string;
+  divider: string;
+};
 
-    | "primary"
-    | "primary.base"
-    | "primary.surface"
-    | "primary.subtle"
-    | "primary.elevated"
-    | "primary.emphasis"
-    | "primary.contrast"
-    | "primary.muted"
-    | "primary.divider"
-    | "primary.ghost"
+export type ThemeMode = "dark" | "light";
 
-    | "accent"
-    | "accent.base"
-    | "accent.surface"
-    | "accent.subtle"
-    | "accent.elevated"
-    | "accent.emphasis"
-    | "accent.contrast"
-    | "accent.muted"
-    | "accent.divider"
-    | "accent.ghost"
+export type ThemeComponents<T = any> = (
+  defaultProps: T,
+  theme: ThemeOptions,
+) => T;
 
-    | "success"
-    | "success.base"
-    | "success.surface"
-    | "success.subtle"
-    | "success.elevated"
-    | "success.emphasis"
-    | "success.contrast"
-    | "success.muted"
-    | "success.divider"
-    | "success.ghost"
+export type ThemeOptions = {
+  name: string;
+  mode?: ThemeMode;
+  rtl: boolean;
+  globalStyle: GlobalCSS;
+  breakpoints: { [key in BreakpointKeys]: number };
+  shadow: string[];
+  components: Record<string, ThemeComponents>;
+  colors: Record<ThemeColorKeys, ThemeColorOption>;
+  typography: Record<TypographyRefTypes, ThemeTypographyItem>;
+  update: (theme: ThemeOptionInput) => void;
+};
 
-    | "info"
-    | "info.base"
-    | "info.surface"
-    | "info.subtle"
-    | "info.elevated"
-    | "info.emphasis"
-    | "info.contrast"
-    | "info.muted"
-    | "info.divider"
-    | "info.ghost"
+export type ThemeOptionInput = {
+  name?: string;
+  mode?: ThemeMode;
+  rtl?: boolean;
+  globalStyle?: GlobalCSS;
+  shadow?: string[];
+  components?: Record<string, ThemeComponents>;
+  colors?: Partial<Record<ThemeColorKeys, string | Partial<ThemeColorOption>>>;
+  typography?: Record<TypographyRefTypes, ThemeTypographyItem>;
+};
 
-    | "warning"
-    | "warning.base"
-    | "warning.surface"
-    | "warning.subtle"
-    | "warning.elevated"
-    | "warning.emphasis"
-    | "warning.contrast"
-    | "warning.muted"
-    | "warning.divider"
-    | "warning.ghost"
+type ColorRole = ThemeColorKeys;
+type ColorVariant = keyof ThemeColorOption;
 
-    | "danger"
-    | "danger.base"
-    | "danger.surface"
-    | "danger.subtle"
-    | "danger.elevated"
-    | "danger.emphasis"
-    | "danger.contrast"
-    | "danger.muted"
-    | "danger.divider"
-    | "danger.ghost"
+export type ColorsRefTypes = ColorRole | `${ColorRole}.${ColorVariant}`;

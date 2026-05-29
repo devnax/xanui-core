@@ -1,6 +1,6 @@
-# useInterface
+# useThemeComponent
 
-`useInterface(name, userProps, defaultProps)` allows component authors to expose overridable interfaces from the active theme. Themes can register interface factories that receive current defaults and return merged props.
+`useThemeComponent(name, userProps, defaultProps)` allows component authors to expose overridable interfaces from the active theme. Themes can register interface factories that receive current defaults and return merged props.
 
 ## Parameters
 
@@ -17,11 +17,11 @@
 ## Usage Example
 
 ```tsx
-import { useInterface, Tag } from 'xanui-core'
+import { useThemeComponent, Tag } from 'xanui-core'
 
 // inside a component
 export const Alert = (props) => {
-  const [merged, theme] = useInterface('alert', props, {
+  const [merged, theme] = useThemeComponent('alert', props, {
     px: 16,
     py: 12,
     radius: 12,
