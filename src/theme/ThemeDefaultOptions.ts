@@ -116,7 +116,7 @@ export const lightThemeOptions: ThemeOptionInput = {
     danger: createPalette("#EF4444", "light"),
   },
   typography: ThemeTypography,
-  interfaces: {},
+  components: {},
 } as ThemeOptionInput;
 
 export const darkThemeOptions: ThemeOptionInput = {
@@ -135,5 +135,5 @@ export const darkThemeOptions: ThemeOptionInput = {
     danger: createPalette("#EF4444", "dark"),
   },
   typography: ThemeTypography,
-  interfaces: {},
+  components: {},
 } as ThemeOptionInput;
