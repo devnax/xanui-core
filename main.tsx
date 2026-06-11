@@ -127,7 +127,7 @@ const Animate = () => {
   );
 };
 
-const TransBox = ({ open, trans }: any) => {
+const TransBox = ({ open, trans, content }: any) => {
   const [closed, setClosed] = useState(false);
   useEffect(() => {
     // if (closed && open) {
@@ -139,15 +139,7 @@ const TransBox = ({ open, trans }: any) => {
     <Transition
       // duration={400}
       open={open}
-      variant={(el: HTMLElement, rect: DOMRect) => {
-        return {
-          from: { x: 0 },
-          to: { x: 100 },
-          onUpdate: ({ x }: any) => {
-            el.style.transform = `translateX(${x}%)`;
-          },
-        };
-      }}
+      variant={trans}
       // disableInitialTransition
       // onEnter={() => {
       //   console.log("Open");
@@ -168,19 +160,17 @@ const TransBox = ({ open, trans }: any) => {
         bgcolor="green"
         radius={1}
         overflow={"hidden"}
-        height={{
-          xs: 500,
-          md: 300,
-        }}
       >
-        <Tag
-          className="test"
-          component="div"
-          radius={1}
-          px={2}
-          bgcolor={"default.base"}
-        >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        <Tag px={2} bgcolor={"default.base"}>
+          {Array(content)
+            .fill(1)
+            .map((v, i) => {
+              return (
+                <Tag radius={1} px={2} key={i}>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </Tag>
+              );
+            })}
         </Tag>
       </Tag>
     </Transition>
@@ -191,6 +181,7 @@ const Trans = () => {
   const theme = useTheme();
   const [v, setV] = React.useState<any>("collapseVertical");
   const [open, setOpen] = React.useState(false);
+  const [content, setContent] = React.useState(1);
 
   useEffect(() => {
     setInterval(() => {
@@ -199,10 +190,13 @@ const Trans = () => {
   }, []);
   return (
     <Tag height={400}>
-      <TransBox open={open} trans={v} />
+      <TransBox open={open} trans={v} content={content} />
       <button onClick={() => setOpen(!open)}>Click</button>
       <button onClick={() => setV(v === "fadeDown" ? "zoom" : "fadeDown")}>
         change
+      </button>
+      <button onClick={() => setContent(content == 1 ? 5 : 1)}>
+        add content
       </button>
       {/* <Transition open={open} variant={"fade"} > */}
       {/* <Tag
