@@ -28,6 +28,7 @@ import {
 import AppRoot from "./src/AppRoot";
 import useTransition from "./src/hooks/useTransition";
 import useTransitionGroup from "./src/hooks/useTransitionGroup";
+import { colorScale } from "hueforge";
 
 const AnimateGroup = () => {
   const items = [
@@ -410,6 +411,34 @@ const App = () => {
   });
   const [count, setCount] = React.useState(0);
   let color = theme.mode === "dark" ? "#0F1115" : "#FFFFFF";
+  const colors = colorScale("oklch(64.5% 0.246 16.439)", "oklch");
+  const palettes = [
+    colorScale("oklch(63.7% 0.237 25.331)", "oklch"),
+    colorScale("oklch(70.5% 0.213 47.604)", "oklch"),
+    colorScale("oklch(76.9% 0.188 70.08)", "oklch"),
+    colorScale("oklch(79.5% 0.184 86.047)", "oklch"),
+    colorScale("oklch(76.8% 0.233 130.85)", "oklch"),
+    colorScale("oklch(72.3% 0.219 149.579)", "oklch"),
+    colorScale("oklch(69.6% 0.17 162.48)", "oklch"),
+    colorScale("oklch(70.4% 0.14 182.503)", "oklch"),
+    colorScale("oklch(71.5% 0.143 215.221)", "oklch"),
+    colorScale("oklch(68.5% 0.169 237.323)", "oklch"),
+    colorScale("oklch(62.3% 0.214 259.815)", "oklch"),
+    colorScale("oklch(58.5% 0.233 277.117)", "oklch"),
+    colorScale("oklch(60.6% 0.25 292.717)", "oklch"),
+    colorScale("oklch(62.7% 0.265 303.9)", "oklch"),
+    colorScale("oklch(66.7% 0.295 322.15)", "oklch"),
+    colorScale("oklch(64.5% 0.246 16.439)", "oklch"),
+    colorScale("oklch(55.4% 0.046 257.417)", "oklch"),
+    colorScale("oklch(55.1% 0.027 264.364)", "oklch"),
+    colorScale("oklch(55.2% 0.016 285.938)", "oklch"),
+    colorScale("oklch(55.6% 0 0)", "oklch"),
+    colorScale("oklch(55.3% 0.013 58.071)", "oklch"),
+    colorScale("oklch(54.7% 0.021 43.1)", "oklch"),
+    colorScale("oklch(54.2% 0.034 322.5)", "oklch"),
+    colorScale("oklch(56% 0.021 213.5)", "oklch"),
+    colorScale("oklch(58% 0.031 107.3)", "oklch"),
+  ];
 
   return (
     <AuthProvider value={{ auth: "naxrul" }}>
@@ -420,7 +449,30 @@ const App = () => {
         }}
         defaultBreakpoint="xl"
         fontFamily="inter,sans-serif"
+        bgcolor={palettes[17][950]}
       >
+        <Tag width={800} flexBox flexColumn gap={1} p={3}>
+          {palettes.map((p, idx) => {
+            return (
+              <Tag key={idx} flexBox flexRow gap={2}>
+                {Object.values(p).map((c) => {
+                  return (
+                    <Tag
+                      key={c}
+                      radius={1}
+                      width={50}
+                      height={50}
+                      bgcolor={c}
+                      border={"1px solid "}
+                      borderColor={p[800]}
+                    />
+                  );
+                })}
+              </Tag>
+            );
+          })}
+        </Tag>
+
         <Tag width={100} height={100} overflow={"auto"} color="default.muted">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab velit
           dolorum atque ipsum, deleniti, architecto dolorem voluptatem,

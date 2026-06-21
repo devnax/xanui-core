@@ -22,22 +22,28 @@ export type ThemeTypographyItem = {
 
 export type ThemeColorKeys =
   | "default"
-  | "primary"
+  | "brand"
   | "accent"
   | "info"
   | "success"
   | "warning"
   | "danger";
+
 export type ThemeColorOption = {
-  base: string;
-  surface: string;
-  subtle: string;
-  elevated: string;
-  emphasis: string;
-  contrast: string;
-  muted: string;
-  ghost: string;
-  divider: string;
+  main: string; // 500
+  light: string; // 400
+  dark: string; // 700
+  contrast: string; // 50
+  muted: string; // 400
+  divider: string; // 200
+
+  shades: {
+    1: string; // 50
+    2: string; // 100
+    3: string; // 300
+    4: string; // 600
+    5: string; // 800
+  };
 };
 
 export type ThemeMode = "dark" | "light";
