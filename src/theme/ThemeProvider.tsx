@@ -37,9 +37,6 @@ const ThemeProvider = <T extends TagComponentType = "div">({
   const cacheId = useCSSCacheId();
 
   const theme = React.useMemo(() => createTheme(THEME), [THEME]);
-  const isDark = theme.mode === "dark";
-  console.log(isDark);
-
   const themeGlobalStyle: any = React.useMemo(() => {
     const root_cls = `.xui-${theme.name}-theme-root`;
     let gkeys = Object.keys(theme.globalStyle || {});
@@ -122,8 +119,8 @@ const ThemeProvider = <T extends TagComponentType = "div">({
     if (noScrollbarCss) return;
     const cls = (cls: string) => `${themeRootClass(theme.name)} ${cls}`;
     let thumbSize = scrollbar?.size ?? 7;
-    let thumbColor = scrollbar?.thumbColor ?? "var(--color-default-2)";
-    let trackColor = scrollbar?.trackColor ?? "var(--color-default-ghost)";
+    let thumbColor = scrollbar?.thumbColor ?? "var(--color-default-6)";
+    let trackColor = scrollbar?.trackColor ?? "var(--color-default-9)";
 
     return css(
       {
@@ -171,7 +168,7 @@ const ThemeProvider = <T extends TagComponentType = "div">({
       <ServerStyleTag factory={themeGlobalStyle} />
       <Tag
         minHeight="100%"
-        bgcolor={"default.5"}
+        bgcolor={"default.10"}
         color="default.contrast"
         fontSize="md"
         fontWeight="md"

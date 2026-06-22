@@ -237,7 +237,6 @@ const Button = ({ children, color, variant, ...rest }: any) => {
         component={"button"}
         cursor={"pointer"}
         p={0.5}
-        shadow={"sm"}
         px={"lg"}
         radius={"xs"}
         minWidth={100}
@@ -307,7 +306,13 @@ const App = () => {
           <Tag overflow="auto" color={"default.contrast"} fontSize="h2">
             This is main title text
           </Tag>
-          <Tag overflow="auto" color={"default.muted"}>
+          <Tag
+            overflow="auto"
+            color={"default.muted"}
+            p="md"
+            border="1px solid"
+            borderColor="default.divider"
+          >
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos sequi
             numquam illo expedita accusamus dolores. Recusandae ab dignissimos
             quod. Minus suscipit quis natus neque voluptate assumenda provident

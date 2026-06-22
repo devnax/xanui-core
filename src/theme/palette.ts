@@ -30,24 +30,42 @@ import { ColorScale } from "./types";
 //   { label: "Rose", value: "#f43f5e" },
 // ];
 
-export const createPalette = (color: string | ColorScale) => {
+export const createColorPalette = (color: string, reverse = false) => {
+  const scale = colorScale(color);
+  if (reverse) {
+    return Object.fromEntries(
+      Object.entries(scale).map(([key, value], index, arr) => [
+        arr[arr.length - 1 - index][0],
+        value,
+      ]),
+    );
+  }
+  return scale;
+};
+
+export const createThemeColorPalette = (color: string | ColorScale) => {
   const scale = typeof color === "string" ? colorScale(color) : color;
   const r = parseColor(scale[500]);
 
   return {
-    primary: scale[500],
-    secondary: scale[600],
     contrast: scale[50],
     muted: scale[300],
-    divider: scale[200],
+    primary: scale[500],
+    secondary: scale[600],
+    divider: scale[700],
     ghost: `rgba(${r[0]}, ${r[1]}, ${r[2]}, .09)`,
     shades: {
-      1: scale[100],
-      2: scale[400],
-      3: scale[700],
-      4: scale[800],
-      5: scale[900],
-      6: scale[950],
+      1: scale[50],
+      2: scale[100],
+      3: scale[200],
+      4: scale[300],
+      5: scale[400],
+      6: scale[500],
+      7: scale[600],
+      8: scale[700],
+      9: scale[800],
+      10: scale[900],
+      11: scale[950],
     },
   };
 };

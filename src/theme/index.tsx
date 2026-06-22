@@ -1,16 +1,17 @@
-"use client"
-import ThemeProvider from './ThemeProvider'
-import { useTheme, createTheme } from './core'
-import { lightThemeOptions, darkThemeOptions } from './ThemeDefaultOptions'
-export type { ThemeProviderProps } from './ThemeProvider'
+"use client";
+import ThemeProvider from "./ThemeProvider";
+import { useTheme, createTheme } from "./core";
+import { lightThemeOptions, darkThemeOptions } from "./ThemeDefaultOptions";
+import { createColorPalette } from "./palette";
+export type { ThemeProviderProps } from "./ThemeProvider";
 
-export const themeRootClass = (theme: string) => `.xui-${theme}-theme-root`
+export const themeRootClass = (theme: string) => `.xui-${theme}-theme-root`;
 
 export {
-    ThemeProvider,
-    createTheme,
-    useTheme,
-    lightThemeOptions,
-    darkThemeOptions,
-}
-
+  ThemeProvider,
+  createTheme,
+  useTheme,
+  lightThemeOptions,
+  darkThemeOptions,
+  createColorPalette,
+};

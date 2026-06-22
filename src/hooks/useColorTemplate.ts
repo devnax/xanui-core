@@ -17,7 +17,7 @@ const useColorTemplate = (
         bgcolor: `transparent`,
         color: is_def ? `default.contrast` : `${color}.primary`,
         border: "1px solid",
-        borderColor: `${color}.primary`,
+        borderColor: is_def ? "default.divider" : `${color}.primary`,
       },
       hover: {
         bgcolor: `transparent`,

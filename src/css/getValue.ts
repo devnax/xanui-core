@@ -15,6 +15,11 @@ const getColor = (color: string) => {
     [`${color}.4`]: `var(--color-${color}-4)`,
     [`${color}.5`]: `var(--color-${color}-5)`,
     [`${color}.6`]: `var(--color-${color}-6)`,
+    [`${color}.7`]: `var(--color-${color}-7)`,
+    [`${color}.8`]: `var(--color-${color}-8)`,
+    [`${color}.9`]: `var(--color-${color}-9)`,
+    [`${color}.10`]: `var(--color-${color}-10)`,
+    [`${color}.11`]: `var(--color-${color}-11)`,
   };
 };
 

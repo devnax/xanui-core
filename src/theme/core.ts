@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { ObjectType, ThemeOptions, ThemeOptionInput } from "./types";
 import { breakpoints } from "../css";
 import { darkThemeOptions, lightThemeOptions } from "./ThemeDefaultOptions";
-import { createPalette } from "./palette";
+import { createThemeColorPalette } from "./palette";
 
 export const mergeObject = (a: ObjectType, b: ObjectType) => {
   a = { ...a };
@@ -37,7 +37,7 @@ export const createTheme = (options: ThemeOptionInput): ThemeOptions => {
   let palettes: any = {};
   for (let key in theme?.colors) {
     const color = (theme as any)?.colors[key];
-    palettes[key] = createPalette(color);
+    palettes[key] = createThemeColorPalette(color);
   }
   theme.colors = palettes;
   return theme as ThemeOptions;

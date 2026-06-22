@@ -43,20 +43,25 @@ export type ThemeColorKeys =
   | "danger";
 
 export type ThemeColorOption = {
-  primary: string; // 500
-  secondary: string; // 700
-  contrast: string; // 50
-  muted: string; // 400
-  divider: string; // 200
-  ghost: string; // 200
+  primary: string;
+  secondary: string;
+  contrast: string;
+  muted: string;
+  divider: string;
+  ghost: string;
 
   shades: {
-    1: string; // 100
-    2: string; // 300
-    3: string; // 600
-    4: string; // 800
-    5: string; // 900
-    6: string; // 950
+    1: string;
+    2: string;
+    3: string;
+    4: string;
+    5: string;
+    6: string;
+    7: string;
+    8: string;
+    9: string;
+    10: string;
+    11: string;
   };
 };
 
@@ -106,4 +111,9 @@ export type ColorsRefTypes =
   | `${ColorRole}.3`
   | `${ColorRole}.4`
   | `${ColorRole}.5`
-  | `${ColorRole}.6`;
+  | `${ColorRole}.6`
+  | `${ColorRole}.7`
+  | `${ColorRole}.8`
+  | `${ColorRole}.9`
+  | `${ColorRole}.10`
+  | `${ColorRole}.11`;

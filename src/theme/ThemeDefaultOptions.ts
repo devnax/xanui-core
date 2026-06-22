@@ -1,25 +1,6 @@
-import { colorScale } from "hueforge";
 import { ThemeOptionInput, ThemeOptions } from "./types";
+import { createColorPalette } from "./palette";
 
-const elevations = {
-  xs: { contact: { y: 1, blur: 2 }, ambient: { y: 1, blur: 3 } },
-  sm: { contact: { y: 1, blur: 3 }, ambient: { y: 4, blur: 8 } },
-  md: { contact: { y: 2, blur: 4 }, ambient: { y: 8, blur: 16 } },
-  lg: { contact: { y: 4, blur: 8 }, ambient: { y: 16, blur: 32 } },
-  xl: { contact: { y: 6, blur: 12 }, ambient: { y: 24, blur: 48 } },
-};
-
-const make = (rgb: any, contactAlpha: any, ambientAlpha: any) =>
-  Object.fromEntries(
-    Object.entries(elevations).map(([key, e]) => {
-      const c = `0px ${e.contact.y}px ${e.contact.blur}px 0px rgba(${rgb},${contactAlpha})`;
-      const a = `0px ${e.ambient.y}px ${e.ambient.blur}px 0px rgba(${rgb},${ambientAlpha})`;
-      return [key, `${c}, ${a}`];
-    }),
-  );
-
-export const lightShadows = make("15,23,42", 0.14, 0.1) as any;
-export const darkShadows = make("0,0,0", 0.22, 0.18) as any;
 const shadows = {
   light: {
     xs: "rgba(0, 0, 0, 0.08) 0px 1px 3px 0px, rgba(0, 0, 0, 0.04) 0px 1px 2px 0px",
@@ -89,20 +70,15 @@ export const ThemeTypography: ThemeOptions["typography"] = {
   h6: { fontSize: 20, lineHeight: 1.55, fontWeight: 500 },
 };
 
-const darkThemeDefaultColor = colorScale("#6b7280");
-const lightThemeDefaultColor = Object.fromEntries(
-  Object.entries(darkThemeDefaultColor).map(([key, value], index, arr) => [
-    arr[arr.length - 1 - index][0],
-    value,
-  ]),
-);
+const darkThemeDefaultColor = createColorPalette("#64748b");
+const lightThemeDefaultColor = createColorPalette("#64748b", true);
 
-const brand = colorScale("#3b82f6");
-const accent = colorScale("#f59e0b");
-const info = colorScale("#0ea5e9");
-const success = colorScale("#22c55e");
-const warning = colorScale("#eab308");
-const danger = colorScale("#ef4444");
+const brand = createColorPalette("#3b82f6");
+const accent = createColorPalette("#f59e0b");
+const info = createColorPalette("#0ea5e9");
+const success = createColorPalette("#22c55e");
+const warning = createColorPalette("#eab308");
+const danger = createColorPalette("#ef4444");
 
 export const lightThemeOptions: ThemeOptionInput = {
   mode: "light",

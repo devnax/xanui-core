@@ -61,7 +61,7 @@ const ThemeCssVars = (theme: ThemeOptions) => {
       }
 
       // shades
-      for (let i = 1; i <= 6; i++) {
+      for (let i = 1; i <= 11; i++) {
         vars[`--color-${cname}-${i}`] = (theme as any).colors[cname].shades[i];
       }
     }
