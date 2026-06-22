@@ -37,6 +37,8 @@ const ThemeProvider = <T extends TagComponentType = "div">({
   const cacheId = useCSSCacheId();
 
   const theme = React.useMemo(() => createTheme(THEME), [THEME]);
+  const isDark = theme.mode === "dark";
+  console.log(isDark);
 
   const themeGlobalStyle: any = React.useMemo(() => {
     const root_cls = `.xui-${theme.name}-theme-root`;
@@ -169,7 +171,7 @@ const ThemeProvider = <T extends TagComponentType = "div">({
       <ServerStyleTag factory={themeGlobalStyle} />
       <Tag
         minHeight="100%"
-        bgcolor={"default.4"}
+        bgcolor={"default.5"}
         color="default.contrast"
         fontSize="md"
         fontWeight="md"

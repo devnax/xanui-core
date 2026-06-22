@@ -89,9 +89,9 @@ export const ThemeTypography: ThemeOptions["typography"] = {
   h6: { fontSize: 20, lineHeight: 1.55, fontWeight: 500 },
 };
 
-const lightThemeDefaultColor = colorScale("#6b7280");
-const darkThemeDefaultColor = Object.fromEntries(
-  Object.entries(lightThemeDefaultColor).map(([key, value], index, arr) => [
+const darkThemeDefaultColor = colorScale("#6b7280");
+const lightThemeDefaultColor = Object.fromEntries(
+  Object.entries(darkThemeDefaultColor).map(([key, value], index, arr) => [
     arr[arr.length - 1 - index][0],
     value,
   ]),
