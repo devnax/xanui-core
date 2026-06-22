@@ -1,7 +1,29 @@
 {
   "name": "@xanui/core",
-  "version": "1.3.23",
-  "description": "Xanui Core Library",
+  "version": "1.3.24",
+  "description": "A styling-engine-agnostic UI primitive layer for React — write CSS as props with a single <Tag> component, theme with color-scale generation, and ship SSR-safe styles out of the box.",
+  "keywords": [
+    "react",
+    "ui",
+    "css-in-js",
+    "styling",
+    "design-system",
+    "theme",
+    "theming",
+    "ssr",
+    "css-props",
+    "responsive",
+    "breakpoints",
+    "animation",
+    "transitions",
+    "typescript",
+    "oncss",
+    "color-scale",
+    "tag",
+    "ui-primitives",
+    "react-hooks",
+    "portal"
+  ],
   "private": false,
   "main": "./index.cjs",
   "module": "./index.js",
@@ -23,6 +45,5 @@
     "@types/react-dom": "^19.2.3",
     "makepack": "^1.7.27",
     "typescript": "^5.9.3"
-  },
-  "keywords": []
+  }
 }

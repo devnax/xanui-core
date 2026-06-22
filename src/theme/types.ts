@@ -102,18 +102,7 @@ export type ThemeOptionInput = {
 
 type ColorRole = ThemeColorKeys;
 type ColorVariant = keyof Omit<ThemeColorOption, "shades">;
-
 export type ColorsRefTypes =
   | ColorRole
   | `${ColorRole}.${ColorVariant}`
-  | `${ColorRole}.1`
-  | `${ColorRole}.2`
-  | `${ColorRole}.3`
-  | `${ColorRole}.4`
-  | `${ColorRole}.5`
-  | `${ColorRole}.6`
-  | `${ColorRole}.7`
-  | `${ColorRole}.8`
-  | `${ColorRole}.9`
-  | `${ColorRole}.10`
-  | `${ColorRole}.11`;
+  | `${ColorRole}.${number}`;
