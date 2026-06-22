@@ -20,6 +20,19 @@ export type ThemeTypographyItem = {
   fontWeight: number;
 };
 
+export type ColorScale = {
+  50: string;
+  100: string;
+  200: string;
+  300: string;
+  400: string;
+  500: string;
+  600: string;
+  700: string;
+  800: string;
+  900: string;
+  950: string;
+};
 export type ThemeColorKeys =
   | "default"
   | "brand"
@@ -30,19 +43,20 @@ export type ThemeColorKeys =
   | "danger";
 
 export type ThemeColorOption = {
-  main: string; // 500
-  light: string; // 400
-  dark: string; // 700
+  primary: string; // 500
+  secondary: string; // 700
   contrast: string; // 50
   muted: string; // 400
   divider: string; // 200
+  ghost: string; // 200
 
   shades: {
-    1: string; // 50
-    2: string; // 100
-    3: string; // 300
-    4: string; // 600
-    5: string; // 800
+    1: string; // 100
+    2: string; // 300
+    3: string; // 600
+    4: string; // 800
+    5: string; // 900
+    6: string; // 950
   };
 };
 
@@ -55,11 +69,13 @@ export type ThemeComponents<T = any> = (
 
 export type ThemeOptions = {
   name: string;
-  mode?: ThemeMode;
+  mode: ThemeMode;
   rtl: boolean;
   globalStyle: GlobalCSS;
   breakpoints: { [key in BreakpointKeys]: number };
-  shadow: string[];
+  shadow: { [key in BreakpointKeys]: string };
+  radius: { [key in BreakpointKeys]: number };
+  spacing: { [key in BreakpointKeys]: number };
   components: Record<string, ThemeComponents>;
   colors: Record<ThemeColorKeys, ThemeColorOption>;
   typography: Record<TypographyRefTypes, ThemeTypographyItem>;
@@ -68,16 +84,26 @@ export type ThemeOptions = {
 
 export type ThemeOptionInput = {
   name?: string;
-  mode?: ThemeMode;
+  mode: ThemeMode;
   rtl?: boolean;
   globalStyle?: GlobalCSS;
-  shadow?: string[];
+  shadow?: { [key in BreakpointKeys]: string };
+  radius?: { [key in BreakpointKeys]: number };
+  spacing?: { [key in BreakpointKeys]: number };
   components?: Record<string, ThemeComponents>;
-  colors?: Partial<Record<ThemeColorKeys, string | Partial<ThemeColorOption>>>;
+  colors?: Partial<Record<ThemeColorKeys, string | ColorScale>>;
   typography?: Record<TypographyRefTypes, ThemeTypographyItem>;
 };
 
 type ColorRole = ThemeColorKeys;
-type ColorVariant = keyof ThemeColorOption;
+type ColorVariant = keyof Omit<ThemeColorOption, "shades">;
 
-export type ColorsRefTypes = ColorRole | `${ColorRole}.${ColorVariant}`;
+export type ColorsRefTypes =
+  | ColorRole
+  | `${ColorRole}.${ColorVariant}`
+  | `${ColorRole}.1`
+  | `${ColorRole}.2`
+  | `${ColorRole}.3`
+  | `${ColorRole}.4`
+  | `${ColorRole}.5`
+  | `${ColorRole}.6`;

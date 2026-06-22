@@ -2,16 +2,19 @@ import { CSSProps } from "./types";
 
 const getColor = (color: string) => {
   return {
-    [`${color}`]: `var(--color-${color}-base)`,
-    [`${color}.base`]: `var(--color-${color}-base)`,
-    [`${color}.surface`]: `var(--color-${color}-surface)`,
-    [`${color}.subtle`]: `var(--color-${color}-subtle)`,
-    [`${color}.elevated`]: `var(--color-${color}-elevated)`,
-    [`${color}.emphasis`]: `var(--color-${color}-emphasis)`,
+    [`${color}`]: `var(--color-${color}-primary)`,
+    [`${color}.primary`]: `var(--color-${color}-primary)`,
+    [`${color}.secondary`]: `var(--color-${color}-secondary)`,
     [`${color}.contrast`]: `var(--color-${color}-contrast)`,
     [`${color}.muted`]: `var(--color-${color}-muted)`,
     [`${color}.divider`]: `var(--color-${color}-divider)`,
     [`${color}.ghost`]: `var(--color-${color}-ghost)`,
+    [`${color}.1`]: `var(--color-${color}-1)`,
+    [`${color}.2`]: `var(--color-${color}-2)`,
+    [`${color}.3`]: `var(--color-${color}-3)`,
+    [`${color}.4`]: `var(--color-${color}-4)`,
+    [`${color}.5`]: `var(--color-${color}-5)`,
+    [`${color}.6`]: `var(--color-${color}-6)`,
   };
 };
 
@@ -19,7 +22,7 @@ const withImportant = (important: any, value: any) =>
   important ? value + important : value;
 const colors: any = {
   ...getColor("default"),
-  ...getColor("primary"),
+  ...getColor("brand"),
   ...getColor("accent"),
   ...getColor("info"),
   ...getColor("success"),
@@ -110,10 +113,33 @@ const getValue = (prop: any, value: string | number, _css: CSSProps): any => {
   ) {
     return withImportant(important, fontsizes[value] || value);
   } else if (
-    typeof value === "number" &&
-    ["shadow", "boxShadow"].includes(prop)
+    typeof value === "string" &&
+    ["shadow", "boxShadow"].includes(prop) &&
+    ["xs", "sm", "md", "lg", "xl"].includes(value)
   ) {
     return withImportant(important, `var(--shadow-${value})`);
+  } else if (["radius", "borderRadius"].includes(prop)) {
+    if (
+      typeof value === "string" &&
+      ["xs", "sm", "md", "lg", "xl"].includes(value)
+    ) {
+      return withImportant(important, `var(--radius-${value})`);
+    } else {
+      return withImportant(important, value);
+    }
+  } else if (
+    prop === "gap" ||
+    prop.startsWith("padding") ||
+    prop.startsWith("margin")
+  ) {
+    if (
+      typeof value === "string" &&
+      ["xs", "sm", "md", "lg", "xl"].includes(value)
+    ) {
+      return withImportant(important, `var(--spacing-${value})`);
+    } else {
+      return withImportant(important, value);
+    }
   }
 
   return withImportant(important, colors[value] || value);

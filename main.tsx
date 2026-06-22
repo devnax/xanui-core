@@ -237,12 +237,14 @@ const Button = ({ children, color, variant, ...rest }: any) => {
         component={"button"}
         cursor={"pointer"}
         p={0.5}
-        px={2}
-        radius={1}
+        shadow={"sm"}
+        px={"lg"}
+        radius={"xs"}
         minWidth={100}
         {...t.main}
         hover={{ ...t.hover }}
         {...rest}
+        transition={"background .3s"}
       >
         {children}
       </Tag>
@@ -250,38 +252,9 @@ const Button = ({ children, color, variant, ...rest }: any) => {
   );
 };
 
-const Input = (props: any) => {
-  const [_p]: any = useThemeComponent("Input", props, {});
-  const { icon, ...rest } = useBreakpointProps(_p);
-
-  return (
-    <Tag>
-      <Tag
-        component={"input"}
-        p={1}
-        px={2}
-        radius={1}
-        border="1px solid"
-        borderColor="default.divider"
-        bgcolor="default.base"
-        color="default.contrast"
-        {...rest}
-      />
-      {icon && <Tag component={"span"}>{icon}</Tag>}
-    </Tag>
-  );
-};
-
 const ACtx = createContext<any>(null);
 const AuthProvider = ({ children, value }: any) => {
   return <ACtx.Provider value={value}>{children}</ACtx.Provider>;
-};
-
-const useAuth = () => useContext(ACtx);
-
-const Auth = () => {
-  const au = useAuth();
-  return <h1>Auth</h1>;
 };
 
 const RND = () => {
@@ -302,103 +275,6 @@ const RND = () => {
   );
 };
 
-const ColorBox = ({ children, ...props }: any) => {
-  return (
-    <Tag
-      width={100}
-      height={80}
-      radius={1}
-      flexBox
-      justifyContent={"center"}
-      alignItems={"center"}
-      transition={"all .3s"}
-      {...props}
-    >
-      {children}
-    </Tag>
-  );
-};
-
-const ColorPallate = ({ color }: any) => {
-  return (
-    <Tag flexBox gap={0} flexColumn>
-      <Tag textTransform={"capitalize"} fontWeight={"bold"}>
-        {color}
-      </Tag>
-      <Tag flexBox flexRow flexWraped p={1} gap={1}>
-        <ColorBox
-          bgcolor={`${color}.base`}
-          border="1px solid"
-          borderColor={`${color}.divider`}
-          color={`${color}.contrast`}
-          hover={{
-            bgcolor: `${color}.surface`,
-          }}
-          radius={1}
-        >
-          base
-        </ColorBox>
-        <ColorBox
-          bgcolor={`${color}.elevated`}
-          color={`${color}.contrast`}
-          radius={1}
-        >
-          elevated
-        </ColorBox>
-        <ColorBox
-          bgcolor={`${color}.emphasis`}
-          color={`${color}.contrast`}
-          radius={1}
-        >
-          emphasis
-        </ColorBox>
-        <ColorBox
-          bgcolor={`${color}.surface`}
-          color={`${color}.contrast`}
-          radius={1}
-        >
-          surface
-        </ColorBox>
-        <ColorBox
-          bgcolor={`${color}.subtle`}
-          color={`${color}.contrast`}
-          radius={1}
-        >
-          subtle
-        </ColorBox>
-        <ColorBox
-          bgcolor={`${color}.ghost`}
-          color={`${color}.contrast`}
-          radius={1}
-        >
-          Ghost
-        </ColorBox>
-        <ColorBox
-          bgcolor={`${color}.contrast`}
-          color={`${color}.base`}
-          radius={1}
-        >
-          Contrast
-        </ColorBox>
-        <ColorBox
-          bgcolor={`${color}.muted`}
-          color={`${color}.contrast`}
-          radius={1}
-        >
-          muted
-        </ColorBox>
-        <ColorBox
-          bgcolor={`${color}.divider`}
-          color={`${color}.contrast`}
-          radius={1}
-        >
-          Divider
-        </ColorBox>
-      </Tag>
-    </Tag>
-  );
-};
-
 const App = () => {
   const { ref, inView } = useInView({
     threshold: 1,
@@ -407,72 +283,19 @@ const App = () => {
   const [toggled, setToggled] = React.useState(true);
   const [text, setText] = React.useState("Click");
   const [theme, setTheme] = React.useState<ThemeOptionInput>({
-    mode: "dark",
+    mode: "light",
   });
-  const [count, setCount] = React.useState(0);
-  let color = theme.mode === "dark" ? "#0F1115" : "#FFFFFF";
-  const colors = colorScale("oklch(64.5% 0.246 16.439)", "oklch");
-  const palettes = [
-    colorScale("oklch(63.7% 0.237 25.331)", "oklch"),
-    colorScale("oklch(70.5% 0.213 47.604)", "oklch"),
-    colorScale("oklch(76.9% 0.188 70.08)", "oklch"),
-    colorScale("oklch(79.5% 0.184 86.047)", "oklch"),
-    colorScale("oklch(76.8% 0.233 130.85)", "oklch"),
-    colorScale("oklch(72.3% 0.219 149.579)", "oklch"),
-    colorScale("oklch(69.6% 0.17 162.48)", "oklch"),
-    colorScale("oklch(70.4% 0.14 182.503)", "oklch"),
-    colorScale("oklch(71.5% 0.143 215.221)", "oklch"),
-    colorScale("oklch(68.5% 0.169 237.323)", "oklch"),
-    colorScale("oklch(62.3% 0.214 259.815)", "oklch"),
-    colorScale("oklch(58.5% 0.233 277.117)", "oklch"),
-    colorScale("oklch(60.6% 0.25 292.717)", "oklch"),
-    colorScale("oklch(62.7% 0.265 303.9)", "oklch"),
-    colorScale("oklch(66.7% 0.295 322.15)", "oklch"),
-    colorScale("oklch(64.5% 0.246 16.439)", "oklch"),
-    colorScale("oklch(55.4% 0.046 257.417)", "oklch"),
-    colorScale("oklch(55.1% 0.027 264.364)", "oklch"),
-    colorScale("oklch(55.2% 0.016 285.938)", "oklch"),
-    colorScale("oklch(55.6% 0 0)", "oklch"),
-    colorScale("oklch(55.3% 0.013 58.071)", "oklch"),
-    colorScale("oklch(54.7% 0.021 43.1)", "oklch"),
-    colorScale("oklch(54.2% 0.034 322.5)", "oklch"),
-    colorScale("oklch(56% 0.021 213.5)", "oklch"),
-    colorScale("oklch(58% 0.031 107.3)", "oklch"),
-  ];
 
   return (
     <AuthProvider value={{ auth: "naxrul" }}>
       <AppRoot
         theme={theme}
-        onThemeUpdate={(t) => {
+        onThemeUpdate={(t: any) => {
           setTheme(t);
         }}
         defaultBreakpoint="xl"
         fontFamily="inter,sans-serif"
-        bgcolor={palettes[17][950]}
       >
-        <Tag width={800} flexBox flexColumn gap={1} p={3}>
-          {palettes.map((p, idx) => {
-            return (
-              <Tag key={idx} flexBox flexRow gap={2}>
-                {Object.values(p).map((c) => {
-                  return (
-                    <Tag
-                      key={c}
-                      radius={1}
-                      width={50}
-                      height={50}
-                      bgcolor={c}
-                      border={"1px solid "}
-                      borderColor={p[800]}
-                    />
-                  );
-                })}
-              </Tag>
-            );
-          })}
-        </Tag>
-
         <Tag width={100} height={100} overflow={"auto"} color="default.muted">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab velit
           dolorum atque ipsum, deleniti, architecto dolorem voluptatem,
@@ -499,8 +322,8 @@ const App = () => {
           <Button variant="text" color="default">
             default
           </Button>
-          <Button variant="text" color="primary">
-            primary
+          <Button variant="text" color="brand">
+            brand
           </Button>
           <Button variant="text" color="accent">
             accent
@@ -525,8 +348,8 @@ const App = () => {
           <Button variant="outline" color="default">
             default
           </Button>
-          <Button variant="outline" color="primary">
-            primary
+          <Button variant="outline" color="brand">
+            brand
           </Button>
           <Button variant="outline" color="accent">
             accent
@@ -551,8 +374,8 @@ const App = () => {
           <Button variant="fill" color="default">
             default
           </Button>
-          <Button variant="fill" color="primary">
-            primary
+          <Button variant="fill" color="brand">
+            brand
           </Button>
           <Button variant="fill" color="accent">
             accent
@@ -577,8 +400,8 @@ const App = () => {
           <Button variant="ghost" color="default">
             default
           </Button>
-          <Button variant="ghost" color="primary">
-            primary
+          <Button variant="ghost" color="brand">
+            brand
           </Button>
           <Button variant="ghost" color="accent">
             accent
@@ -596,22 +419,12 @@ const App = () => {
             danger
           </Button>
         </Tag>
-        <Tag flexBox gap={2} flexColumn>
-          <ColorPallate color="default" />
-          <ColorPallate color="primary" />
-          <ColorPallate color="accent" />
-          <ColorPallate color="info" />
-          <ColorPallate color="success" />
-          <ColorPallate color="warning" />
-          <ColorPallate color="danger" />
-        </Tag>
 
         <Tag
           theme={{
+            mode: "light",
             colors: {
-              default: {
-                base: "#3470f2",
-              },
+              default: "#3470f2",
             },
           }}
           width={150}

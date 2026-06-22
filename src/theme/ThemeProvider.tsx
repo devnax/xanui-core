@@ -120,8 +120,8 @@ const ThemeProvider = <T extends TagComponentType = "div">({
     if (noScrollbarCss) return;
     const cls = (cls: string) => `${themeRootClass(theme.name)} ${cls}`;
     let thumbSize = scrollbar?.size ?? 7;
-    let thumbColor = scrollbar?.thumbColor ?? "var(--color-default-muted)";
-    let trackColor = scrollbar?.trackColor ?? "var(--color-default-divider)";
+    let thumbColor = scrollbar?.thumbColor ?? "var(--color-default-2)";
+    let trackColor = scrollbar?.trackColor ?? "var(--color-default-ghost)";
 
     return css(
       {
@@ -169,18 +169,13 @@ const ThemeProvider = <T extends TagComponentType = "div">({
       <ServerStyleTag factory={themeGlobalStyle} />
       <Tag
         minHeight="100%"
-        bgcolor={"default.surface"}
+        bgcolor={"default.4"}
         color="default.contrast"
         fontSize="md"
         fontWeight="md"
         lineHeight="md"
         fontFamily={`system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`}
         {...props}
-        sxr={{
-          "& a": {
-            color: "primary.base",
-          },
-        }}
         baseClass={`${theme.name}-theme-root`}
         direction={theme.rtl ? "rtl" : "ltr"}
       >

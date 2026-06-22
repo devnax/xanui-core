@@ -39,7 +39,7 @@ const AppRoot = React.forwardRef(
     ref: React.Ref<any>,
   ) => {
     noScrollbarCss ??= false;
-    selectionColor ??= "primary";
+    selectionColor ??= "brand";
     if (typeof window !== "undefined") {
       _document ??= document;
     }
@@ -75,7 +75,7 @@ const AppRoot = React.forwardRef(
     if (selectionColor && selectionColor !== "default") {
       selection = {
         "&::selection": {
-          bgcolor: `${selectionColor}.surface`,
+          bgcolor: `${selectionColor}.primary`,
           color: `${selectionColor}.contrast`,
         },
       };
