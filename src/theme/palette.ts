@@ -48,10 +48,12 @@ export const createThemeColorPalette = (color: string | ColorScale) => {
   const r = parseColor(scale[500]);
 
   return {
-    contrast: scale[50],
-    muted: scale[300],
     primary: scale[500],
     secondary: scale[600],
+    paper: scale[800],
+    surface: scale[900],
+    contrast: scale[50],
+    muted: scale[300],
     divider: scale[700],
     ghost: `rgba(${r[0]}, ${r[1]}, ${r[2]}, .09)`,
     shades: {

@@ -5,6 +5,8 @@ const getColor = (color: string) => {
     [`${color}`]: `var(--color-${color}-primary)`,
     [`${color}.primary`]: `var(--color-${color}-primary)`,
     [`${color}.secondary`]: `var(--color-${color}-secondary)`,
+    [`${color}.paper`]: `var(--color-${color}-paper)`,
+    [`${color}.surface`]: `var(--color-${color}-surface)`,
     [`${color}.contrast`]: `var(--color-${color}-contrast)`,
     [`${color}.muted`]: `var(--color-${color}-muted)`,
     [`${color}.divider`]: `var(--color-${color}-divider)`,

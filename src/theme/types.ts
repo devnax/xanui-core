@@ -49,6 +49,8 @@ export type ThemeColorOption = {
   muted: string;
   divider: string;
   ghost: string;
+  paper: string;
+  surface: string;
 
   shades: {
     1: string;

@@ -48,6 +48,8 @@ const ThemeCssVars = (theme: ThemeOptions) => {
   const colorKeys = [
     "primary",
     "secondary",
+    "paper",
+    "surface",
     "contrast",
     "muted",
     "divider",

@@ -119,8 +119,8 @@ const ThemeProvider = <T extends TagComponentType = "div">({
     if (noScrollbarCss) return;
     const cls = (cls: string) => `${themeRootClass(theme.name)} ${cls}`;
     let thumbSize = scrollbar?.size ?? 7;
-    let thumbColor = scrollbar?.thumbColor ?? "var(--color-default-6)";
-    let trackColor = scrollbar?.trackColor ?? "var(--color-default-9)";
+    let thumbColor = scrollbar?.thumbColor ?? "var(--color-default-secondary)";
+    let trackColor = scrollbar?.trackColor ?? "var(--color-default-paper)";
 
     return css(
       {
@@ -168,7 +168,7 @@ const ThemeProvider = <T extends TagComponentType = "div">({
       <ServerStyleTag factory={themeGlobalStyle} />
       <Tag
         minHeight="100%"
-        bgcolor={"default.10"}
+        bgcolor={"default.surface"}
         color="default.contrast"
         fontSize="md"
         fontWeight="md"
