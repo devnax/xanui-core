@@ -1,5 +1,11 @@
-import { colorScale, parseColor } from "hueforge";
-import { ColorScale } from "./types";
+import { colorScale, hexToRgb, parseColor } from "hueforge";
+import {
+  ColorCode,
+  ThemeMode,
+  ThemeOptionColorNeutralInput,
+  ThemeOptionColors,
+  ThemeOptionColorsInput,
+} from "./types";
 
 // const colors = [
 //   { label: "Slate", value: "#64748b" },
@@ -30,9 +36,33 @@ import { ColorScale } from "./types";
 //   { label: "Rose", value: "#f43f5e" },
 // ];
 
-export const createColorPalette = (color: string, reverse = false) => {
-  const scale = colorScale(color);
-  if (reverse) {
+const neutralColors = {
+  Slate: "#64748b",
+  Gray: "#6b7280",
+  Zinc: "#71717a",
+  Neutral: "#737373",
+  Stone: "#78716c",
+};
+
+const defaultColors = {
+  brand: "#3b82f6",
+  accent: "#f59e0b",
+  info: "#0ea5e9",
+  success: "#22c55e",
+  warning: "#eab308",
+  danger: "#ef4444",
+};
+export const createNeutralColorScale = (
+  color: ThemeOptionColorNeutralInput,
+  mode: ThemeMode,
+) => {
+  if (color in neutralColors) {
+    color = (neutralColors as any)[color];
+  }
+  const steps = [50, 100, 200, 250, 300, 400, 500, 600, 700, 800, 900];
+  const scale = colorScale(color, "hex", steps);
+
+  if (mode === "dark") {
     return Object.fromEntries(
       Object.entries(scale).map(([key, value], index, arr) => [
         arr[arr.length - 1 - index][0],
@@ -40,34 +70,78 @@ export const createColorPalette = (color: string, reverse = false) => {
       ]),
     );
   }
+
   return scale;
 };
 
-export const createThemeColorPalette = (color: string | ColorScale) => {
-  const scale = typeof color === "string" ? colorScale(color) : color;
-  const r = parseColor(scale[500]);
+export const formatNeutralColors = (scale: Record<number, string>) => {
+  const colors: Record<number, string> = {};
+  const colorValues = Object.values(scale);
+  for (let color of colorValues) {
+    const index = colorValues.indexOf(color) + 1;
+    colors[index] = color;
+  }
+  return colors;
+};
 
+export const createVariantColors = (color: ColorCode) => {
+  const steps = [50, 500, 550];
+  const scale = colorScale(color, "hex", steps);
+  const [r, g, b] = hexToRgb(scale[500]);
   return {
     primary: scale[500],
-    secondary: scale[600],
-    paper: scale[800],
-    surface: scale[900],
+    secondary: scale[550],
     contrast: scale[50],
-    muted: scale[300],
-    divider: scale[700],
-    ghost: `rgba(${r[0]}, ${r[1]}, ${r[2]}, .09)`,
-    shades: {
-      1: scale[50],
-      2: scale[100],
-      3: scale[200],
-      4: scale[300],
-      5: scale[400],
-      6: scale[500],
-      7: scale[600],
-      8: scale[700],
-      9: scale[800],
-      10: scale[900],
-      11: scale[950],
+    ghost: {
+      primary: `rgba(${r}, ${g}, ${b}, .08)`,
+      secondary: `rgba(${r}, ${g}, ${b}, .09)`,
     },
+  };
+};
+
+export const createPalette = (
+  colors: ThemeOptionColorsInput,
+  mode: ThemeMode,
+): ThemeOptionColors => {
+  const scale = createNeutralColorScale(colors.neutral || "Gray", mode);
+  const neutral = formatNeutralColors(scale);
+  const surface = colors.surface || {
+    primary: scale[50],
+    secondary: scale[100],
+  };
+  const paper = colors.paper || {
+    primary: scale[200],
+    secondary: scale[250],
+  };
+  const text = colors.paper || {
+    primary: scale[900],
+    secondary: scale[600],
+  };
+  const divider = colors.paper || {
+    primary: scale[200],
+    secondary: scale[300],
+  };
+
+  const variants: any = {};
+  const variant_names = [
+    "brand",
+    "accent",
+    "info",
+    "success",
+    "warning",
+    "danger",
+  ];
+  for (let name of variant_names) {
+    let color = (colors as any)[name] || (defaultColors as any)[name];
+    variants[name] = createVariantColors(color);
+  }
+
+  return {
+    neutral,
+    surface,
+    paper,
+    text,
+    divider,
+    ...variants,
   };
 };

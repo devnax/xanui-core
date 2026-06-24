@@ -1,5 +1,4 @@
 import { ThemeOptionInput, ThemeOptions } from "./types";
-import { createColorPalette } from "./palette";
 
 const shadows = {
   light: {
@@ -70,52 +69,14 @@ export const ThemeTypography: ThemeOptions["typography"] = {
   h6: { fontSize: 20, lineHeight: 1.55, fontWeight: 500 },
 };
 
-const darkThemeDefaultColor = createColorPalette("#64748b");
-const lightThemeDefaultColor = createColorPalette("#64748b", true);
-
-const brand = createColorPalette("#3b82f6");
-const accent = createColorPalette("#f59e0b");
-const info = createColorPalette("#0ea5e9");
-const success = createColorPalette("#22c55e");
-const warning = createColorPalette("#eab308");
-const danger = createColorPalette("#ef4444");
-
-export const lightThemeOptions: ThemeOptionInput = {
+export const defaultThemeOptions: ThemeOptionInput = {
   mode: "light",
   rtl: false,
   shadow: shadows.dark as any,
   radius: radius as any,
   spacing: spacing as any,
   globalStyle: {},
-  colors: {
-    default: lightThemeDefaultColor,
-    brand,
-    accent,
-    success,
-    info,
-    warning,
-    danger,
-  },
+  colors: { neutral: "Gray" },
   typography: ThemeTypography,
   components: {},
-} as ThemeOptionInput;
-
-export const darkThemeOptions: ThemeOptionInput = {
-  mode: "dark",
-  rtl: false,
-  shadow: shadows.light as any,
-  radius: radius as any,
-  spacing: spacing as any,
-  globalStyle: {},
-  colors: {
-    default: darkThemeDefaultColor,
-    brand,
-    accent,
-    success,
-    info,
-    warning,
-    danger,
-  },
-  typography: ThemeTypography,
-  components: {},
-} as ThemeOptionInput;
+};

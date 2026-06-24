@@ -36,37 +36,37 @@ const ThemeCssVars = (theme: ThemeOptions) => {
     }
   }
 
-  const colorNames = [
-    "default",
+  // print neutral colors
+  for (let i = 1; i <= 10; i++) {
+    vars[`--color-neutral-${i}`] = (theme as any).colors.neutral[i];
+  }
+
+  // print surface, paper, text, divider
+  const names = ["surface", "paper", "text", "divider"];
+  for (let name of names) {
+    vars[`--color-${name}-primary`] = (theme as any).colors[name].primary;
+    vars[`--color-${name}-secondary`] = (theme as any).colors[name].secondary;
+  }
+
+  // print variant colors
+  const variant_names = [
     "brand",
     "accent",
-    "success",
     "info",
+    "success",
     "warning",
     "danger",
   ];
-  const colorKeys = [
-    "primary",
-    "secondary",
-    "paper",
-    "surface",
-    "contrast",
-    "muted",
-    "divider",
-    "ghost",
-  ];
-
-  for (let cname of colorNames) {
-    if (cname in theme.colors) {
-      for (let key of colorKeys) {
-        vars[`--color-${cname}-${key}`] = (theme as any).colors[cname][key];
-      }
-
-      // shades
-      for (let i = 1; i <= 11; i++) {
-        vars[`--color-${cname}-${i}`] = (theme as any).colors[cname].shades[i];
-      }
-    }
+  for (let name of variant_names) {
+    vars[`--color-${name}-primary`] = (theme as any).colors[name].primary;
+    vars[`--color-${name}-secondary`] = (theme as any).colors[name].secondary;
+    vars[`--color-${name}-contrast`] = (theme as any).colors[name].contrast;
+    vars[`--color-${name}-ghost-primary`] = (theme as any).colors[
+      name
+    ].ghost.primary;
+    vars[`--color-${name}-ghost-secondary`] = (theme as any).colors[
+      name
+    ].ghost.secondary;
   }
 
   vars[`--shadow-xs`] = theme.shadow.xs;

@@ -2,8 +2,8 @@
 import React, { useContext } from "react";
 import { ObjectType, ThemeOptions, ThemeOptionInput } from "./types";
 import { breakpoints } from "../css";
-import { darkThemeOptions, lightThemeOptions } from "./ThemeDefaultOptions";
-import { createThemeColorPalette } from "./palette";
+import { defaultThemeOptions } from "./ThemeDefaultOptions";
+import { createPalette } from "./palette";
 
 export const mergeObject = (a: ObjectType, b: ObjectType) => {
   a = { ...a };
@@ -26,20 +26,12 @@ export const mergeObject = (a: ObjectType, b: ObjectType) => {
 export const createTheme = (options: ThemeOptionInput): ThemeOptions => {
   options.mode = options?.mode ?? "light";
   options.name = options.name ?? options.mode;
-  const defaultOptions =
-    options.mode === "dark" ? darkThemeOptions : lightThemeOptions;
-
-  let theme: any = mergeObject(defaultOptions, {
+  let theme: any = mergeObject(defaultThemeOptions, {
     ...options,
     breakpoints: breakpoints,
   });
 
-  let palettes: any = {};
-  for (let key in theme?.colors) {
-    const color = (theme as any)?.colors[key];
-    palettes[key] = createThemeColorPalette(color);
-  }
-  theme.colors = palettes;
+  theme.colors = createPalette(theme.colors, options.mode);
   return theme as ThemeOptions;
 };
 

@@ -20,39 +20,31 @@ export type ThemeTypographyItem = {
   fontWeight: number;
 };
 
-export type ColorScale = {
-  50: string;
-  100: string;
-  200: string;
-  300: string;
-  400: string;
-  500: string;
-  600: string;
-  700: string;
-  800: string;
-  900: string;
-  950: string;
+export type ColorCode =
+  | `#${string}`
+  | `rgb(${string})`
+  | `hsl(${string})`
+  | `oklch(${string})`;
+export type ThemeColorNeutralNames =
+  | "Slate"
+  | "Gray"
+  | "Zinc"
+  | "Neutral"
+  | "Stone";
+export type ThemeColorValue = {
+  primary: ColorCode;
+  secondary: ColorCode;
 };
-export type ThemeColorKeys =
-  | "default"
-  | "brand"
-  | "accent"
-  | "info"
-  | "success"
-  | "warning"
-  | "danger";
+export type ThemeColorVariantValue = ThemeColorValue & {
+  contrast: ColorCode;
+  ghost: ThemeColorValue;
+};
+export type ThemeColorInputVariantValue = ThemeColorValue & {
+  contrast?: ColorCode;
+};
 
-export type ThemeColorOption = {
-  primary: string;
-  secondary: string;
-  contrast: string;
-  muted: string;
-  divider: string;
-  ghost: string;
-  paper: string;
-  surface: string;
-
-  shades: {
+export type ThemeOptionColors = {
+  neutral: {
     1: string;
     2: string;
     3: string;
@@ -63,8 +55,31 @@ export type ThemeColorOption = {
     8: string;
     9: string;
     10: string;
-    11: string;
   };
+  surface: ThemeColorValue;
+  paper: ThemeColorValue;
+  text: ThemeColorValue;
+  divider: ThemeColorValue;
+  brand: ThemeColorVariantValue;
+  accent: ThemeColorVariantValue;
+  info: ThemeColorVariantValue;
+  success: ThemeColorVariantValue;
+  warning: ThemeColorVariantValue;
+  danger: ThemeColorVariantValue;
+};
+export type ThemeOptionColorNeutralInput = ThemeColorNeutralNames | ColorCode;
+export type ThemeOptionColorsInput = {
+  neutral?: ThemeOptionColorNeutralInput;
+  surface?: ThemeColorValue;
+  paper?: ThemeColorValue;
+  text?: ThemeColorValue;
+  divider?: ThemeColorValue;
+  brand?: ThemeColorInputVariantValue | ColorCode;
+  accent?: ThemeColorInputVariantValue | ColorCode;
+  info?: ThemeColorInputVariantValue | ColorCode;
+  success?: ThemeColorInputVariantValue | ColorCode;
+  warning?: ThemeColorInputVariantValue | ColorCode;
+  danger?: ThemeColorInputVariantValue | ColorCode;
 };
 
 export type ThemeMode = "dark" | "light";
@@ -84,7 +99,7 @@ export type ThemeOptions = {
   radius: { [key in BreakpointKeys]: number };
   spacing: { [key in BreakpointKeys]: number };
   components: Record<string, ThemeComponents>;
-  colors: Record<ThemeColorKeys, ThemeColorOption>;
+  colors: ThemeOptionColors;
   typography: Record<TypographyRefTypes, ThemeTypographyItem>;
   update: (theme: ThemeOptionInput) => void;
 };
@@ -98,13 +113,33 @@ export type ThemeOptionInput = {
   radius?: { [key in BreakpointKeys]: number };
   spacing?: { [key in BreakpointKeys]: number };
   components?: Record<string, ThemeComponents>;
-  colors?: Partial<Record<ThemeColorKeys, string | ColorScale>>;
+  colors?: ThemeOptionColorsInput;
   typography?: Record<TypographyRefTypes, ThemeTypographyItem>;
 };
 
-type ColorRole = ThemeColorKeys;
-type ColorVariant = keyof Omit<ThemeColorOption, "shades">;
+type ColorKeys = "surface" | "paper" | "text" | "divider";
+type ColorVariantKeys =
+  | "brand"
+  | "accent"
+  | "info"
+  | "success"
+  | "warning"
+  | "danger";
+
 export type ColorsRefTypes =
-  | ColorRole
-  | `${ColorRole}.${ColorVariant}`
-  | `${ColorRole}.${number}`;
+  | "Neutral.1"
+  | "Neutral.2"
+  | "Neutral.3"
+  | "Neutral.4"
+  | "Neutral.5"
+  | "Neutral.6"
+  | "Neutral.7"
+  | "Neutral.8"
+  | "Neutral.9"
+  | "Neutral.10"
+  | ColorKeys
+  | `${ColorKeys}.secondary`
+  | ColorVariantKeys
+  | `${ColorVariantKeys}.secondary`
+  | `${ColorVariantKeys}.ghost`
+  | `${ColorVariantKeys}.ghost.secondary`;

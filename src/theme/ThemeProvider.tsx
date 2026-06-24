@@ -119,8 +119,8 @@ const ThemeProvider = <T extends TagComponentType = "div">({
     if (noScrollbarCss) return;
     const cls = (cls: string) => `${themeRootClass(theme.name)} ${cls}`;
     let thumbSize = scrollbar?.size ?? 7;
-    let thumbColor = scrollbar?.thumbColor ?? "var(--color-default-secondary)";
-    let trackColor = scrollbar?.trackColor ?? "var(--color-default-paper)";
+    let thumbColor = scrollbar?.thumbColor ?? "var(--color-paper-secondary)";
+    let trackColor = scrollbar?.trackColor ?? "var(--color-paper-ghost)";
 
     return css(
       {

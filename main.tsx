@@ -162,7 +162,7 @@ const TransBox = ({ open, trans, content }: any) => {
         radius={1}
         overflow={"hidden"}
       >
-        <Tag px={2} bgcolor={"default.base"}>
+        <Tag px={2} bgcolor={"paper.base"}>
           {Array(content)
             .fill(1)
             .map((v, i) => {
@@ -218,7 +218,7 @@ const Trans = () => {
             component="div"
             radius={1}
             px={2}
-            bgcolor={"default.base"}
+            bgcolor={"paper.base"}
           >
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </Tag>
@@ -292,10 +292,9 @@ const App = () => {
         onThemeUpdate={(t: any) => {
           setTheme(t);
         }}
-        defaultBreakpoint="xl"
         fontFamily="inter,sans-serif"
       >
-        <Tag width={100} height={100} overflow={"auto"} color="default.muted">
+        <Tag width={100} height={100} overflow={"auto"} color="text.secondary">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab velit
           dolorum atque ipsum, deleniti, architecto dolorem voluptatem,
           provident laboriosam est necessitatibus consequatur explicabo harum
@@ -303,15 +302,15 @@ const App = () => {
         </Tag>
 
         <Tag p={3} width={300}>
-          <Tag overflow="auto" color={"default.contrast"} fontSize="h2">
+          <Tag overflow="auto" color={"text"} fontSize="h2">
             This is main title text
           </Tag>
           <Tag
             overflow="auto"
-            color={"default.muted"}
+            color={"text.secondary"}
             p="md"
             border="1px solid"
-            borderColor="default.divider"
+            borderColor="divider"
           >
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos sequi
             numquam illo expedita accusamus dolores. Recusandae ab dignissimos
@@ -325,7 +324,7 @@ const App = () => {
             disabled
           </Button>
           <Button variant="text" color="default">
-            default
+            paper
           </Button>
           <Button variant="text" color="brand">
             brand
@@ -351,7 +350,7 @@ const App = () => {
             disabled
           </Button>
           <Button variant="outline" color="default">
-            default
+            paper
           </Button>
           <Button variant="outline" color="brand">
             brand
@@ -377,7 +376,7 @@ const App = () => {
             disabled
           </Button>
           <Button variant="fill" color="default">
-            default
+            paper
           </Button>
           <Button variant="fill" color="brand">
             brand
@@ -403,7 +402,7 @@ const App = () => {
             disabled
           </Button>
           <Button variant="ghost" color="default">
-            default
+            paper
           </Button>
           <Button variant="ghost" color="brand">
             brand
@@ -429,14 +428,14 @@ const App = () => {
           theme={{
             mode: "light",
             colors: {
-              default: "#3470f2",
+              brand: "#3470f2",
             },
           }}
           width={150}
           height={100}
-          bgcolor="default"
+          bgcolor="paper"
         >
-          <Tag color="default.contrast">Hello</Tag>
+          <Tag color="text">Hello</Tag>
         </Tag>
 
         <AnimateGroup />
@@ -485,10 +484,10 @@ const App = () => {
         sx={{
         }}
       >
-        <Button color="default" >Filled</Button>
-        <Button color="default" variant="outline">Outlined</Button>
-        <Button color="default" variant="text">Text</Button>
-        <Button color="default" variant="soft">Soft</Button>
+        <Button color="paper" >Filled</Button>
+        <Button color="paper" variant="outline">Outlined</Button>
+        <Button color="paper" variant="text">Text</Button>
+        <Button color="paper" variant="soft">Soft</Button>
       </Tag>
 
       <Tag

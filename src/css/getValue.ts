@@ -1,41 +1,39 @@
 import { CSSProps } from "./types";
 
-const getColor = (color: string) => {
-  return {
-    [`${color}`]: `var(--color-${color}-primary)`,
-    [`${color}.primary`]: `var(--color-${color}-primary)`,
-    [`${color}.secondary`]: `var(--color-${color}-secondary)`,
-    [`${color}.paper`]: `var(--color-${color}-paper)`,
-    [`${color}.surface`]: `var(--color-${color}-surface)`,
-    [`${color}.contrast`]: `var(--color-${color}-contrast)`,
-    [`${color}.muted`]: `var(--color-${color}-muted)`,
-    [`${color}.divider`]: `var(--color-${color}-divider)`,
-    [`${color}.ghost`]: `var(--color-${color}-ghost)`,
-    [`${color}.1`]: `var(--color-${color}-1)`,
-    [`${color}.2`]: `var(--color-${color}-2)`,
-    [`${color}.3`]: `var(--color-${color}-3)`,
-    [`${color}.4`]: `var(--color-${color}-4)`,
-    [`${color}.5`]: `var(--color-${color}-5)`,
-    [`${color}.6`]: `var(--color-${color}-6)`,
-    [`${color}.7`]: `var(--color-${color}-7)`,
-    [`${color}.8`]: `var(--color-${color}-8)`,
-    [`${color}.9`]: `var(--color-${color}-9)`,
-    [`${color}.10`]: `var(--color-${color}-10)`,
-    [`${color}.11`]: `var(--color-${color}-11)`,
-  };
-};
+const color_vars: Record<string, string> = {};
+
+// generate Neutral
+for (let i = 1; i <= 10; i++) {
+  color_vars[`neutral.${i}`] = `var(--color-neutral-${i})`;
+}
+
+// generate surface, paper, text, divider
+const names = ["surface", "paper", "text", "divider"];
+for (let name of names) {
+  color_vars[`${name}`] = `var(--color-${name}-primary)`;
+  color_vars[`${name}.secondary`] = `var(--color-${name}-secondary)`;
+}
+
+// generate variant colors
+const variant_names = [
+  "brand",
+  "accent",
+  "info",
+  "success",
+  "warning",
+  "danger",
+];
+for (let name of variant_names) {
+  color_vars[`${name}`] = `var(--color-${name}-primary)`;
+  color_vars[`${name}.secondary`] = `var(--color-${name}-secondary)`;
+  color_vars[`${name}.contrast`] = `var(--color-${name}-contrast)`;
+  color_vars[`${name}.ghost`] = `var(--color-${name}-ghost-primary)`;
+  color_vars[`${name}.ghost.secondary`] =
+    `var(--color-${name}-ghost-secondary)`;
+}
 
 const withImportant = (important: any, value: any) =>
   important ? value + important : value;
-const colors: any = {
-  ...getColor("default"),
-  ...getColor("brand"),
-  ...getColor("accent"),
-  ...getColor("info"),
-  ...getColor("success"),
-  ...getColor("warning"),
-  ...getColor("danger"),
-};
 
 const breakpoints: any = {
   xs: "var(--bp-xs)",
@@ -149,7 +147,7 @@ const getValue = (prop: any, value: string | number, _css: CSSProps): any => {
     }
   }
 
-  return withImportant(important, colors[value] || value);
+  return withImportant(important, color_vars[value] || value);
 };
 
 export default getValue;
