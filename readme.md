@@ -249,7 +249,7 @@ The theme color system is split into two tiers: **structural colors** (for backg
 
 | Color     | Roles                      | Description                                                     |
 | --------- | -------------------------- | --------------------------------------------------------------- |
-| `neutral` | `neutral.1`–`neutral.11` | A full 11-step gray scale, auto-inverted in dark mode           |
+| `neutral` | `neutral.50`–`neutral.950` | A full 11-step gray scale, auto-inverted in dark mode           |
 | `surface` | `.primary` `.secondary`    | Page/app background — derived from neutral steps 50 and 100     |
 | `paper`   | `.primary` `.secondary` `.ghost.primary` `.ghost.secondary` | Card/panel background — derived from neutral steps 200 and 250 |
 | `text`    | `.primary` `.secondary`    | Body and secondary text colors                                  |
@@ -306,7 +306,7 @@ All theme colors are exposed as CSS custom properties scoped under `.xui-{name}-
 
 ```css
 /* Neutral scale (indices 0–10, mapping steps 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950) */
---color-neutral-0  through  --color-neutral-10
+--color-neutral-50  through  --color-neutral-950
 
 /* Structural */
 --color-surface-primary     --color-surface-secondary
@@ -341,8 +341,8 @@ Use these string tokens anywhere a color prop is accepted:
 
 ```tsx
 // Neutral steps
-"neutral.1"  "neutral.2"  "neutral.3"  "neutral.4"  "neutral.5"
-"neutral.6"  "neutral.7"  "neutral.8"  "neutral.9"  "neutral.10"  "neutral.11"
+"neutral.50"  "neutral.100"  "neutral.200"  "neutral.300"  "neutral.400"
+"neutral.500"  "neutral.600"  "neutral.700"  "neutral.800"  "neutral.900"  "neutral.950"
 
 // Structural
 "surface.primary"  "surface.secondary"
