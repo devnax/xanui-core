@@ -1,4 +1,4 @@
-import { colorScale, hexToRgb, parseColor } from "hueforge";
+import { colorScale, hexToRgb } from "hueforge";
 import {
   ColorCode,
   ThemeMode,
@@ -52,6 +52,7 @@ const defaultColors = {
   warning: "#eab308",
   danger: "#ef4444",
 };
+
 export const createNeutralColorScale = (
   color: ThemeOptionColorNeutralInput,
   mode: ThemeMode,
@@ -59,12 +60,12 @@ export const createNeutralColorScale = (
   if (color in neutralColors) {
     color = (neutralColors as any)[color];
   }
-  const steps = [50, 100, 200, 250, 300, 400, 500, 600, 700, 800, 900];
+  const steps = [50, 100, 200, 250, 300, 400, 500, 600, 700, 800, 900, 950];
   const scale = colorScale(color, "hex", steps);
 
   if (mode === "dark") {
     return Object.fromEntries(
-      Object.entries(scale).map(([key, value], index, arr) => [
+      Object.entries(scale).map(([_key, value], index, arr) => [
         arr[arr.length - 1 - index][0],
         value,
       ]),
@@ -74,13 +75,18 @@ export const createNeutralColorScale = (
   return scale;
 };
 
+export const neutralColorSteps = [
+  50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
+] as const;
+
 export const formatNeutralColors = (scale: Record<number, string>) => {
   const colors: Record<number, string> = {};
-  const colorValues = Object.values(scale);
-  for (let color of colorValues) {
-    const index = colorValues.indexOf(color) + 1;
-    colors[index] = color;
+  for (let step of neutralColorSteps) {
+    const index = neutralColorSteps.indexOf(step);
+    const val = scale[step];
+    colors[index] = val;
   }
+
   return colors;
 };
 
@@ -93,8 +99,8 @@ export const createVariantColors = (color: ColorCode) => {
     secondary: scale[550],
     contrast: scale[50],
     ghost: {
-      primary: `rgba(${r}, ${g}, ${b}, .08)`,
-      secondary: `rgba(${r}, ${g}, ${b}, .09)`,
+      primary: `rgba(${r}, ${g}, ${b}, .1)`,
+      secondary: `rgba(${r}, ${g}, ${b}, .2)`,
     },
   };
 };
@@ -105,6 +111,8 @@ export const createPalette = (
 ): ThemeOptionColors => {
   const scale = createNeutralColorScale(colors.neutral || "Gray", mode);
   const neutral = formatNeutralColors(scale);
+  const neutralBase = scale[500];
+  const [r, g, b] = hexToRgb(neutralBase);
   const surface = colors.surface || {
     primary: scale[50],
     secondary: scale[100],
@@ -112,6 +120,10 @@ export const createPalette = (
   const paper = colors.paper || {
     primary: scale[200],
     secondary: scale[250],
+    ghost: {
+      primary: `rgba(${r}, ${g}, ${b}, .1)`,
+      secondary: `rgba(${r}, ${g}, ${b}, .2)`,
+    },
   };
   const text = colors.paper || {
     primary: scale[900],

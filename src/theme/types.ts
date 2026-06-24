@@ -1,4 +1,5 @@
 import { BreakpointKeys, GlobalCSS } from "../css/types";
+import { neutralColorSteps } from "./palette";
 export type ObjectType = { [key: string]: any };
 
 export type TypographyRefTypes =
@@ -45,16 +46,7 @@ export type ThemeColorInputVariantValue = ThemeColorValue & {
 
 export type ThemeOptionColors = {
   neutral: {
-    1: string;
-    2: string;
-    3: string;
-    4: string;
-    5: string;
-    6: string;
-    7: string;
-    8: string;
-    9: string;
-    10: string;
+    [key in (typeof neutralColorSteps)[number]]: string;
   };
   surface: ThemeColorValue;
   paper: ThemeColorValue;
@@ -105,7 +97,7 @@ export type ThemeOptions = {
 };
 
 export type ThemeOptionInput = {
-  name?: string;
+  name: string;
   mode: ThemeMode;
   rtl?: boolean;
   globalStyle?: GlobalCSS;
@@ -127,19 +119,13 @@ type ColorVariantKeys =
   | "danger";
 
 export type ColorsRefTypes =
-  | "Neutral.1"
-  | "Neutral.2"
-  | "Neutral.3"
-  | "Neutral.4"
-  | "Neutral.5"
-  | "Neutral.6"
-  | "Neutral.7"
-  | "Neutral.8"
-  | "Neutral.9"
-  | "Neutral.10"
-  | ColorKeys
+  | `neutral.${(typeof neutralColorSteps)[number]}`
+  | "paper.gost.primary"
+  | "paper.gost.secondary"
+  | `${ColorKeys}.primary`
   | `${ColorKeys}.secondary`
-  | ColorVariantKeys
+  | `${ColorVariantKeys}.primary`
   | `${ColorVariantKeys}.secondary`
+  | `${ColorVariantKeys}.contrast`
   | `${ColorVariantKeys}.ghost`
   | `${ColorVariantKeys}.ghost.secondary`;

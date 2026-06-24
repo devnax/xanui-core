@@ -10,8 +10,15 @@ import useMergeRefs from "../hooks/useMergeRefs";
 import { CSSCacheProvider } from "../css/CSSCacheProvider";
 import { BreakpointKeys } from "../css/types";
 import Cookie from "../cookie";
-import { ThemeColorKeys } from "../theme/types";
 
+export type ThemeSelectionColor =
+  | "default"
+  | "brand"
+  | "accent"
+  | "info"
+  | "success"
+  | "warning"
+  | "danger";
 export type AppRootProps<T extends TagComponentType = "div"> =
   ThemeProviderProps<T> & {
     noScrollbarCss?: boolean;
@@ -19,7 +26,7 @@ export type AppRootProps<T extends TagComponentType = "div"> =
     CSSCacheId?: string;
     disableRenderar?: boolean;
     defaultBreakpoint?: BreakpointKeys;
-    selectionColor?: ThemeColorKeys;
+    selectionColor?: ThemeSelectionColor;
   };
 
 const AppRoot = React.forwardRef(

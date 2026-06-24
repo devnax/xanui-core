@@ -20,28 +20,30 @@ const useColorTemplate = (
     return {
       main: {
         bgcolor: `transparent`,
-        color: is_def ? `text` : color,
+        color: is_def ? `text.primary` : `${color}.primary`,
         border: "1px solid",
-        borderColor: is_def ? "divider" : color,
+        borderColor: is_def ? "divider.primary" : `${color}.primary`,
+        transition: "border .2s",
       },
       hover: {
         bgcolor: `transparent`,
-        color: is_def ? `text` : `${color}.secondary`,
+        color: is_def ? `text.primary` : `${color}.secondary`,
         border: "1px solid",
-        borderColor: is_def ? "text.secondary" : `${color}.secondary`,
+        borderColor: is_def ? "divider.secondary" : `${color}.secondary`,
+        transition: "border .2s",
       },
     };
   } else if (type === "fill") {
     return {
       main: {
-        bgcolor: is_def ? "paper" : color,
-        color: is_def ? "text" : `${color}.contrast`,
+        bgcolor: is_def ? "paper.primary" : `${color}.primary`,
+        color: is_def ? "text.primary" : `${color}.contrast`,
         border: 0,
         borderColor: "transparent",
       },
       hover: {
         bgcolor: is_def ? "paper.secondary" : `${color}.secondary`,
-        color: is_def ? "text" : `${color}.text`,
+        color: is_def ? "text.primary" : `${color}.text`,
         border: 0,
         borderColor: "transparent",
       },
@@ -50,13 +52,13 @@ const useColorTemplate = (
     return {
       main: {
         bgcolor: "transparent",
-        color: is_def ? `text` : `${color}.primary`,
+        color: is_def ? `text.primary` : `${color}.primary`,
         border: 0,
         borderColor: `transparent`,
       },
       hover: {
         bgcolor: "transparent",
-        color: is_def ? `text` : `${color}.primary`,
+        color: is_def ? `text.primary` : `${color}.primary`,
         border: 0,
         borderColor: `transparent`,
       },
@@ -64,14 +66,14 @@ const useColorTemplate = (
   } else if (type === "ghost") {
     return {
       main: {
-        bgcolor: `${color}.ghost`,
-        color: is_def ? `text` : color,
+        bgcolor: is_def ? "paper.ghost.primary" : `${color}.ghost.primary`,
+        color: is_def ? `text.primary` : `${color}.primary`,
         border: 0,
         borderColor: `transparent`,
       },
       hover: {
-        bgcolor: `${color}.ghost`,
-        color: is_def ? `text` : `${color}.secondary`,
+        bgcolor: is_def ? "paper.ghost.secondary" : `${color}.ghost.secondary`,
+        color: is_def ? `text.primary` : `${color}.secondary`,
         border: 0,
         borderColor: `transparent`,
       },

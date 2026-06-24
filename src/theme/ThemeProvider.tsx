@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { ThemeOptionInput, ThemeOptions } from "./types";
+import { ThemeOptionInput } from "./types";
 import Tag from "../Tag";
 import { TagComponentType, TagProps } from "../Tag/types";
 import { createTheme, ThemeContext } from "./core";
@@ -14,7 +14,7 @@ import { useCSSCacheId } from "../css/CSSCacheProvider";
 export type ThemeProviderProps<T extends TagComponentType = "div"> =
   TagProps<T> & {
     theme: ThemeOptionInput;
-    onThemeUpdate?: (theme: ThemeOptions) => void;
+    onThemeUpdate?: (theme: ThemeOptionInput) => void;
     isRoot?: boolean;
     noScrollbarCss?: boolean;
     scrollbar?: {
@@ -119,8 +119,8 @@ const ThemeProvider = <T extends TagComponentType = "div">({
     if (noScrollbarCss) return;
     const cls = (cls: string) => `${themeRootClass(theme.name)} ${cls}`;
     let thumbSize = scrollbar?.size ?? 7;
-    let thumbColor = scrollbar?.thumbColor ?? "var(--color-paper-secondary)";
-    let trackColor = scrollbar?.trackColor ?? "var(--color-paper-ghost)";
+    let thumbColor = scrollbar?.thumbColor ?? "var(--color-neutral-5)";
+    let trackColor = scrollbar?.trackColor ?? "var(--color-neutral-2)";
 
     return css(
       {
@@ -168,8 +168,8 @@ const ThemeProvider = <T extends TagComponentType = "div">({
       <ServerStyleTag factory={themeGlobalStyle} />
       <Tag
         minHeight="100%"
-        bgcolor={"default.surface"}
-        color="default.contrast"
+        bgcolor={"surface.primary"}
+        color="text.primary"
         fontSize="md"
         fontWeight="md"
         lineHeight="md"

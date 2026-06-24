@@ -265,7 +265,9 @@ const RND = () => {
       onClick={() => {
         // const rr = Renderar.render(Auth)
         theme.update(
-          theme.name === "dark" ? { mode: "light" } : { mode: "dark" },
+          theme.name === "dark"
+            ? { mode: "light", name: "light" }
+            : { mode: "dark", name: "dark" },
         );
       }}
     >
@@ -282,6 +284,7 @@ const App = () => {
   const [toggled, setToggled] = React.useState(true);
   const [text, setText] = React.useState("Click");
   const [theme, setTheme] = React.useState<ThemeOptionInput>({
+    name: "light",
     mode: "light",
   });
 
@@ -310,7 +313,10 @@ const App = () => {
             color={"text.secondary"}
             p="md"
             border="1px solid"
-            borderColor="divider"
+            borderColor="divider.primary"
+            hover={{
+              borderColor: "divider.secondary",
+            }}
           >
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos sequi
             numquam illo expedita accusamus dolores. Recusandae ab dignissimos
@@ -426,6 +432,7 @@ const App = () => {
 
         <Tag
           theme={{
+            name: "light",
             mode: "light",
             colors: {
               brand: "#3470f2",

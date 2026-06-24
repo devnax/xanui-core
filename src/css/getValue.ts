@@ -1,18 +1,23 @@
+import { neutralColorSteps } from "../theme/palette";
 import { CSSProps } from "./types";
 
 const color_vars: Record<string, string> = {};
 
 // generate Neutral
-for (let i = 1; i <= 10; i++) {
-  color_vars[`neutral.${i}`] = `var(--color-neutral-${i})`;
+for (let step of neutralColorSteps) {
+  const index = neutralColorSteps.indexOf(step);
+  color_vars[`neutral.${index}`] = `var(--color-neutral-${index})`;
 }
 
 // generate surface, paper, text, divider
 const names = ["surface", "paper", "text", "divider"];
 for (let name of names) {
-  color_vars[`${name}`] = `var(--color-${name}-primary)`;
+  color_vars[`${name}.primary`] = `var(--color-${name}-primary)`;
   color_vars[`${name}.secondary`] = `var(--color-${name}-secondary)`;
 }
+
+color_vars[`paper.ghost.primary`] = `var(--color-paper-ghost-primary)`;
+color_vars[`paper.ghost.secondary`] = `var(--color-paper-ghost-secondary)`;
 
 // generate variant colors
 const variant_names = [
@@ -24,10 +29,10 @@ const variant_names = [
   "danger",
 ];
 for (let name of variant_names) {
-  color_vars[`${name}`] = `var(--color-${name}-primary)`;
+  color_vars[`${name}.primary`] = `var(--color-${name}-primary)`;
   color_vars[`${name}.secondary`] = `var(--color-${name}-secondary)`;
   color_vars[`${name}.contrast`] = `var(--color-${name}-contrast)`;
-  color_vars[`${name}.ghost`] = `var(--color-${name}-ghost-primary)`;
+  color_vars[`${name}.ghost.primary`] = `var(--color-${name}-ghost-primary)`;
   color_vars[`${name}.ghost.secondary`] =
     `var(--color-${name}-ghost-secondary)`;
 }

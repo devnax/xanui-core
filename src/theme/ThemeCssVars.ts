@@ -1,3 +1,4 @@
+import { neutralColorSteps } from "./palette";
 import { ThemeOptions } from "./types";
 
 const ThemeCssVars = (theme: ThemeOptions) => {
@@ -37,8 +38,9 @@ const ThemeCssVars = (theme: ThemeOptions) => {
   }
 
   // print neutral colors
-  for (let i = 1; i <= 10; i++) {
-    vars[`--color-neutral-${i}`] = (theme as any).colors.neutral[i];
+  for (let step of neutralColorSteps) {
+    const index = neutralColorSteps.indexOf(step);
+    vars[`--color-neutral-${index}`] = (theme as any).colors.neutral[index];
   }
 
   // print surface, paper, text, divider
@@ -47,6 +49,14 @@ const ThemeCssVars = (theme: ThemeOptions) => {
     vars[`--color-${name}-primary`] = (theme as any).colors[name].primary;
     vars[`--color-${name}-secondary`] = (theme as any).colors[name].secondary;
   }
+
+  // paper ghpst
+  vars[`--color-paper-ghost-primary`] = (
+    theme as any
+  ).colors.paper.ghost.primary;
+  vars[`--color-paper-ghost-secondary`] = (
+    theme as any
+  ).colors.paper.ghost.secondary;
 
   // print variant colors
   const variant_names = [
