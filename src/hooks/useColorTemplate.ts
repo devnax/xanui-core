@@ -1,5 +1,4 @@
 "use client";
-
 export type UseColorTemplateType = "fill" | "outline" | "text" | "ghost";
 export type UseColorTemplateColor =
   | "default"

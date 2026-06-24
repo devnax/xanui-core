@@ -1,3 +1,4 @@
+"use client";
 import { useTheme } from "../theme";
 
 const useThemeComponent = <P extends object>(

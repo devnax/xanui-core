@@ -70,6 +70,7 @@ export const ThemeTypography: ThemeOptions["typography"] = {
 };
 
 export const defaultThemeOptions: ThemeOptionInput = {
+  name: "light",
   mode: "light",
   rtl: false,
   shadow: shadows.dark as any,

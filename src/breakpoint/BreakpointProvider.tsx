@@ -1,5 +1,4 @@
 "use client";
-
 import React, { ReactNode, useEffect, useState } from "react";
 import { breakpoints } from "../css";
 import { BreakpointKeys } from "../css/types";
@@ -8,53 +7,57 @@ import Cookie from "../cookie";
 export const BreakpointCtx = React.createContext<BreakpointKeys | null>(null);
 
 const queries: Record<BreakpointKeys, string> = {
-    xs: `(max-width:${breakpoints.sm - 0.02}px)`,
-    sm: `(min-width:${breakpoints.sm}px) and (max-width:${breakpoints.md - 0.02}px)`,
-    md: `(min-width:${breakpoints.md}px) and (max-width:${breakpoints.lg - 0.02}px)`,
-    lg: `(min-width:${breakpoints.lg}px) and (max-width:${breakpoints.xl - 0.02}px)`,
-    xl: `(min-width:${breakpoints.xl}px)`
+  xs: `(max-width:${breakpoints.sm - 0.02}px)`,
+  sm: `(min-width:${breakpoints.sm}px) and (max-width:${breakpoints.md - 0.02}px)`,
+  md: `(min-width:${breakpoints.md}px) and (max-width:${breakpoints.lg - 0.02}px)`,
+  lg: `(min-width:${breakpoints.lg}px) and (max-width:${breakpoints.xl - 0.02}px)`,
+  xl: `(min-width:${breakpoints.xl}px)`,
 };
 
 const getCurrent = (def: BreakpointKeys): BreakpointKeys => {
-    if (typeof window === "undefined") return def;
-    const entries = Object.entries(queries) as [BreakpointKeys, string][];
-    for (const [key, query] of entries) {
-        if (window.matchMedia(query).matches) {
-            return key;
-        }
+  if (typeof window === "undefined") return def;
+  const entries = Object.entries(queries) as [BreakpointKeys, string][];
+  for (const [key, query] of entries) {
+    if (window.matchMedia(query).matches) {
+      return key;
     }
-    return def;
+  }
+  return def;
 };
 
-export const BreakpointProvider = ({ children, defaultKey }: { children?: ReactNode, defaultKey: BreakpointKeys }) => {
-    const [current, setCurrent] = useState<BreakpointKeys>(defaultKey);
+export const BreakpointProvider = ({
+  children,
+  defaultKey,
+}: {
+  children?: ReactNode;
+  defaultKey: BreakpointKeys;
+}) => {
+  const [current, setCurrent] = useState<BreakpointKeys>(defaultKey);
 
-    useEffect(() => {
-        const current = getCurrent(defaultKey)
-        setCurrent(current)
-        Cookie.set("xuibp", current)
-        const mqls = Object.entries(queries).map(([key, query]) => {
-            const mql = window.matchMedia(query);
-            const handler = () => {
-                if (mql.matches) {
-                    setCurrent(key as BreakpointKeys);
-                    Cookie.set("xuibp", key)
-                }
-            };
+  useEffect(() => {
+    const current = getCurrent(defaultKey);
+    setCurrent(current);
+    Cookie.set("xuibp", current);
+    const mqls = Object.entries(queries).map(([key, query]) => {
+      const mql = window.matchMedia(query);
+      const handler = () => {
+        if (mql.matches) {
+          setCurrent(key as BreakpointKeys);
+          Cookie.set("xuibp", key);
+        }
+      };
 
-            mql.addEventListener("change", handler);
+      mql.addEventListener("change", handler);
 
-            return () => mql.removeEventListener("change", handler);
-        });
+      return () => mql.removeEventListener("change", handler);
+    });
 
-        return () => {
-            mqls.forEach(fn => fn());
-        };
-    }, []);
+    return () => {
+      mqls.forEach((fn) => fn());
+    };
+  }, []);
 
-    return (
-        <BreakpointCtx.Provider value={current}>
-            {children}
-        </BreakpointCtx.Provider>
-    );
+  return (
+    <BreakpointCtx.Provider value={current}>{children}</BreakpointCtx.Provider>
+  );
 };

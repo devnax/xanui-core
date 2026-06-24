@@ -1,4 +1,3 @@
-"use client";
 import ThemeProvider from "./ThemeProvider";
 import { useTheme, createTheme } from "./core";
 import { defaultThemeOptions } from "./ThemeDefaultOptions";

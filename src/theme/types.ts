@@ -98,7 +98,7 @@ export type ThemeOptions = {
 
 export type ThemeOptionInput = {
   name: string;
-  mode: ThemeMode;
+  mode?: ThemeMode;
   rtl?: boolean;
   globalStyle?: GlobalCSS;
   shadow?: { [key in BreakpointKeys]: string };

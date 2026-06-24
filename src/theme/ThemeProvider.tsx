@@ -71,6 +71,9 @@ const ThemeProvider = <T extends TagComponentType = "div">({
             outline: "none",
             boxSizing: "border-box",
             verticalAlign: "baseline",
+            borderWidth: 0,
+            borderStyle: "solid",
+            borderColor: "var(--color-divider-primary)",
           },
           "html, body": {
             height: "100%",
