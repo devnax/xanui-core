@@ -39,8 +39,7 @@ const ThemeCssVars = (theme: ThemeOptions) => {
 
   // print neutral colors
   for (let step of neutralColorSteps) {
-    const index = neutralColorSteps.indexOf(step);
-    vars[`--color-neutral-${index}`] = (theme as any).colors.neutral[index];
+    vars[`--color-neutral-${step}`] = (theme as any).colors.neutral[step];
   }
 
   // print surface, paper, text, divider

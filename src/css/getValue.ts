@@ -5,8 +5,7 @@ const color_vars: Record<string, string> = {};
 
 // generate Neutral
 for (let step of neutralColorSteps) {
-  const index = neutralColorSteps.indexOf(step);
-  color_vars[`neutral.${index}`] = `var(--color-neutral-${index})`;
+  color_vars[`neutral.${step}`] = `var(--color-neutral-${step})`;
 }
 
 // generate surface, paper, text, divider
