@@ -22,14 +22,14 @@ const useColorTemplate = (
         color: is_def ? `text.primary` : `${color}.primary`,
         border: "1px solid",
         borderColor: is_def ? "divider.primary" : `${color}.primary`,
-        transition: "border .2s",
+        transition: "border .3s",
       },
       hover: {
         bgcolor: `transparent`,
         color: is_def ? `text.primary` : `${color}.secondary`,
         border: "1px solid",
         borderColor: is_def ? "divider.secondary" : `${color}.secondary`,
-        transition: "border .2s",
+        transition: "border .3s",
       },
     };
   } else if (type === "fill") {
@@ -39,12 +39,14 @@ const useColorTemplate = (
         color: is_def ? "text.primary" : `${color}.contrast`,
         border: 0,
         borderColor: "transparent",
+        transition: "background-color .3s",
       },
       hover: {
         bgcolor: is_def ? "paper.secondary" : `${color}.secondary`,
         color: is_def ? "text.primary" : `${color}.text`,
         border: 0,
         borderColor: "transparent",
+        transition: "background-color .3s",
       },
     };
   } else if (type === "text") {
@@ -69,12 +71,14 @@ const useColorTemplate = (
         color: is_def ? `text.primary` : `${color}.primary`,
         border: 0,
         borderColor: `transparent`,
+        transition: "background-color .3s",
       },
       hover: {
         bgcolor: is_def ? "paper.ghost.secondary" : `${color}.ghost.secondary`,
         color: is_def ? `text.primary` : `${color}.secondary`,
         border: 0,
         borderColor: `transparent`,
+        transition: "background-color .3s",
       },
     };
   }
