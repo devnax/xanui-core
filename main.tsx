@@ -314,10 +314,10 @@ const App = () => {
           </Tag>
           <Tag
             overflow="auto"
-            color={"text.secondary"}
             p="md"
             border="1px solid"
             borderColor="divider.primary"
+            bgcolor="paper.primary"
             hover={{
               borderColor: "divider.secondary",
             }}

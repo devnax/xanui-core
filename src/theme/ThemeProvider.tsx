@@ -167,7 +167,7 @@ const ThemeProvider = <T extends TagComponentType = "div">({
       <ServerStyleTag factory={themeGlobalStyle} />
       <Tag
         minHeight="100%"
-        bgcolor={"surface.primary"}
+        bgcolor={"neutral.100"}
         color="text.primary"
         fontSize="md"
         fontWeight="md"

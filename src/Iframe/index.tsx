@@ -64,7 +64,7 @@ const Iframe = (
           >
             <AppRoot
               disableRenderar
-              theme={{ name: parentTheme.name, mode: parentTheme.mode }}
+              theme={parentTheme}
               document={doc as Document}
               CSSCacheId={CSSCacheId}
             >
