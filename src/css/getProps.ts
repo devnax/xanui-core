@@ -21,8 +21,6 @@ const getProps = (prop: string, value: string, _css: CSSProps) => {
       return c;
     }
     return {};
-  } else if (prop === "border" && typeof value === "number") {
-    return { borderWidth: value };
   } else if (prop === "spacing" && typeof value === "number") {
     const val = value * 8;
     const hasWidth = "width" in _css;

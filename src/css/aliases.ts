@@ -35,6 +35,55 @@ const aliases: OptionAliases<Aliases> = {
   direction: (v) =>
     v === "row" || v === "column" ? { flexDirection: v } : { direction: v },
   gap: (v) => ({ gap: isStr(v, 8 * v) }),
+  border: (v) => {
+    if (v === false) return {};
+    if (v === true || typeof v === "number") {
+      return {
+        border: `${v === true ? 1 : v}px solid var(--color-divider-primary)`,
+      };
+    }
+    return { border: v };
+  },
+  borderLeft: (v) => {
+    if (v === false) return {};
+
+    if (v === true || typeof v === "number") {
+      return {
+        borderLeft: `${v === true ? 1 : v}px solid var(--color-divider-primary)`,
+      };
+    }
+    return { borderLeft: v };
+  },
+  borderRight: (v) => {
+    if (v === false) return {};
+
+    if (v === true || typeof v === "number") {
+      return {
+        borderRight: `${v === true ? 1 : v}px solid var(--color-divider-primary)`,
+      };
+    }
+    return { borderRight: v };
+  },
+  borderTop: (v) => {
+    if (v === false) return {};
+
+    if (v === true || typeof v === "number") {
+      return {
+        borderTop: `${v === true ? 1 : v}px solid var(--color-divider-primary)`,
+      };
+    }
+    return { borderTop: v };
+  },
+  borderBottom: (v) => {
+    if (v === false) return {};
+
+    if (v === true || typeof v === "number") {
+      return {
+        borderBottom: `${v === true ? 1 : v}px solid var(--color-divider-primary)`,
+      };
+    }
+    return { borderBottom: v };
+  },
 };
 
 export default aliases;

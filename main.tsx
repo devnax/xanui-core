@@ -309,7 +309,7 @@ const App = () => {
         </Tag>
 
         <Tag p={3} width={300}>
-          <Tag overflow="auto" color={"text"} fontSize="h2">
+          <Tag overflow="auto" color={"text"} fontSize="h2" border={1}>
             This is main title text
           </Tag>
           <Tag

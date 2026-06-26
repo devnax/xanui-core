@@ -64,15 +64,12 @@ const ThemeProvider = <T extends TagComponentType = "div">({
     return css(
       {
         "@global": {
-          "*": {
+          "*, *::after, *::before": {
             m: 0,
             p: 0,
             outline: "none",
             boxSizing: "border-box",
             verticalAlign: "baseline",
-            borderWidth: 0,
-            borderStyle: "solid",
-            borderColor: "var(--color-divider-primary)",
           },
           "html, body": {
             height: "100%",
@@ -176,6 +173,7 @@ const ThemeProvider = <T extends TagComponentType = "div">({
         fontWeight="md"
         lineHeight="md"
         fontFamily={`system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`}
+        borderColor="red"
         {...props}
         baseClass={`${theme.name}-theme-root`}
         direction={theme.rtl ? "rtl" : "ltr"}

@@ -52,6 +52,13 @@ export type Aliases = {
   maxWidth?: CSSValueType<"maxWidth"> | BreakpointKeys;
   minHeight?: CSSValueType<"minHeight">;
   maxHeight?: CSSValueType<"maxHeight">;
+
+  // border
+  border?: CSSValueType<"border"> | number | boolean;
+  borderLeft?: CSSValueType<"border"> | number | boolean;
+  borderTop?: CSSValueType<"border"> | number | boolean;
+  borderRight?: CSSValueType<"border"> | number | boolean;
+  borderBottom?: CSSValueType<"border"> | number | boolean;
 };
 
 export type BreakpointKeys = "xs" | "sm" | "md" | "lg" | "xl";
