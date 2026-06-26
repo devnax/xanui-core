@@ -37,7 +37,7 @@ export const createTheme = (options: ThemeOptionInput): ThemeOptions => {
 
 export type ThemeCntextProps = {
   theme: ThemeOptions;
-  onThemeUpdate: (theme: ThemeOptionInput) => void;
+  onThemeUpdate: (theme: ThemeOptions) => void;
 };
 
 export const ThemeContext = React.createContext<ThemeCntextProps>({
@@ -51,6 +51,6 @@ export const ThemeContext = React.createContext<ThemeCntextProps>({
 export const useTheme = () => {
   const ctx = useContext(ThemeContext);
   const theme = ctx.theme;
-  theme.update = (theme: ThemeOptionInput) => ctx.onThemeUpdate(theme);
+  theme.update = (theme: ThemeOptions) => ctx.onThemeUpdate(theme);
   return theme;
 };

@@ -83,18 +83,19 @@ const ThemeCssVars = (theme: ThemeOptions) => {
   vars[`--shadow-md`] = theme.shadow.md;
   vars[`--shadow-lg`] = theme.shadow.lg;
   vars[`--shadow-xl`] = theme.shadow.xl;
+  vars[`--shadow-xxl`] = theme.shadow.xxl;
 
   vars[`--radius-xs`] = theme.radius.xs;
   vars[`--radius-sm`] = theme.radius.sm;
   vars[`--radius-md`] = theme.radius.md;
   vars[`--radius-lg`] = theme.radius.lg;
-  vars[`--radius-xl`] = theme.radius.xl;
+  vars[`--radius-xxl`] = theme.radius.xxl;
 
   vars[`--spacing-xs`] = theme.spacing.xs;
   vars[`--spacing-sm`] = theme.spacing.sm;
   vars[`--spacing-md`] = theme.spacing.md;
   vars[`--spacing-lg`] = theme.spacing.lg;
-  vars[`--spacing-xl`] = theme.spacing.xl;
+  vars[`--spacing-xxl`] = theme.spacing.xxl;
 
   return vars;
 };

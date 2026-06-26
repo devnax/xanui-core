@@ -114,7 +114,7 @@ export const createPalette = (
   const neutralBase = scale[500];
   const [r, g, b] = hexToRgb(neutralBase);
   const surface = colors.surface || {
-    primary: scale[50],
+    primary: mode === "dark" ? scale[100] : scale[50],
     secondary: scale[200],
   };
   const paper = colors.paper || {

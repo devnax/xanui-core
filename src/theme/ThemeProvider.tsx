@@ -1,9 +1,9 @@
 "use client";
 import * as React from "react";
-import { ThemeOptionInput } from "./types";
+import { ThemeOptions } from "./types";
 import Tag from "../Tag";
 import { TagComponentType, TagProps } from "../Tag/types";
-import { createTheme, ThemeContext } from "./core";
+import { ThemeContext } from "./core";
 import ThemeCssVars from "./ThemeCssVars";
 import { css } from "../css";
 import ServerStyleTag from "../Tag/ServerStyleTag";
@@ -13,8 +13,8 @@ import { useCSSCacheId } from "../css/CSSCacheProvider";
 
 export type ThemeProviderProps<T extends TagComponentType = "div"> =
   TagProps<T> & {
-    theme: ThemeOptionInput;
-    onThemeUpdate?: (theme: ThemeOptionInput) => void;
+    theme: ThemeOptions;
+    onThemeUpdate?: (theme: ThemeOptions) => void;
     isRoot?: boolean;
     noScrollbarCss?: boolean;
     scrollbar?: {
@@ -26,7 +26,7 @@ export type ThemeProviderProps<T extends TagComponentType = "div"> =
 
 const ThemeProvider = <T extends TagComponentType = "div">({
   children,
-  theme: THEME,
+  theme,
   scrollbar,
   onThemeUpdate,
   isRoot,
@@ -36,7 +36,6 @@ const ThemeProvider = <T extends TagComponentType = "div">({
   const doc = useDocument();
   const cacheId = useCSSCacheId();
 
-  const theme = React.useMemo(() => createTheme(THEME), [THEME]);
   const themeGlobalStyle: any = React.useMemo(() => {
     const root_cls = `.xui-${theme.name}-theme-root`;
     let gkeys = Object.keys(theme.globalStyle || {});

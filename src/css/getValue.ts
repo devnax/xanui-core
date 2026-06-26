@@ -36,8 +36,7 @@ for (let name of variant_names) {
     `var(--color-${name}-ghost-secondary)`;
 }
 
-const withImportant = (important: any, value: any) =>
-  important ? value + important : value;
+const withImportant = (imp: any, value: any) => (imp ? value + imp : value);
 
 const breakpoints: any = {
   xs: "var(--bp-xs)",
@@ -90,6 +89,8 @@ let fontWeights: any = {
 };
 
 const fontKeys = Object.keys(fontsizes);
+const UnitKeys = ["xs", "sm", "md", "lg", "xl", "xxl"];
+const Widths = ["width", "maxWidth", "minWidth", "max-width", "min-width"];
 
 const getValue = (prop: any, value: string | number, _css: CSSProps): any => {
   let important;
@@ -99,10 +100,7 @@ const getValue = (prop: any, value: string | number, _css: CSSProps): any => {
     important = split[1] ? "!important" : "";
     value = split[0];
   }
-
-  if (
-    ["width", "maxWidth", "minWidth", "max-width", "min-width"].includes(prop)
-  ) {
+  if (Widths.includes(prop)) {
     return withImportant(important, breakpoints[value] || value);
   } else if (
     ["fontWeight", "font-weight"].includes(prop) &&
@@ -124,14 +122,11 @@ const getValue = (prop: any, value: string | number, _css: CSSProps): any => {
   } else if (
     typeof value === "string" &&
     ["shadow", "boxShadow"].includes(prop) &&
-    ["xs", "sm", "md", "lg", "xl"].includes(value)
+    UnitKeys.includes(value)
   ) {
     return withImportant(important, `var(--shadow-${value})`);
   } else if (["radius", "borderRadius"].includes(prop)) {
-    if (
-      typeof value === "string" &&
-      ["xs", "sm", "md", "lg", "xl"].includes(value)
-    ) {
+    if (typeof value === "string" && UnitKeys.includes(value)) {
       return withImportant(important, `var(--radius-${value})`);
     } else {
       return withImportant(important, value);
@@ -141,10 +136,7 @@ const getValue = (prop: any, value: string | number, _css: CSSProps): any => {
     prop.startsWith("padding") ||
     prop.startsWith("margin")
   ) {
-    if (
-      typeof value === "string" &&
-      ["xs", "sm", "md", "lg", "xl"].includes(value)
-    ) {
+    if (typeof value === "string" && UnitKeys.includes(value)) {
       return withImportant(important, `var(--spacing-${value})`);
     } else {
       return withImportant(important, value);

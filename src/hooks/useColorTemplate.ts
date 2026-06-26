@@ -1,18 +1,28 @@
 "use client";
-export type UseColorTemplateType = "fill" | "outline" | "text" | "ghost";
-export type UseColorTemplateColor =
-  | "default"
-  | "brand"
-  | "accent"
-  | "info"
-  | "success"
-  | "warning"
-  | "danger";
+
+const colorNames = [
+  "default",
+  "brand",
+  "accent",
+  "info",
+  "success",
+  "warning",
+  "danger",
+] as const;
+const types = ["fill", "outline", "text", "ghost"] as const;
+export type UseColorTemplateType = (typeof types)[number];
+export type UseColorTemplateColor = (typeof colorNames)[number];
 
 const useColorTemplate = (
   color: UseColorTemplateColor,
   type: UseColorTemplateType,
 ) => {
+  if (!colorNames.includes(color)) {
+    throw new Error(`Invalid color: ${color}`);
+  }
+  if (!types.includes(type)) {
+    throw new Error(`Invalid type: ${type}`);
+  }
   const is_def = color === "default";
 
   if (type === "outline") {

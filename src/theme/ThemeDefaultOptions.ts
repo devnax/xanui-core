@@ -1,21 +1,12 @@
 import { ThemeOptionInput, ThemeOptions } from "./types";
 
-const shadows = {
-  light: {
-    xs: "rgba(0, 0, 0, 0.08) 0px 1px 3px 0px, rgba(0, 0, 0, 0.04) 0px 1px 2px 0px",
-    sm: "rgba(0, 0, 0, 0.08) 0px 4px 6px -1px, rgba(0, 0, 0, 0.04) 0px 2px 4px -1px",
-    md: "rgba(0, 0, 0, 0.10) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
-    lg: "rgba(0, 0, 0, 0.12) 0px 20px 25px -5px, rgba(0, 0, 0, 0.06) 0px 10px 10px -5px",
-    xl: "rgba(0, 0, 0, 0.16) 0px 25px 50px -12px",
-  },
-
-  dark: {
-    xs: "rgba(0, 0, 0, 0.45) 0px 1px 3px 0px, rgba(0, 0, 0, 0.30) 0px 1px 2px 0px",
-    sm: "rgba(0, 0, 0, 0.55) 0px 4px 6px -1px, rgba(0, 0, 0, 0.35) 0px 2px 4px -1px",
-    md: "rgba(0, 0, 0, 0.65) 0px 10px 15px -3px, rgba(0, 0, 0, 0.45) 0px 4px 6px -2px",
-    lg: "rgba(0, 0, 0, 0.75) 0px 20px 25px -5px, rgba(0, 0, 0, 0.55) 0px 10px 10px -5px",
-    xl: "rgba(0, 0, 0, 0.85) 0px 25px 50px -12px",
-  },
+export const shadows = {
+  xs: "0 1px 2px rgb(0 0 0 / 0.10), 0 0 1px rgb(0 0 0 / 0.20)",
+  sm: "0 2px 4px rgb(0 0 0 / 0.10), 0 0 1px rgb(0 0 0 / 0.30)",
+  md: "0 4px 8px rgb(0 0 0 / 0.10), 0 0 1px rgb(0 0 0 / 0.30)",
+  lg: "0 8px 16px rgb(0 0 0 / 0.10), 0 0 1px rgb(0 0 0 / 0.30)",
+  xl: "0 16px 24px rgb(0 0 0 / 0.10), 0 0 1px rgb(0 0 0 / 0.30)",
+  xxl: "0 24px 40px rgb(0 0 0 / 0.16), 0 0 1px rgb(0 0 0 / 0.30)",
 };
 
 const radius = {
@@ -24,6 +15,7 @@ const radius = {
   md: "12px",
   lg: "16px",
   xl: "24px",
+  xxl: "32px",
 };
 
 const spacing = {
@@ -32,6 +24,7 @@ const spacing = {
   md: "12px",
   lg: "16px",
   xl: "24px",
+  xxl: "32px",
 };
 
 export const ThemeTypography: ThemeOptions["typography"] = {
@@ -73,7 +66,7 @@ export const defaultThemeOptions: ThemeOptionInput = {
   name: "light",
   mode: "light",
   rtl: false,
-  shadow: shadows.dark as any,
+  shadow: shadows as any,
   radius: radius as any,
   spacing: spacing as any,
   globalStyle: {},

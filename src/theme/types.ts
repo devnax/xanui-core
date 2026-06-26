@@ -81,19 +81,21 @@ export type ThemeComponents<T = any> = (
   theme: ThemeOptions,
 ) => T;
 
+type UnitgKeys = BreakpointKeys | "xxl";
+
 export type ThemeOptions = {
   name: string;
   mode: ThemeMode;
   rtl: boolean;
   globalStyle: GlobalCSS;
   breakpoints: { [key in BreakpointKeys]: number };
-  shadow: { [key in BreakpointKeys]: string };
-  radius: { [key in BreakpointKeys]: number };
-  spacing: { [key in BreakpointKeys]: number };
+  shadow: { [key in UnitgKeys]: string };
+  radius: { [key in UnitgKeys]: number };
+  spacing: { [key in UnitgKeys]: number };
   components: Record<string, ThemeComponents>;
   colors: ThemeOptionColors;
   typography: Record<TypographyRefTypes, ThemeTypographyItem>;
-  update: (theme: ThemeOptionInput) => void;
+  update: (theme: ThemeOptions) => void;
 };
 
 export type ThemeOptionInput = {
@@ -101,9 +103,9 @@ export type ThemeOptionInput = {
   mode?: ThemeMode;
   rtl?: boolean;
   globalStyle?: GlobalCSS;
-  shadow?: { [key in BreakpointKeys]: string };
-  radius?: { [key in BreakpointKeys]: number };
-  spacing?: { [key in BreakpointKeys]: number };
+  shadow?: { [key in UnitgKeys]: string };
+  radius?: { [key in UnitgKeys]: number };
+  spacing?: { [key in UnitgKeys]: number };
   components?: Record<string, ThemeComponents>;
   colors?: ThemeOptionColorsInput;
   typography?: Record<TypographyRefTypes, ThemeTypographyItem>;

@@ -24,6 +24,7 @@ import {
   useColorTemplate,
   useThemeComponent,
   useInView,
+  ThemeOptions,
 } from "./src";
 import AppRoot from "./src/AppRoot";
 import useTransition from "./src/hooks/useTransition";
@@ -263,11 +264,12 @@ const RND = () => {
   return (
     <button
       onClick={() => {
-        // const rr = Renderar.render(Auth)
         theme.update(
-          theme.name === "dark"
-            ? { mode: "light", name: "light" }
-            : { mode: "dark", name: "dark" },
+          createTheme(
+            theme.name === "dark"
+              ? { mode: "light", name: "light" }
+              : { mode: "dark", name: "dark" },
+          ),
         );
       }}
     >
@@ -283,10 +285,12 @@ const App = () => {
   });
   const [toggled, setToggled] = React.useState(true);
   const [text, setText] = React.useState("Click");
-  const [theme, setTheme] = React.useState<ThemeOptionInput>({
-    name: "light",
-    mode: "light",
-  });
+  const [theme, setTheme] = React.useState<ThemeOptions>(
+    createTheme({
+      name: "light",
+      mode: "light",
+    }),
+  );
 
   return (
     <AuthProvider value={{ auth: "naxrul" }}>
@@ -430,18 +434,7 @@ const App = () => {
           </Button>
         </Tag>
 
-        <Tag
-          theme={{
-            name: "light",
-            mode: "light",
-            colors: {
-              brand: "#3470f2",
-            },
-          }}
-          width={150}
-          height={100}
-          bgcolor="paper"
-        >
+        <Tag width={150} height={100} bgcolor="paper">
           <Tag color="text">Hello</Tag>
         </Tag>
 

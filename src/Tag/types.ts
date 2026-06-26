@@ -189,5 +189,4 @@ export type CSSPropAsAttr = Partial<TagCSSProperties> &
     hover?: CSSProps;
     disabled?: boolean;
     classNames?: classNamesTypes;
-    theme?: ThemeOptionInput;
   };
