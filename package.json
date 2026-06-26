@@ -1,6 +1,6 @@
 {
   "name": "@xanui/core",
-  "version": "1.3.30",
+  "version": "1.3.31",
   "description": "A styling-engine-agnostic UI primitive layer for React — write CSS as props with a single <Tag> component, theme with color-scale generation, and ship SSR-safe styles out of the box.",
   "keywords": [
     "react",
