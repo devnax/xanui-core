@@ -61,7 +61,8 @@ export const createNeutralColorScale = (
     color = (neutralColors as any)[color];
   }
   const steps = [
-    50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 800, 900, 950,
+    50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750,
+    800, 850, 900, 950,
   ];
   const scale = colorScale(color, "hex", steps);
 
@@ -78,7 +79,8 @@ export const createNeutralColorScale = (
 };
 
 export const neutralColorSteps = [
-  50, 100, 150, 200, 300, 400, 500, 600, 700, 800, 900, 950,
+  50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800,
+  850, 900, 950,
 ] as const;
 
 export const formatNeutralColors = (scale: Record<number, string>) => {
@@ -114,8 +116,8 @@ export const createPalette = (
   const neutralBase = scale[500];
   const [r, g, b] = hexToRgb(neutralBase);
   const surface = colors.surface || {
-    primary: mode === "dark" ? scale[150] : scale[50],
-    secondary: mode === "dark" ? scale[200] : scale[150],
+    primary: mode === "dark" ? scale[100] : scale[50],
+    secondary: mode === "dark" ? scale[150] : scale[150],
   };
   const paper = colors.paper || {
     primary: mode === "dark" ? scale[150] : scale[200],
