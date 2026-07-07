@@ -1,27 +1,27 @@
 # useColorTemplate
 
-`useColorTemplate(color, type)` reads the active theme and returns template-friendly style blocks (background, text color, border, hover states) for a specific semantic color and presentation style.
+`useColorTemplate(color, type)` returns a `{ main, hover }` pair of style objects for a semantic color and a presentation style, using theme color references (e.g. `"brand.primary"`) that resolve via the CSS variables injected by `ThemeProvider`.
 
 ## Parameters
 
-| Parameter | Type                                                                               | Default | Description                                                                   |
-| --------- | ---------------------------------------------------------------------------------- | ------- | ----------------------------------------------------------------------------- |
-| `color`   | `'default' \| 'brand' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'danger'` | —       | Semantic palette to target. `'default'` maps to the theme's background token. |
-| `type`    | `'fill' \| 'outline' \| 'text' \| 'alpha'`                                         | —       | Template shape describing which fields to return.                             |
+| Parameter | Type                                                                          | Description                                                                    |
+| --------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| `color`   | `'default' \| 'brand' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'danger'` | Semantic palette to target. `'default'` maps to the theme's neutral/text/paper tokens instead of a variant color. Throws if not one of these values. |
+| `type`    | `'fill' \| 'outline' \| 'text' \| 'ghost'`                                       | Which visual treatment to produce. Throws if not one of these values.             |
 
 ## Return Value
 
-The template object defined by `createColor`, typically shaped as:
-
 ```ts
 {
-  bgcolor: string,
-  color: string,
-  border?: number,
-  borderColor?: string,
-  hover: { bgcolor: string; color: string }
+  main: { bgcolor: string; color: string; border: number | string; borderColor: string; transition?: string },
+  hover: { bgcolor: string; color: string; border: number | string; borderColor: string; transition?: string },
 }
 ```
+
+- `type: 'outline'` — transparent background, a 1px border in the color's `primary`/`secondary`, text colored to match.
+- `type: 'fill'` — solid `primary`/`secondary` background with `contrast` text (or `paper`/`text` tokens for `'default'`).
+- `type: 'text'` — transparent background and border, text-only coloring.
+- `type: 'ghost'` — low-opacity `ghost.primary`/`ghost.secondary` background with `primary`/`secondary` text.
 
 ## Usage Examples
 
@@ -29,7 +29,7 @@ The template object defined by `createColor`, typically shaped as:
 import { Tag, useColorTemplate } from 'xanui-core'
 
 const StatusBadge = ({ tone = 'info', children }) => {
-  const template = useColorTemplate(tone, 'outline')
+  const { main, hover } = useColorTemplate(tone, 'outline')
 
   return (
     <Tag
@@ -37,11 +37,11 @@ const StatusBadge = ({ tone = 'info', children }) => {
       px={12}
       py={4}
       radius={999}
-      border={template.border}
-      borderColor={template.borderColor}
-      bgcolor={template.bgcolor}
-      color={template.color}
-      hover={template.hover}
+      border={main.border}
+      borderColor={main.borderColor}
+      bgcolor={main.bgcolor}
+      color={main.color}
+      hover={hover}
     >
       {children}
     </Tag>
@@ -51,17 +51,12 @@ const StatusBadge = ({ tone = 'info', children }) => {
 
 ```tsx
 const GhostButton = () => {
-  const alpha = useColorTemplate('brand', 'alpha')
+  const { main, hover } = useColorTemplate('brand', 'ghost')
 
   return (
-    <button
-      style={{
-        backgroundColor: alpha.bgcolor,
-        color: alpha.color,
-      }}
-    >
+    <Tag component="button" bgcolor={main.bgcolor} color={main.color} hover={hover}>
       Learn more
-    </button>
+    </Tag>
   )
 }
 ```

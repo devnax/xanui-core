@@ -1,30 +1,37 @@
 # ThemeProvider
 
-`ThemeProvider` binds a named theme (registered via `createTheme`) to a subtree. It exposes the active theme through context, injects theme CSS variables, and applies baseline typography/background styles so descendants automatically render with the correct look-and-feel.
+`ThemeProvider` binds a `ThemeOptions` object (built with `createTheme`) to a subtree. It exposes the theme through context, injects the theme's CSS variables, optionally resets browser defaults and styles the scrollbar, and renders a `Tag` wrapper carrying baseline typography/background styles so descendants render with the correct look-and-feel.
 
 ## Props
 
-| Prop          | Type       | Default | Description                                                                                            |
-| ------------- | ---------- | ------- | ------------------------------------------------------------------------------------------------------ |
-| `theme`       | `string`   | —       | Theme name that must exist in `ThemeFactory`. Throws if the theme is missing.                          |
-| `...tagProps` | `TagProps` | `—`     | Any prop accepted by `Tag` (e.g., `component`, `px`, `gap`, DOM attributes). They augment the wrapper. |
+`ThemeProvider` accepts every prop `Tag` accepts (it forwards the rest to an internal `Tag`), plus:
+
+| Prop             | Type                                                          | Default     | Description                                                                                     |
+| ---------------- | -------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------- |
+| `theme`          | `ThemeOptions`                                                  | —           | Theme object returned by `createTheme`. Required.                                                |
+| `onThemeUpdate`  | `(theme: ThemeOptions) => void`                                 | `undefined` | Called when a descendant invokes `useTheme().update(...)`.                                       |
+| `isRoot`         | `boolean`                                                       | `false`     | When `true`, also injects a global CSS reset (`box-sizing`, list/anchor/table resets, etc.) and the scrollbar styling. Set this once at the top of the app. |
+| `noScrollbarCss` | `boolean`                                                       | `false`     | When `isRoot` is `true`, skip injecting the custom scrollbar CSS.                                |
+| `scrollbar`      | `{ size?: number; thumbColor?: string; trackColor?: string }`   | `{ size: 7, thumbColor: 'var(--color-neutral-600)', trackColor: 'var(--color-neutral-200)' }` | Customizes the `::-webkit-scrollbar` styling injected when `isRoot` is true. |
 
 ### Automatic styling
 
-- Enforces `minHeight="100%"`, and pulls body typography defaults (`fontFamily`, `fontSize`, `fontWeight`, `lineHeight`) from the selected theme.
-- Sets `bgcolor` to `theme.colors.default.base` and `direction` to `rtl` when the theme is flagged RTL.
-- Generates a deterministic class name (`xui-${theme}-theme-root`) used by CSS variables and helpers like `themeRootClass`.
-- Pushes each selector from `theme.globalStyle` into the global stylesheet under that class and injects the computed CSS variables via `ThemeCssVars`.
+- Renders a `Tag` with `minHeight="100%"`, `bgcolor="neutral.100"`, `color="text.primary"`, and the default typography (`fontSize="md"`, `fontWeight="md"`, `lineHeight="md"`, a system font stack) — any of these can be overridden by passing the corresponding prop.
+- Sets `direction` to `"rtl"` when `theme.rtl` is `true`, otherwise `"ltr"`.
+- Assigns `baseClass={`${theme.name}-theme-root`}`, producing the deterministic class `xui-${theme.name}-theme-root` (also available via the `themeRootClass(name)` helper exported from `xanui-core`).
+- Pushes each selector in `theme.globalStyle` into the global stylesheet scoped under that root class, and injects the theme's CSS variables (colors, typography, shadow/radius/spacing scales, breakpoints) computed by `ThemeCssVars`.
 
 ## Usage Examples
 
 ### Minimal App Shell
 
 ```tsx
-import { ThemeProvider } from 'xanui-core'
+import { ThemeProvider, createTheme } from 'xanui-core'
+
+const theme = createTheme({ name: 'light', mode: 'light' })
 
 export const AppShell = ({ children }) => (
-  <ThemeProvider theme="light" component="main">
+  <ThemeProvider theme={theme} isRoot component="main">
     {children}
   </ThemeProvider>
 )
@@ -33,9 +40,12 @@ export const AppShell = ({ children }) => (
 ### Nesting for Overlays
 
 ```tsx
-<ThemeProvider theme="light">
+const light = createTheme({ name: 'light', mode: 'light' })
+const brand = createTheme({ name: 'brand', mode: 'light', colors: { brand: '#7C3AED' } })
+
+<ThemeProvider theme={light} isRoot>
   <AppContent />
-  <ThemeProvider theme="brand" component="aside" px={24} py={16} radius={12} shadow={3}>
+  <ThemeProvider theme={brand} component="aside" px={24} py={16} radius="md" shadow="md">
     <ControlPanel />
   </ThemeProvider>
 </ThemeProvider>
@@ -43,4 +53,4 @@ export const AppShell = ({ children }) => (
 
 ### Pair with `AppRoot`
 
-`AppRoot` wraps `ThemeProvider` with global resets and the `BreakpointProvider`. Prefer it at the document root, then rely on `ThemeProvider` for nested theme islands.
+`AppRoot` composes global providers (document/portal context, breakpoints, CSS cache) around your app. Use it at the document root and nest `ThemeProvider` (with `isRoot`) directly under it to establish the theme.

@@ -1,40 +1,65 @@
-# useScrollbar
+# Scrollbar Styling
 
-`useScrollbar(themeName, rootCls?)` injects global scrollbar styles that respect the chosen theme's colors. It returns the generated class name (via `css`) so you can track or test the styles if needed, but usually you just call it for its side effects.
+> Note: there is no `useScrollbar` hook (or any export by that name) in the package. Themed scrollbar CSS is injected automatically by `ThemeProvider`/`AppRoot` — it's controlled entirely by the `scrollbar` and `noScrollbarCss` props documented below.
 
-## Parameters
+## How it works
 
-| Parameter   | Type     | Default | Description                                                                                                                        |
-| ----------- | -------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `themeName` | `string` | —       | Name of a theme registered with `createTheme`. Required.                                                                           |
-| `rootCls`   | `string` | `''`    | Optional selector to scope the scrollbar styles (e.g., `.sidebar`). When omitted, global `*`/`::-webkit-scrollbar` rules are used. |
+When `ThemeProvider` renders as the root (`isRoot`, which `AppRoot` always sets), it computes a global stylesheet targeting `::-webkit-scrollbar` and related pseudo-elements, scoped to the current theme's root class (`.xui-{theme.name}-theme-root`), and renders it via the same internal `ServerStyleTag` mechanism used for the rest of the theme's global CSS (see the server-styles docs). Unless `noScrollbarCss` is set, this happens on every render of `ThemeProvider`/`AppRoot`.
 
-## Behavior
+## Props (on `ThemeProvider` and `AppRoot`)
 
-- Generates rules for `scrollbar-width`, `scrollbar-color`, thumb/track size, colors, and hover states using theme tokens.
-- Writes the rules using the `css` utility's global mode.
+| Prop              | Type                                                          | Default                              | Description                                                                 |
+| ----------------- | ---------------------------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------------- |
+| `noScrollbarCss`  | `boolean`                                                        | `false`                                 | When `true`, skips generating/injecting the scrollbar stylesheet entirely.  |
+| `scrollbar`       | `{ size?: number; thumbColor?: string; trackColor?: string }`   | `{}`                                     | Customizes the generated scrollbar CSS. Only used when `noScrollbarCss` is `false`. |
 
-## Usage Examples
+### `scrollbar` sub-fields
 
-### Automatic (inside ThemeProvider)
+| Field        | Type     | Default                        | Description                                                     |
+| ------------ | -------- | --------------------------------- | -------------------------------------------------------------------- |
+| `size`       | `number` | `7`                                | Scrollbar width/height in pixels (`::-webkit-scrollbar`).       |
+| `thumbColor` | `string` | `"var(--color-neutral-600)"`      | Color of the scrollbar thumb, including its hover state.        |
+| `trackColor` | `string` | `"var(--color-neutral-200)"`      | Color of the scrollbar track.                                    |
 
-`ThemeProvider` calls `useScrollbar(UseScrollbarOption)` for you when `applyScrollbarCss` is `true`, so most apps already get the styling.
+The generated rules only cover the WebKit-style pseudo-elements (`::-webkit-scrollbar`, `::-webkit-scrollbar-thumb`, `::-webkit-scrollbar-thumb:hover`, `::-webkit-scrollbar-track`) with a fixed `6px` border radius on the thumb/track — there is no `scrollbar-width`/`scrollbar-color` (Firefox standard properties) rule generated.
 
-### Manual Invocation
+## Usage
+
+### Default (scrollbar styling included automatically)
 
 ```tsx
-import { useScrollbar } from 'xanui-core'
+import { AppRoot } from 'xanui-core'
 
-export const ScrollArea = ({ children }) => {
-    const classname = useScrollbar({
-      theme: "light"
-    })
-  
+<AppRoot theme={theme}>
+  {children}
+</AppRoot>
+```
 
-  return (
-    <div className={classname} style={{ maxHeight: 320, overflowY: 'auto' }}>
-      {children}
-    </div>
-  )
-}
+### Disabling scrollbar styling
+
+```tsx
+<AppRoot theme={theme} noScrollbarCss>
+  {children}
+</AppRoot>
+```
+
+### Customizing colors and size
+
+```tsx
+<AppRoot
+  theme={theme}
+  scrollbar={{ size: 10, thumbColor: '#94a3b8', trackColor: '#1e293b' }}
+>
+  {children}
+</AppRoot>
+```
+
+The same `scrollbar` / `noScrollbarCss` props work identically on `ThemeProvider` directly, if you're using it without `AppRoot`:
+
+```tsx
+import { ThemeProvider } from 'xanui-core'
+
+<ThemeProvider theme={theme} isRoot scrollbar={{ size: 8 }}>
+  {children}
+</ThemeProvider>
 ```

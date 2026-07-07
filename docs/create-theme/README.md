@@ -1,85 +1,79 @@
 # Theme APIs
 
-Xanui Core ships a small set of helpers for registering, consuming, and switching themes at runtime.
+Xanui Core ships a small set of helpers for creating and consuming themes: `createTheme` builds a `ThemeOptions` object, and `useTheme` reads the active theme from context.
 
-## `createTheme(name, options, darkMode?)`
+## `createTheme(options)`
 
-Registers a theme inside the global `ThemeFactory`. Throws if the name is already taken.
+Builds a full `ThemeOptions` object by deep-merging `options` over `defaultThemeOptions` and generating a color palette from `options.colors`. It does **not** register a global theme registry — the returned object is just data you pass to `ThemeProvider`.
 
-| Parameter  | Type               | Default                   | Description                                                                      |
-| ---------- | ------------------ | ------------------------- | -------------------------------------------------------------------------------- |
-| `name`     | `string`           | —                         | Unique identifier referenced by `ThemeProvider` and `createThemeSwitcher`.       |
-| `options`  | `ThemeOptionInput` | `{}` merged with defaults | Theme overrides: colors, typography, global styles, interfaces, RTL flag.        |
-| `darkMode` | `boolean`          | `false`                   | When `true`, seeds the palette from `darkColorPallete` before merging overrides. |
+| Parameter | Type              | Default | Description                                                                 |
+| --------- | ----------------- | ------- | ---------------------------------------------------------------------------- |
+| `options` | `ThemeOptionInput` | —       | Theme overrides: `name`, `mode`, `colors`, `typography`, `components`, `rtl`, `globalStyle`, `shadow`, `radius`, `spacing`. |
 
-### Theme Option Fields
+If `options.mode` is omitted it defaults to `"light"`. If `options.name` is omitted it defaults to `options.mode`.
 
-| Field         | Type                                      | Description                                                                                             |
-| ------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `colors`      | `ThemeColorInput`                         | Override semantic color slots (`background`, `text`, `brand`, etc.). Partial objects are merged deeply. |
-| `typography`  | `ThemeTypographyInputType`                | Configure `fontFamily` and the `h1`–`small` scale (size, weight, line height).                          |
-| `interfaces`  | `Record<string, (props, theme) => props>` | Register interface factories consumed by `useThemeComponent`.                                                |
-| `rtl`         | `boolean`                                 | Enables right-to-left layout defaults.                                                                  |
-| `globalStyle` | `GlobalCSS`                               | Map of selectors to CSS objects that will be scoped under the theme's root class.                       |
+### `ThemeOptionInput` fields
 
-## `createThemeSwitcher(defaultTheme, store?)`
+| Field         | Type                                                 | Description                                                                                              |
+| ------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `name`        | `string`                                              | Identifier for the theme, used to derive the root class `xui-${name}-theme-root`.                          |
+| `mode`        | `"light" \| "dark"`                                  | Controls how the neutral color scale is generated and defaults to `"light"`.                               |
+| `colors`      | `ThemeOptionColorsInput`                              | Override semantic color slots (`neutral`, `surface`, `paper`, `text`, `divider`, `brand`, `accent`, `info`, `success`, `warning`, `danger`). See below. |
+| `typography`  | `Record<TypographyRefTypes, ThemeTypographyItem>`     | Overrides the `xs`–`xl` and `h1`–`h6` scale (`fontSize`, `lineHeight`, `fontWeight`).                       |
+| `components`  | `Record<string, (defaultProps, theme) => props>`      | Register component factories consumed by `useThemeComponent`.                                              |
+| `rtl`         | `boolean`                                             | Enables right-to-left layout. Defaults to `false`.                                                          |
+| `globalStyle` | `GlobalCSS`                                           | Map of selectors to CSS objects, scoped under the theme's root class by `ThemeProvider`.                    |
+| `shadow`      | `{ xs, sm, md, lg, xl, xxl }`                         | Overrides the default box-shadow scale.                                                                    |
+| `radius`      | `{ xs, sm, md, lg, xl, xxl }`                         | Overrides the default border-radius scale.                                                                 |
+| `spacing`     | `{ xs, sm, md, lg, xl, xxl }`                         | Overrides the default spacing scale.                                                                       |
 
-Creates a hook that manages the current theme name (persisted via `react-state-bucket`).
+### Color generation
 
-| Parameter      | Type                   | Default     | Description                  |
-| -------------- | ---------------------- | ----------- | ---------------------------- |
-| `defaultTheme` | `string`               | —           | Initial theme name.          |
-| `store`        | `'session' \| 'local'` | `undefined` | Optional persistence method. |
+`createTheme` runs `colors` through `createPalette`, which:
 
-Calling the hook returns `{ name, theme, change }`.
+- Expands `colors.neutral` (a named scale — `"Slate" | "Gray" | "Zinc" | "Neutral" | "Stone"` — or a hex/rgb/hsl/oklch color) into a 19-step scale (`50`…`950`) using `hueforge`. In `dark` mode the scale is reversed.
+- Derives `surface`, `paper`, `text`, and `divider` from that neutral scale unless explicitly overridden.
+- Expands each variant color (`brand`, `accent`, `info`, `success`, `warning`, `danger`) — given as a single hex/rgb/hsl/oklch string, or defaulted from a built-in palette — into `{ primary, secondary, contrast, ghost: { primary, secondary } }`.
 
-## `useTheme()` 
+The final `theme.colors` shape is `ThemeOptionColors` (see `src/theme/types.ts`), and is what `ThemeCssVars` turns into CSS custom properties (`--color-neutral-500`, `--color-brand-primary`, etc.) for `ThemeProvider` to inject.
 
-- `useTheme()` – Reads the active `ThemeOptions` from context inside React components.
+## `useTheme()`
+
+Reads the active `ThemeOptions` from `ThemeContext` (populated by `ThemeProvider`). The returned object also has an `update` method bound to the provider's `onThemeUpdate` callback, so components can push theme changes back up:
+
+```ts
+const theme = useTheme()
+theme.update({ ...theme, mode: 'dark' })
+```
 
 ## Usage Example
 
 ```tsx
-import {
-  createTheme,
-  createThemeSwitcher,
-  ThemeProvider,
-  useTheme,
-} from 'xanui-core'
+import { createTheme, ThemeProvider, useTheme } from 'xanui-core'
 
-createTheme('brand', {
+const lightTheme = createTheme({
+  name: 'brand',
+  mode: 'light',
   colors: {
-    brand: {
-      primary: '#7C3AED',
-      secondary: '#5B21B6',
-      text: '#FFFFFF',
-    },
+    neutral: 'Gray',
+    brand: '#7C3AED',
+    accent: '#f59e0b',
   },
   typography: {
-    fontFamily: 'Inter',
-    text: { fontSize: 16, lineHeight: 24 },
+    md: { fontSize: 16, lineHeight: 1.5, fontWeight: 400 },
   },
 })
 
-const useThemeState = createThemeSwitcher('brand', 'local')
-
-const ThemeToggle = () => {
-  const { name, change } = useThemeState()
+const ThemeLabel = () => {
   const theme = useTheme()
-
-  return (
-    <button onClick={() => change(name === 'brand' ? 'dark' : 'brand')}>
-      Active theme: {theme.name}
-    </button>
-  )
+  return <span>Active theme: {theme.name}</span>
 }
 
-export const App = () => {
-  const { name } = useThemeState()
-  return (
-    <ThemeProvider theme={name} isRootProvider>
-      <ThemeToggle />
-    </ThemeProvider>
-  )
-}
+export const App = () => (
+  <ThemeProvider theme={lightTheme} isRoot>
+    <ThemeLabel />
+  </ThemeProvider>
+)
 ```
+
+There is no built-in theme registry or persisted theme-switcher hook — to toggle between themes at runtime, hold the current `ThemeOptions` (e.g. light vs. dark, built with two `createTheme` calls) in your own state and pass whichever one is active to `ThemeProvider`'s `theme` prop.

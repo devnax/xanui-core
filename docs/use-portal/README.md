@@ -1,53 +1,46 @@
-# usePortal
+# Portal
 
-`usePortal(children)` mounts arbitrary React nodes into a detached DOM node and keeps them themed automatically. It is handy for modals, toasts, and other UI that should escape the current stacking context.
+> Note: the source at `src/Portal/index.tsx` exports a `Portal` **component**, not a `usePortal` hook. There is no `usePortal` export anywhere in the package (`src/index.ts` only re-exports `Portal` and its `PortalProps` type). This page documents the real `Portal` component.
 
-## Requirements
+`Portal` is an SSR-safe wrapper around `react-dom`'s `createPortal`. It renders its `children` into a DOM node outside of the current component's position in the tree — handy for modals, toasts, tooltips, and anything else that needs to escape the current stacking context.
 
-- Must be called inside a React component rendered beneath a `ThemeProvider` (or `AppRoot`).
-- Expects an element with the `.xui-app-root` class to exist in `document`. `AppRoot` already renders one.
-- Client-side only. The hook touches `document`, `window`, and `react-dom/client`.
+## Props
 
-## Return value
+| Prop        | Type                      | Default                       | Description                                                                                                    |
+| ----------- | ------------------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| `children`  | `ReactNode`               | —                              | Content to render into the portal target.                                                                      |
+| `container` | `HTMLElement \| string`   | auto-created `<div>`           | Where to portal into. Pass an `HTMLElement` directly, or a CSS selector string that will be looked up via `document.querySelector`. If omitted (or the selector doesn't resolve to an element), `Portal` creates a new `<div data-portal="...">` with a random id and appends it to `document.body`. |
 
-```ts
-const portal = usePortal(<MyModal />)
-```
+## Behavior
 
-| Method      | Description                                                                              |
-| ----------- | ---------------------------------------------------------------------------------------- |
-| `isMount()` | `true` if the portal element is currently attached to `document.body`.                   |
-| `mount()`   | Appends the portal element to `body` (if not already) and renders the latest `children`. |
-| `unmount()` | Removes the element from `body` and clears the React root.                               |
+- **SSR-safe**: while `document` is undefined (server rendering), `Portal` renders `null` instead of throwing.
+- The target node is resolved once via `useMemo`, re-evaluated only when `container` changes.
+- When no `container` is provided, a fresh `<div>` is created and appended to `document.body` on every recomputation (i.e., whenever the `container` prop identity changes) — it is not removed automatically when the component unmounts.
 
-The hook also renders immediately on first use and keeps the portal updated whenever `children` changes.
-
-## Theming behavior
-
-Whenever the portal renders, it wraps `children` in a `ThemeProvider` seeded with the theme from `useTheme()`. That means modals and overlays automatically inherit the right typography, colors, and CSS variables without extra providers.
-
-## Example
+## Usage
 
 ```tsx
-import { usePortal } from 'xanui-core'
+import { Portal } from 'xanui-core'
 
-const ModalHost = ({ isOpen, onClose }) => {
-  const portal = usePortal(
-    <div role="dialog" sx={{ position: 'fixed', inset: 0, backdropFilter: 'blur(4px)' }}>
-      <section sx={{ margin: '10% auto', p: 24, radius: 12, bgcolor: 'default.base' }}>
-        <header>Title</header>
-        <button onClick={onClose}>Close</button>
-      </section>
+const Overlay = ({ children }) => (
+  <Portal container="#modal-root">
+    <div style={{ position: 'fixed', inset: 0 }}>
+      {children}
     </div>
-  )
-
-  React.useEffect(() => {
-    if (isOpen) portal.mount()
-    else portal.unmount()
-  }, [isOpen])
-
-  return null
-}
+  </Portal>
+)
 ```
 
-For most apps, render `ModalHost` somewhere under `AppRoot` and toggle `isOpen`. Portaled content stays synchronized with theme switches automatically.
+### Auto-created container
+
+```tsx
+import { Portal } from 'xanui-core'
+
+const Toast = ({ message }) => (
+  <Portal>
+    <div role="status">{message}</div>
+  </Portal>
+)
+```
+
+`Portal` itself knows nothing about theming — it is a plain DOM portal. Theme CSS variables are scoped (via a CSS class) to the element `AppRoot`/`ThemeProvider` renders, so content rendered through `Portal` only inherits them if the portal target is a descendant of that themed element. This is why the recommended `AppRoot` usage renders `component="body"`: with the theme root *being* `<body>`, an auto-created portal `<div>` (which `Portal` appends to `document.body`) ends up as a descendant of the themed root and inherits the CSS variables. If `AppRoot` is mounted further down the tree instead, a `Portal` targeting `document.body` (or any container outside that subtree) will not inherit theme CSS variables.
