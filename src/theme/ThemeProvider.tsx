@@ -167,13 +167,12 @@ const ThemeProvider = <T extends TagComponentType = "div">({
       <ServerStyleTag factory={themeGlobalStyle} />
       <Tag
         minHeight="100%"
-        bgcolor={"neutral.100"}
+        bgcolor={"surface.primary"}
         color="text.primary"
         fontSize="md"
         fontWeight="md"
         lineHeight="md"
         fontFamily={`system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`}
-        borderColor="red"
         {...props}
         baseClass={`${theme.name}-theme-root`}
         direction={theme.rtl ? "rtl" : "ltr"}

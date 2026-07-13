@@ -9,7 +9,12 @@ import React, {
   useState,
 } from "react";
 import { createRoot } from "react-dom/client";
-import { createTheme, ThemeProvider, useTheme } from "./src/theme";
+import {
+  createTheme,
+  ThemeProvider,
+  ThemeProvider,
+  useTheme,
+} from "./src/theme";
 import {
   css,
   Easing,
@@ -266,15 +271,43 @@ const RND = () => {
       onClick={() => {
         theme.update(
           createTheme(
-            theme.name === "dark"
+            theme.name === "dark-child"
               ? { mode: "light", name: "light" }
-              : { mode: "dark", name: "dark" },
+              : { mode: "dark", name: "dark-child" },
           ),
         );
       }}
     >
       render
     </button>
+  );
+};
+
+const ChildTheme = () => {
+  const [theme, setTheme] = React.useState<ThemeOptions>(
+    createTheme({
+      name: "dark-child",
+      mode: "dark",
+    }),
+  );
+  return (
+    <ThemeProvider theme={theme} onThemeUpdate={(t: any) => setTheme(t)}>
+      <Tag
+        overflow="auto"
+        p="md"
+        bgcolor="paper.primary"
+        hover={{
+          borderColor: "divider.secondary",
+          bgcolor: "paper.secondary",
+        }}
+      >
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos sequi
+        numquam illo expedita accusamus dolores. Recusandae ab dignissimos quod.
+        Minus suscipit quis natus neque voluptate assumenda provident dicta
+        officiis animi!
+      </Tag>
+      <RND />
+    </ThemeProvider>
   );
 };
 
@@ -308,18 +341,27 @@ const App = () => {
           distinctio tempora aliquam quaerat placeat. Deleniti!
         </Tag>
 
-        <Tag p={3} width={300}>
+        <Tag
+          p={3}
+          width={300}
+          flexBox
+          flexColumn
+          gap={2}
+          bgcolor="surface.primary"
+          radius={1}
+        >
           <Tag overflow="auto" color={"text"} fontSize="h2" border={1}>
             This is main title text
           </Tag>
           <Tag
             overflow="auto"
             p="md"
-            border="1px solid"
-            borderColor="divider.primary"
+            // border="1px solid"
+            // borderColor="divider.primary"
             bgcolor="paper.primary"
             hover={{
               borderColor: "divider.secondary",
+              bgcolor: "paper.secondary",
             }}
           >
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos sequi
@@ -327,7 +369,15 @@ const App = () => {
             quod. Minus suscipit quis natus neque voluptate assumenda provident
             dicta officiis animi!
           </Tag>
+          <Tag overflow="auto" p="md" bgcolor="surface.secondary">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos sequi
+            numquam illo expedita accusamus dolores. Recusandae ab dignissimos
+            quod. Minus suscipit quis natus neque voluptate assumenda provident
+            dicta officiis animi!
+          </Tag>
         </Tag>
+        <ChildTheme />
+
         <RND />
         <Tag flexBox flexRow flexWraped p={1} gap={1}>
           <Button variant="text" color="default" disabled>

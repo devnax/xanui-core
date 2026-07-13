@@ -53,7 +53,7 @@ const useColorTemplate = (
       },
       hover: {
         bgcolor: is_def ? "paper.secondary" : `${color}.secondary`,
-        color: is_def ? "text.primary" : `${color}.text`,
+        color: is_def ? "text.primary" : `${color}.contrast`,
         border: 0,
         borderColor: "transparent",
         transition: "background-color .3s",
