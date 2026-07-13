@@ -70,7 +70,7 @@ export const defaultThemeOptions: ThemeOptionInput = {
   radius: radius as any,
   spacing: spacing as any,
   globalStyle: {},
-  colors: { neutral: "Slate" },
+  colors: { neutral: "Gray" },
   typography: ThemeTypography,
   components: {},
 };

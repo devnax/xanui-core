@@ -271,9 +271,9 @@ const RND = () => {
       onClick={() => {
         theme.update(
           createTheme(
-            theme.name === "dark-child"
+            theme.name === "dark"
               ? { mode: "light", name: "light" }
-              : { mode: "dark", name: "dark-child" },
+              : { mode: "dark", name: "dark" },
           ),
         );
       }}
@@ -286,7 +286,7 @@ const RND = () => {
 const ChildTheme = () => {
   const [theme, setTheme] = React.useState<ThemeOptions>(
     createTheme({
-      name: "dark-child",
+      name: "dark",
       mode: "dark",
     }),
   );
@@ -369,7 +369,7 @@ const App = () => {
             quod. Minus suscipit quis natus neque voluptate assumenda provident
             dicta officiis animi!
           </Tag>
-          <Tag overflow="auto" p="md" bgcolor="surface.secondary">
+          <Tag overflow="auto" p="md" bgcolor="surface.primary" shadow="md">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos sequi
             numquam illo expedita accusamus dolores. Recusandae ab dignissimos
             quod. Minus suscipit quis natus neque voluptate assumenda provident
