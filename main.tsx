@@ -320,8 +320,8 @@ const App = () => {
   const [text, setText] = React.useState("Click");
   const [theme, setTheme] = React.useState<ThemeOptions>(
     createTheme({
-      name: "light",
-      mode: "light",
+      name: "dark",
+      mode: "dark",
     }),
   );
 

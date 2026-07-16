@@ -134,29 +134,30 @@ export const createPalette = (
   colors: ThemeOptionColorsInput,
   mode: ThemeMode,
 ): ThemeOptionColors => {
+  const isDark = mode === "dark";
   const scale = createNeutralColorScale(colors.neutral || "Gray", mode);
   const neutral = formatNeutralColors(scale);
   const neutralBase = scale[500];
   const [r, g, b] = hexToRgb(neutralBase);
   const surface = colors.surface || {
-    primary: mode === "dark" ? scale[110] : scale[50],
-    secondary: mode === "dark" ? scale[135] : scale[150],
+    primary: isDark ? scale[110] : scale[50],
+    secondary: isDark ? scale[135] : scale[150],
   };
   const paper = colors.paper || {
-    primary: mode === "dark" ? scale[135] : scale[135],
-    secondary: mode === "dark" ? scale[160] : scale[180],
+    primary: isDark ? scale[140] : scale[140],
+    secondary: isDark ? scale[160] : scale[180],
     ghost: {
       primary: `rgba(${r}, ${g}, ${b}, .1)`,
       secondary: `rgba(${r}, ${g}, ${b}, .2)`,
     },
   };
+  const divider = colors.divider || {
+    primary: isDark ? scale[150] : scale[200],
+    secondary: isDark ? scale[200] : scale[300],
+  };
   const text = colors.text || {
     primary: scale[900],
     secondary: scale[600],
-  };
-  const divider = colors.divider || {
-    primary: scale[200],
-    secondary: scale[300],
   };
 
   const variants: any = {};
