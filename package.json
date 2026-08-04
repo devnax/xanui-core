@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "hueforge": "^1.0.2",
-    "oncss": "^1.2.12",
+    "oncss": "^1.2.13",
     "pretty-class": "^1.0.8",
     "tslib": "^2.8.1"
   },
